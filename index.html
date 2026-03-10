@@ -177,6 +177,22 @@ body {
   padding: 8px;
 }
 </style>
+
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1267687915507510');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1267687915507510&ev=PageView&noscript=1"
+/></noscript>
 </head>
 <body>
 
@@ -195,7 +211,6 @@ body {
   <div class="slides-outer" id="slidesOuter">
     <div class="slides-inner" id="slidesInner">
 
-      <!-- 0: INTRO -->
       <div class="slide">
         <div class="intro-brand">Manufaktura Formy Białyst…</div>
         <div class="intro-title">Wypełnij formularz – otrzymasz trening EMS i drenaż za 69 zł</div>
@@ -205,10 +220,9 @@ body {
         <button class="btn-next" onclick="nextSlide()"><span class="btn-label">Dalej</span><div class="spinner"></div></button>
       </div>
 
-      <!-- 1: PYTANIE -->
       <div class="slide">
         <div class="q-title">Powiedz tylko, kiedy chciałbyś spróbować pierwszego treningu?</div>
-        <div class="q-sub">&nbsp;</div>
+        <div class="q-sub"> </div>
         <div class="options-list" id="q1-options">
           <div class="option-item" onclick="selectOption(0)">
             <span class="option-label">Narazie nie chcę próbować</span>
@@ -229,7 +243,6 @@ body {
         <button class="btn-back" onclick="prevSlide()">Wstecz</button>
       </div>
 
-      <!-- 2: KONTAKT -->
       <div class="slide">
         <div class="q-title">Informacje kontaktowe ℹ️</div>
         <div class="q-sub">Pozostaw teraz proszę swój kontakt, abyśmy mogli oddzwonić i umówić się na trening próbny</div>
@@ -248,7 +261,6 @@ body {
         <button class="btn-back" onclick="prevSlide()">Wstecz</button>
       </div>
 
-      <!-- 3: ZGODY -->
       <div class="slide">
         <div class="q-title">Oświadczam, że</div>
         <div class="q-sub">-</div>
@@ -269,7 +281,6 @@ body {
         <button class="btn-back" onclick="prevSlide()">Wstecz</button>
       </div>
 
-      <!-- 4: DZIĘKUJEMY -->
       <div class="slide">
         <div class="thankyou-brand">Manufaktura Formy Białyst…</div>
         <div class="thankyou-title">Dziękujemy bardzo!</div>
@@ -285,7 +296,6 @@ body {
     </div>
   </div>
 
-  <!-- REJECTION SCREEN -->
   <div class="rejection-screen" id="rejectionScreen">
     <div class="rejection-emoji">🙏</div>
     <div class="rejection-title">Rozumiemy, że na razie to nie ten moment</div>
