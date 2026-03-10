@@ -177,23 +177,6 @@ body {
   padding: 8px;
 }
 </style>
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1267687915507510');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1267687915507510&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -322,7 +305,7 @@ src="https://www.facebook.com/tr?id=1267687915507510&ev=PageView&noscript=1"
 
 <script>
 // ══ CONFIG ══
-const SHEETS_URL = "https://script.google.com/macros/s/AKfycbzvkPbGBQTOs2DOO7ens76pwSU2jVWe4M-TwxXaIqlnR49lXBQocyBJcMbfX_m9xdE7/exec";
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbx8u1gY4vFhjTgcyE8Z5MyPj2-JUDxr-_488oQ3KfzBjMNksTuawnVoMq0_QYOydQShgQ/exec";
 
 // ══ UTM z URL ══
 const p = new URLSearchParams(window.location.search);
@@ -348,11 +331,22 @@ const LABELS = [
 ];
 const STEPS = ['intro','pytanie_kiedy','dane_kontaktowe','zgody','podziekowanie'];
 
+// ══ FB PIXEL EVENTS ══
+function fbTrack(event, params) {
+  try { if (typeof fbq === 'function') fbq('track', event, params || {}); } catch(e) {}
+}
+function fbCustom(event, params) {
+  try { if (typeof fbq === 'function') fbq('trackCustom', event, params || {}); } catch(e) {}
+}
+
 // ══ NAVIGATION ══
 function goTo(n) {
   document.getElementById('slidesInner').style.transform = `translateX(-${n*100}%)`;
   cur = n; updateUI();
-  if (n > 0) ping(n, 'entered'); // krok 0 wysyłamy tylko raz przy załadowaniu
+  if (n === 1) fbCustom('FormStep1_Pytanie');
+  if (n === 2) fbCustom('FormStep2_Kontakt');
+  if (n === 3) fbCustom('FormStep3_Zgody');
+  if (n > 0) ping(n, 'entered');
 }
 function nextSlide() { goTo(cur + 1); }
 function prevSlide()  { goTo(cur - 1); }
@@ -450,7 +444,8 @@ async function submitForm() {
   });
 
   btn.classList.remove('loading');
-  fbq('track', 'Contact');
+  fbTrack('Lead');
+  fbTrack('Contact', { currency: 'PLN', value: 1 });
   goTo(4);
 }
 
