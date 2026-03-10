@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Manufaktura Formy – Formularz</title>
+<style>
+*, *::before, *::after {
+  margin: 0; padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+html { height: 100%; overflow-x: hidden; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #fff; width: 100%; min-height: 100%; overflow-x: hidden;
+}
+
+.modal {
+  width: 100%; min-height: 100svh; background: #fff;
+  display: flex; flex-direction: column; overflow: hidden;
+}
+
+@media (min-width: 520px) {
+  body {
+    background: #f0f2f5; display: flex;
+    align-items: center; justify-content: center;
+    min-height: 100svh; padding: 24px;
+  }
+  .modal {
+    width: 460px; min-height: unset;
+    border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,.18);
+  }
+}
+
+@keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+.modal { animation: fadeIn .2s ease; }
+
+
+
+.logo-wrap {
+  background: #f0f2f5; display: flex; justify-content: center;
+  padding: 8px 0 0; flex-shrink: 0;
+}
+.logo-circle {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: #fff; border: 2px solid #ddd;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,.12);
+}
+.logo-circle img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.step-indicator { font-size: 12px; color: #65676b; text-align: center; padding: 6px 0 2px; flex-shrink: 0; }
+.progress-wrap  { height: 3px; background: #e4e6ea; flex-shrink: 0; }
+.progress-bar   { height: 100%; background: #1877f2; transition: width .4s ease; }
+
+.slides-outer { overflow: hidden; flex: 1; }
+.slides-inner { display: flex; transition: transform .3s cubic-bezier(.4,0,.2,1); will-change: transform; }
+.slide { min-width: 100%; width: 100%; flex-shrink: 0; padding: 20px 16px 28px; }
+
+.intro-brand { font-size: 13px; color: #65676b; text-align: center; margin-bottom: 10px; }
+.intro-title { font-size: 20px; font-weight: 700; color: #050505; text-align: center; line-height: 1.3; margin-bottom: 12px; }
+.intro-sub   { font-size: 14px; color: #3c3c3c; text-align: center; line-height: 1.55; margin-bottom: 10px; }
+.divider     { border: none; border-top: 1px solid #e4e6ea; margin: 10px 0; }
+.intro-cta   { font-size: 14px; color: #3c3c3c; text-align: center; line-height: 1.55; }
+
+.q-title { font-size: 16px; font-weight: 700; color: #050505; line-height: 1.4; margin-bottom: 4px; }
+.q-sub   { font-size: 13px; color: #65676b; line-height: 1.4; margin-bottom: 16px; min-height: 1em; }
+
+.options-list { display: flex; flex-direction: column; gap: 8px; }
+.option-item {
+  display: flex; align-items: center; justify-content: space-between;
+  border: 1.5px solid #e4e6ea; border-radius: 8px;
+  padding: 12px 14px; cursor: pointer; user-select: none;
+  transition: border-color .12s, background .12s;
+}
+.option-item.selected { border-color: #1877f2; background: #f0f5ff; }
+.option-label { font-size: 14px; color: #050505; line-height: 1.4; padding-right: 10px; }
+.radio-circle {
+  width: 22px; height: 22px; flex-shrink: 0; border-radius: 50%;
+  border: 2px solid #bcc0c4;
+  display: flex; align-items: center; justify-content: center;
+}
+.option-item.selected .radio-circle { border-color: #1877f2; background: #1877f2; }
+.radio-dot { width: 10px; height: 10px; border-radius: 50%; background: #fff; display: none; }
+.option-item.selected .radio-dot { display: block; }
+
+.checkbox-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 0; cursor: pointer; user-select: none;
+  border-bottom: 1px solid #f0f2f5;
+}
+.checkbox-box {
+  width: 22px; height: 22px; flex-shrink: 0;
+  border: 2px solid #bcc0c4; border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+}
+.checkbox-item.checked .checkbox-box { background: #1877f2; border-color: #1877f2; }
+.checkbox-item.checked .checkbox-box::after { content: '✓'; color: #fff; font-size: 13px; font-weight: 700; }
+.checkbox-label { font-size: 14px; color: #050505; }
+
+.input-group { margin-bottom: 20px; }
+.input-label { font-size: 12px; color: #65676b; margin-bottom: 4px; display: block; }
+.input-field {
+  width: 100%; border: none; border-bottom: 1.5px solid #e4e6ea;
+  padding: 6px 0 8px; font-size: 17px; color: #050505;
+  outline: none; background: transparent; font-family: inherit;
+  transition: border-color .15s;
+}
+.input-field:focus { border-bottom-color: #1877f2; }
+.input-field::placeholder { color: #bcc0c4; }
+.input-hint { font-size: 11px; color: #65676b; margin-top: 4px; line-height: 1.4; }
+
+.legal-text { font-size: 11px; color: #65676b; line-height: 1.5; margin-top: 14px; margin-bottom: 8px; }
+.legal-link { color: #1877f2; font-weight: 600; text-decoration: none; }
+
+/* Buttons */
+.btn-next {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; padding: 13px; margin-top: 18px;
+  background: #1877f2; color: #fff; border: none; border-radius: 8px;
+  font-size: 16px; font-weight: 600; cursor: pointer; font-family: inherit;
+  transition: background .12s;
+}
+.btn-next:active { background: #145dbf; }
+.btn-next:disabled { background: #bcc0c4; cursor: default; }
+.btn-back {
+  display: block; width: 100%; padding: 11px; margin-top: 6px;
+  background: transparent; color: #1877f2; border: none; border-radius: 8px;
+  font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit;
+}
+
+/* Spinner */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.4);
+  border-top-color: #fff;
+  animation: spin .7s linear infinite;
+  display: none; flex-shrink: 0;
+}
+.btn-next.loading .spinner { display: block; }
+.btn-next.loading .btn-label { opacity: .7; }
+
+/* Thank you */
+.thankyou-brand { font-size: 13px; color: #65676b; text-align: center; margin-bottom: 10px; }
+.thankyou-title { font-size: 19px; font-weight: 700; color: #050505; text-align: center; margin-bottom: 10px; }
+.thankyou-body  { font-size: 14px; color: #3c3c3c; line-height: 1.55; margin-bottom: 8px; }
+.thankyou-footer {
+  display: flex; align-items: center; gap: 6px;
+  padding-top: 14px; border-top: 1px solid #e4e6ea;
+  font-size: 13px; color: #65676b;
+}
+
+/* Rejection */
+.rejection-screen {
+  display: none; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 40px 24px; text-align: center; flex: 1;
+}
+.rejection-screen.active { display: flex; }
+.rejection-emoji { font-size: 52px; margin-bottom: 20px; }
+.rejection-title { font-size: 20px; font-weight: 700; color: #050505; margin-bottom: 12px; line-height: 1.3; }
+.rejection-sub   { font-size: 14px; color: #65676b; line-height: 1.6; margin-bottom: 28px; }
+.btn-ig {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af, #515bd4);
+  color: #fff; border: none; border-radius: 10px;
+  padding: 13px 24px; font-size: 15px; font-weight: 700;
+  cursor: pointer; text-decoration: none; font-family: inherit;
+  margin-bottom: 16px;
+}
+.btn-ig svg { width: 22px; height: 22px; fill: #fff; flex-shrink: 0; }
+.btn-rejection-back {
+  font-size: 14px; color: #65676b; background: none; border: none;
+  cursor: pointer; font-family: inherit; text-decoration: underline;
+  padding: 8px;
+}
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1267687915507510');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1267687915507510&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<div class="modal">
+
+  <div class="logo-wrap">
+    <div class="logo-circle">
+      <img src="https://lh3.googleusercontent.com/d/18mEyEP41W-2NXRbPbsCetiXB_BAchfST" alt="Manufaktura Formy" onerror="this.style.display='none';this.parentNode.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:10px;font-weight:800;color:#1877f2;text-align:center;line-height:1.3;\'>MANUFAKTURA<br><span style=\'color:#e85d04\'>FORMY</span></div>'">
+    </div>
+  </div>
+  <div class="step-indicator" id="stepIndicator"></div>
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-bar" id="progressBar" style="width:0%"></div>
+  </div>
+
+  <div class="slides-outer" id="slidesOuter">
+    <div class="slides-inner" id="slidesInner">
+
+      <!-- 0: INTRO -->
+      <div class="slide">
+        <div class="intro-brand">Manufaktura Formy Białyst…</div>
+        <div class="intro-title">Wypełnij formularz – otrzymasz trening EMS i drenaż za 69 zł</div>
+        <div class="intro-sub">Zaprezentujemy Ci szczegóły naszego działania podczas konsultacji z treningiem wprowadzającym</div>
+        <hr class="divider">
+        <div class="intro-cta">Odpowiedz na pytanie i<br><br>podaj AKTUALNE dane kontaktowe, a zadzwonimy w ciągu jednego dnia roboczego</div>
+        <button class="btn-next" onclick="nextSlide()"><span class="btn-label">Dalej</span><div class="spinner"></div></button>
+      </div>
+
+      <!-- 1: PYTANIE -->
+      <div class="slide">
+        <div class="q-title">Powiedz tylko, kiedy chciałbyś spróbować pierwszego treningu?</div>
+        <div class="q-sub">&nbsp;</div>
+        <div class="options-list" id="q1-options">
+          <div class="option-item" onclick="selectOption(0)">
+            <span class="option-label">Narazie nie chcę próbować</span>
+            <div class="radio-circle"><div class="radio-dot"></div></div>
+          </div>
+          <div class="option-item" onclick="selectOption(1)">
+            <span class="option-label">W następnym tygodniu — odezwijcie się do mnie</span>
+            <div class="radio-circle"><div class="radio-dot"></div></div>
+          </div>
+          <div class="option-item" onclick="selectOption(2)">
+            <span class="option-label">Chcę spróbować w tym tygodniu 💪</span>
+            <div class="radio-circle"><div class="radio-dot"></div></div>
+          </div>
+        </div>
+        <button class="btn-next" id="btn-q1" onclick="handleQ1Next()" disabled>
+          <span class="btn-label">Dalej</span><div class="spinner"></div>
+        </button>
+        <button class="btn-back" onclick="prevSlide()">Wstecz</button>
+      </div>
+
+      <!-- 2: KONTAKT -->
+      <div class="slide">
+        <div class="q-title">Informacje kontaktowe ℹ️</div>
+        <div class="q-sub">Pozostaw teraz proszę swój kontakt, abyśmy mogli oddzwonić i umówić się na trening próbny</div>
+        <div class="input-group">
+          <label class="input-label">Imię i nazwisko</label>
+          <input class="input-field" id="inp-name" type="text" placeholder="Wprowadź odpowiedź." oninput="validateContact()" autocomplete="name">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Numer telefonu</label>
+          <input class="input-field" id="inp-phone" type="tel" placeholder="Wprowadź odpowiedź." oninput="validateContact()" autocomplete="tel">
+          <div class="input-hint">Strona Manufaktura Formy Białystok może skontaktować się z Tobą w tej sprawie.</div>
+        </div>
+        <button class="btn-next" id="btn-contact" onclick="nextSlide()" disabled>
+          <span class="btn-label">Dalej</span><div class="spinner"></div>
+        </button>
+        <button class="btn-back" onclick="prevSlide()">Wstecz</button>
+      </div>
+
+      <!-- 3: ZGODY -->
+      <div class="slide">
+        <div class="q-title">Oświadczam, że</div>
+        <div class="q-sub">-</div>
+        <div>
+          <div class="checkbox-item" id="cb-phone" onclick="toggleCheckbox('cb-phone')">
+            <div class="checkbox-box"></div>
+            <span class="checkbox-label">Zgadzam się na kontakt telefoniczny</span>
+          </div>
+        </div>
+        <div class="legal-text">
+          Poprzez kliknięcie przycisku Prześlij wyrażasz zgodę na przesłanie Twoich informacji stronie Manufaktura Formy Białystok, która zobowiązuje się do korzystania z nich zgodnie z własnymi zasadami.<br><br>
+          <a href="#" class="legal-link">Wyświetl Zasady dotyczące danych na Facebooku.</a><br>
+          <a href="#" class="legal-link">Visit Manufaktura Formy Białystok's Privacy Policy.</a>
+        </div>
+        <button class="btn-next" id="btn-submit" onclick="submitForm()" disabled>
+          <span class="btn-label">Prześlij</span><div class="spinner"></div>
+        </button>
+        <button class="btn-back" onclick="prevSlide()">Wstecz</button>
+      </div>
+
+      <!-- 4: DZIĘKUJEMY -->
+      <div class="slide">
+        <div class="thankyou-brand">Manufaktura Formy Białyst…</div>
+        <div class="thankyou-title">Dziękujemy bardzo!</div>
+        <div class="thankyou-body">Skontaktujemy się z Tobą w ciągu 24h.</div>
+        <div class="thankyou-body">Jeśli nie chcesz czekać możesz zadzwonić i umówić się już TERAZ!</div>
+        <hr class="divider">
+        <div class="thankyou-footer">
+          <span>ℹ️</span>
+          <span>Twoje odpowiedzi zostały przesłane.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- REJECTION SCREEN -->
+  <div class="rejection-screen" id="rejectionScreen">
+    <div class="rejection-emoji">🙏</div>
+    <div class="rejection-title">Rozumiemy, że na razie to nie ten moment</div>
+    <div class="rejection-sub">
+      Gdy będziesz gotowy/gotowa — jesteśmy tutaj!<br><br>
+      Tymczasem zapraszamy na nasz Instagram, gdzie pokazujemy efekty treningów EMS, porady i życie studia na co dzień 💪
+    </div>
+    <a class="btn-ig" href="https://www.instagram.com/manufakturaformy.bialystok?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+      </svg>
+      Obserwuj nas na Instagramie
+    </a>
+    <button class="btn-rejection-back" onclick="hideRejection()">← Wróć do formularza</button>
+  </div>
+</div>
+
+<script>
+// ══ CONFIG ══
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbzvkPbGBQTOs2DOO7ens76pwSU2jVWe4M-TwxXaIqlnR49lXBQocyBJcMbfX_m9xdE7/exec";
+
+// ══ UTM z URL ══
+const p = new URLSearchParams(window.location.search);
+const UTM = {
+  source:   p.get('utm_source')   || 'brak',
+  medium:   p.get('utm_medium')   || 'brak',
+  campaign: p.get('utm_campaign') || 'brak',
+  content:  p.get('utm_content')  || 'brak',
+};
+
+// ══ SESSION ID – do agregacji w Sheets ══
+const SESSION_ID = Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+
+// ══ STATE ══
+let cur = 0;
+let selectedIdx = null;
+const ans = { q1: null, name: "", phone: "", cbPhone: false };
+const t0  = Date.now();
+const LABELS = [
+  'Narazie nie chcę próbować',
+  'W następnym tygodniu — odezwijcie się do mnie',
+  'Chcę spróbować w tym tygodniu 💪'
+];
+const STEPS = ['intro','pytanie_kiedy','dane_kontaktowe','zgody','podziekowanie'];
+
+// ══ NAVIGATION ══
+function goTo(n) {
+  document.getElementById('slidesInner').style.transform = `translateX(-${n*100}%)`;
+  cur = n; updateUI();
+  if (n > 0) ping(n, 'entered'); // krok 0 wysyłamy tylko raz przy załadowaniu
+}
+function nextSlide() { goTo(cur + 1); }
+function prevSlide()  { goTo(cur - 1); }
+
+function updateUI() {
+  const pct = cur===0 ? 0 : cur>=4 ? 100 : Math.round(cur/4*100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('stepIndicator').textContent =
+    (cur > 0 && cur < 4) ? `Krok ${cur} z 3` : '';
+}
+
+// ══ REJECTION ══
+function handleQ1Next() {
+  if (selectedIdx === 0) {
+    send({
+      type: 'dropoff', event: 'narazie_nie_chce',
+      session_id: SESSION_ID,
+      timestamp: new Date().toISOString(),
+      step: 1, step_name: 'pytanie_kiedy',
+      kiedy_trening: LABELS[0],
+      utm_content: UTM.content, utm_campaign: UTM.campaign, utm_source: UTM.source,
+    });
+    showRejection();
+  } else {
+    nextSlide();
+  }
+}
+
+function showRejection() {
+  document.getElementById('slidesOuter').style.display   = 'none';
+  document.getElementById('progressWrap').style.display  = 'none';
+  document.getElementById('stepIndicator').style.display = 'none';
+  document.getElementById('rejectionScreen').classList.add('active');
+}
+
+function hideRejection() {
+  document.getElementById('slidesOuter').style.display   = '';
+  document.getElementById('progressWrap').style.display  = '';
+  document.getElementById('stepIndicator').style.display = '';
+  document.getElementById('rejectionScreen').classList.remove('active');
+  // Odznacz opcję żeby mógł wybrać inną
+  selectedIdx = null;
+  ans.q1 = null;
+  document.getElementById('q1-options').querySelectorAll('.option-item')
+    .forEach(el => el.classList.remove('selected'));
+  document.getElementById('btn-q1').disabled = true;
+  goTo(1);
+}
+
+// ══ INPUTS ══
+function selectOption(i) {
+  selectedIdx = i;
+  document.getElementById('q1-options').querySelectorAll('.option-item')
+    .forEach((el, j) => el.classList.toggle('selected', j === i));
+  ans.q1 = LABELS[i];
+  document.getElementById('btn-q1').disabled = false;
+}
+
+function validateContact() {
+  ans.name  = document.getElementById('inp-name').value.trim();
+  ans.phone = document.getElementById('inp-phone').value.trim();
+  document.getElementById('btn-contact').disabled =
+    !(ans.name.length > 1 && ans.phone.length > 7);
+}
+
+function toggleCheckbox(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('checked');
+  if (id === 'cb-phone') {
+    ans.cbPhone = el.classList.contains('checked');
+    document.getElementById('btn-submit').disabled = !ans.cbPhone;
+  }
+}
+
+// ══ SUBMIT z spinner ══
+async function submitForm() {
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = true;
+  btn.classList.add('loading');
+  btn.querySelector('.btn-label').textContent = 'Wysyłam…';
+
+  await send({
+    type: 'submission',
+    session_id: SESSION_ID,
+    timestamp: new Date().toISOString(),
+    czas_wypelniania: Math.round((Date.now() - t0) / 1000) + 's',
+    imie_nazwisko:  ans.name,
+    telefon:        ans.phone,
+    kiedy_trening:  ans.q1,
+    utm_content:    UTM.content,
+    utm_campaign:   UTM.campaign,
+    utm_source:     UTM.source,
+    utm_medium:     UTM.medium,
+    zgoda_telefon:  ans.cbPhone ? 'TAK' : 'NIE',
+  });
+
+  btn.classList.remove('loading');
+  fbq('track', 'Contact');
+  goTo(4);
+}
+
+function closeForm() { ping(cur, 'closed'); }
+
+async function ping(step, event) {
+  await send({
+    type: 'dropoff', event,
+    session_id: SESSION_ID,
+    timestamp: new Date().toISOString(),
+    step, step_name: STEPS[step] || '',
+    imie: ans.name, telefon: ans.phone,
+    utm_content: UTM.content, utm_campaign: UTM.campaign, utm_source: UTM.source,
+  });
+}
+
+async function send(data) {
+  try {
+    await fetch(SHEETS_URL, {
+      method: 'POST', mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+  } catch(e) { console.error(e); }
+}
+
+updateUI();
+// Krok 0 — intro wyświetlone
+ping(0, 'entered');
+</script>
+</body>
+</html>
