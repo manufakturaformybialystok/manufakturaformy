@@ -110,6 +110,8 @@ body {
 .input-field:focus { border-bottom-color: #1877f2; }
 .input-field::placeholder { color: #bcc0c4; }
 .input-hint { font-size: 11px; color: #65676b; margin-top: 4px; line-height: 1.4; }
+.input-error { font-size: 11px; color: #e02020; margin-top: 4px; line-height: 1.4; display: none; }
+.input-field.error { border-bottom-color: #e02020; }
 
 .legal-text { font-size: 11px; color: #65676b; line-height: 1.5; margin-top: 14px; margin-bottom: 8px; }
 .legal-link { color: #1877f2; font-weight: 600; text-decoration: none; }
@@ -252,8 +254,9 @@ src="https://www.facebook.com/tr?id=1267687915507510&ev=PageView&noscript=1"
         </div>
         <div class="input-group">
           <label class="input-label">Numer telefonu</label>
-          <input class="input-field" id="inp-phone" type="tel" placeholder="Wprowadź odpowiedź." oninput="validateContact()" autocomplete="tel">
-          <div class="input-hint">Strona Manufaktura Formy Białystok może skontaktować się z Tobą w tej sprawie.</div>
+          <input class="input-field" id="inp-phone" type="tel" placeholder="123 456 789" maxlength="11" autocomplete="tel">
+          <div class="input-hint" id="phone-hint">Podaj 9-cyfrowy numer telefonu, np. 123 456 789</div>
+          <div class="input-error" id="phone-error">Podaj pełny numer — 9 cyfr w formacie 123 456 789</div>
         </div>
         <button class="btn-next" id="btn-contact" onclick="nextSlide()" disabled>
           <span class="btn-label">Dalej</span><div class="spinner"></div>
@@ -349,6 +352,67 @@ function fbCustom(event, params) {
   try { if (typeof fbq === 'function') fbq('trackCustom', event, params || {}); } catch(e) {}
 }
 
+// ══ PHONE FORMAT: XXX XXX XXX ══
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    var phoneInput = document.getElementById('inp-phone');
+    if (!phoneInput) return;
+
+    phoneInput.addEventListener('input', function(e) {
+      var input  = e.target;
+      var cursor = input.selectionStart;
+
+      // Wyciągnij tylko cyfry (max 9)
+      var digits = input.value.replace(/\D/g, '').slice(0, 9);
+
+      // Zbuduj format XXX XXX XXX
+      var formatted = '';
+      for (var i = 0; i < digits.length; i++) {
+        if (i === 3 || i === 6) formatted += ' ';
+        formatted += digits[i];
+      }
+
+      // Ustaw wartość tylko jeśli się zmieniła (żeby nie ruszać kursora niepotrzebnie)
+      if (input.value !== formatted) {
+        // Oblicz pozycję kursora po formatowaniu
+        var digitsBeforeCursor = input.value.slice(0, cursor).replace(/\D/g, '').length;
+        input.value = formatted;
+        // Przesuń kursor za cyfry (uwzględnij dodane spacje)
+        var newCursor = 0, counted = 0;
+        for (var j = 0; j < formatted.length; j++) {
+          if (formatted[j] !== ' ') counted++;
+          if (counted === digitsBeforeCursor) { newCursor = j + 1; break; }
+        }
+        input.setSelectionRange(newCursor, newCursor);
+      }
+
+      validateContact();
+    });
+
+    // Blokuj wklejanie nieprawidłowych znaków
+    phoneInput.addEventListener('paste', function(e) {
+      e.preventDefault();
+      var pasted = (e.clipboardData || window.clipboardData).getData('text');
+      var digits = pasted.replace(/\D/g, '').slice(0, 9);
+      var formatted = '';
+      for (var i = 0; i < digits.length; i++) {
+        if (i === 3 || i === 6) formatted += ' ';
+        formatted += digits[i];
+      }
+      phoneInput.value = formatted;
+      validateContact();
+    });
+
+    // Blokuj wpisywanie liter i innych znaków (poza cyframi i Backspace/Delete/strzałki)
+    phoneInput.addEventListener('keydown', function(e) {
+      var allowed = ['Backspace','Delete','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Tab','Home','End'];
+      if (allowed.indexOf(e.key) !== -1) return;
+      if (e.ctrlKey || e.metaKey) return; // kopiuj/wklej
+      if (!/^\d$/.test(e.key)) e.preventDefault();
+    });
+  });
+})();
+
 // ══ NAVIGATION ══
 function goTo(n) {
   document.getElementById('slidesInner').style.transform = `translateX(-${n*100}%)`;
@@ -397,7 +461,6 @@ function hideRejection() {
   document.getElementById('progressWrap').style.display  = '';
   document.getElementById('stepIndicator').style.display = '';
   document.getElementById('rejectionScreen').classList.remove('active');
-  // Odznacz opcję żeby mógł wybrać inną
   selectedIdx = null;
   ans.q1 = null;
   document.getElementById('q1-options').querySelectorAll('.option-item')
@@ -417,9 +480,29 @@ function selectOption(i) {
 
 function validateContact() {
   ans.name  = document.getElementById('inp-name').value.trim();
-  ans.phone = document.getElementById('inp-phone').value.trim();
+
+  var phoneInput = document.getElementById('inp-phone');
+  var phoneHint  = document.getElementById('phone-hint');
+  var phoneError = document.getElementById('phone-error');
+  var digits     = phoneInput.value.replace(/\D/g, '');
+  var phoneValid = digits.length === 9;
+  var phoneTouched = digits.length > 0;
+
+  ans.phone = phoneInput.value.trim();
+
+  // Pokaż błąd tylko jeśli użytkownik coś wpisał, ale liczba cyfr ≠ 9
+  if (phoneTouched && !phoneValid) {
+    phoneInput.classList.add('error');
+    phoneError.style.display = 'block';
+    phoneHint.style.display  = 'none';
+  } else {
+    phoneInput.classList.remove('error');
+    phoneError.style.display = 'none';
+    phoneHint.style.display  = 'block';
+  }
+
   document.getElementById('btn-contact').disabled =
-    !(ans.name.length > 1 && ans.phone.length > 7);
+    !(ans.name.length > 1 && phoneValid);
 }
 
 function toggleCheckbox(id) {
@@ -483,7 +566,6 @@ async function send(data) {
 }
 
 updateUI();
-// Krok 0 — intro wyświetlone
 ping(0, 'entered');
 </script>
 </body>
