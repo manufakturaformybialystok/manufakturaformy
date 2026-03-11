@@ -510,29 +510,7 @@ function updateUI() {
 }
 
 function handleNext() {
-  if (cur===0) {
-    // Mierzymy czas spędzony na intro
-    // introEnterTime ustawiane przy pierwszej interakcji człowieka
-    // Jeśli < 3s od wejścia → missclick, >= 3s → przeczytał
-    var introMs   = introEnterTime ? (Date.now() - introEnterTime) : 0;
-    var introEvent = introMs < 5000 ? 'intro_missclick' : 'intro_przeczytał';
-    send({
-      type:       'dropoff',
-      event:      introEvent,
-      session_id: SESSION_ID,
-      timestamp:  new Date().toISOString(),
-      step:       0,
-      step_name:  introEvent,          // ← kolumna E w arkuszu Sesje
-      imie:       ans.name,
-      telefon:    ans.phone,
-      utm_content:  UTM.content,
-      utm_campaign: UTM.campaign,
-      utm_source:   UTM.source,
-      intro_czas_ms: introMs,          // dodatkowa info do debugowania
-    });
-    goTo(1);
-    return;
-  }
+  if (cur===0) { goTo(1); return; }
   if (cur===1) { handleQ1Next(); return; }
   if (cur===2) { goTo(3); return; }
   if (cur===3) { submitForm(); return; }
@@ -651,19 +629,50 @@ async function send(data) {
 
 updateUI();
 
-// ── Czas wejścia na intro (slajd 0) ─────────────────────────
-// Ping wysyłamy TYLKO przy kliknięciu Kontynuuj w handleNext().
-// Dzięki temu wiemy ile czasu minęło i wysyłamy intro_missclick (<3s)
-// lub intro_przeczytał (>=3s). Nie ma osobnego pingu "entered".
+// ── Intro tracking ───────────────────────────────────────────
+// 1. Przy pierwszej interakcji człowieka → od razu intro_missclick
+// 2. Jeśli zostaje na intro >= 5s → update na intro_przeczytał
+// 3. Kliknięcie Kontynuuj → goTo(1), intro już zapisane w arkuszu
 var introEnterTime = null;
 
 (function() {
   var humanDetected = false;
+
   function onHuman() {
     if (humanDetected) return;
     humanDetected = true;
     introEnterTime = Date.now();
+
+    // Natychmiast zapisz jako missclick
+    send({
+      type:        'dropoff',
+      event:       'intro_missclick',
+      session_id:  SESSION_ID,
+      timestamp:   new Date().toISOString(),
+      step:        0,
+      step_name:   'intro_missclick',
+      utm_content:  UTM.content,
+      utm_campaign: UTM.campaign,
+      utm_source:   UTM.source,
+    });
+
+    // Po 5s — jeśli nadal na intro — zaktualizuj na przeczytał
+    setTimeout(function() {
+      if (cur !== 0) return;  // już kliknął dalej, nie nadpisuj
+      send({
+        type:        'dropoff',
+        event:       'intro_przeczytał',
+        session_id:  SESSION_ID,
+        timestamp:   new Date().toISOString(),
+        step:        0,
+        step_name:   'intro_przeczytał',
+        utm_content:  UTM.content,
+        utm_campaign: UTM.campaign,
+        utm_source:   UTM.source,
+      });
+    }, 5000);
   }
+
   ['touchstart','touchmove','mousemove','mousedown','scroll','keydown'].forEach(function(ev) {
     document.addEventListener(ev, onHuman, { once: true, passive: true });
   });
