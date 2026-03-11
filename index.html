@@ -629,33 +629,31 @@ async function send(data) {
 
 updateUI();
 
-// ── Ping kroku 0 tylko dla prawdziwych użytkowników ──────────
-// Bot crawluje natychmiast i nie wchodzi w interakcję.
-// Czekamy 2s + wymagamy choć jednego zdarzenia użytkownika.
+// ── Intro tracking ───────────────────────────────────────────
+// Przy pierwszej interakcji człowieka → zapisz wiersz z event: 'intro'
+// Dalsze kroki aktualizują ten sam SESSION_ID
 (function() {
   var humanDetected = false;
-  var pingTimer = null;
 
-  function scheduleHumanPing() {
+  function onHuman() {
     if (humanDetected) return;
     humanDetected = true;
-    // Wyślij ping po 2 sekundach od pierwszej interakcji
-    pingTimer = setTimeout(function() {
-      ping(0, 'entered');
-    }, 2000);
+    send({
+      type:        'dropoff',
+      event:       'intro',
+      session_id:  SESSION_ID,
+      timestamp:   new Date().toISOString(),
+      step:        0,
+      step_name:   'intro',
+      utm_content:  UTM.content,
+      utm_campaign: UTM.campaign,
+      utm_source:   UTM.source,
+    });
   }
 
-  // Zdarzenia które generuje tylko prawdziwy użytkownik
   ['touchstart','touchmove','mousemove','mousedown','scroll','keydown'].forEach(function(ev) {
-    document.addEventListener(ev, scheduleHumanPing, { once: true, passive: true });
+    document.addEventListener(ev, onHuman, { once: true, passive: true });
   });
-
-  // Fallback: jeśli po 8s nadal brak interakcji — NIE wysyłamy (to bot)
-  setTimeout(function() {
-    if (!humanDetected) {
-      // cicho odrzucamy
-    }
-  }, 8000);
 })();
 </script>
 </body>
