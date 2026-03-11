@@ -510,7 +510,29 @@ function updateUI() {
 }
 
 function handleNext() {
-  if (cur===0) { goTo(1); return; }
+  if (cur===0) {
+    // Mierzymy czas spędzony na intro
+    // introEnterTime ustawiane przy pierwszej interakcji człowieka
+    // Jeśli < 3s od wejścia → missclick, >= 3s → przeczytał
+    var introMs   = introEnterTime ? (Date.now() - introEnterTime) : 0;
+    var introEvent = introMs < 5000 ? 'intro_missclick' : 'intro_przeczytał';
+    send({
+      type:       'dropoff',
+      event:      introEvent,
+      session_id: SESSION_ID,
+      timestamp:  new Date().toISOString(),
+      step:       0,
+      step_name:  introEvent,          // ← kolumna E w arkuszu Sesje
+      imie:       ans.name,
+      telefon:    ans.phone,
+      utm_content:  UTM.content,
+      utm_campaign: UTM.campaign,
+      utm_source:   UTM.source,
+      intro_czas_ms: introMs,          // dodatkowa info do debugowania
+    });
+    goTo(1);
+    return;
+  }
   if (cur===1) { handleQ1Next(); return; }
   if (cur===2) { goTo(3); return; }
   if (cur===3) { submitForm(); return; }
@@ -629,33 +651,22 @@ async function send(data) {
 
 updateUI();
 
-// ── Ping kroku 0 tylko dla prawdziwych użytkowników ──────────
-// Bot crawluje natychmiast i nie wchodzi w interakcję.
-// Czekamy 2s + wymagamy choć jednego zdarzenia użytkownika.
+// ── Czas wejścia na intro (slajd 0) ─────────────────────────
+// Ping wysyłamy TYLKO przy kliknięciu Kontynuuj w handleNext().
+// Dzięki temu wiemy ile czasu minęło i wysyłamy intro_missclick (<3s)
+// lub intro_przeczytał (>=3s). Nie ma osobnego pingu "entered".
+var introEnterTime = null;
+
 (function() {
   var humanDetected = false;
-  var pingTimer = null;
-
-  function scheduleHumanPing() {
+  function onHuman() {
     if (humanDetected) return;
     humanDetected = true;
-    // Wyślij ping po 2 sekundach od pierwszej interakcji
-    pingTimer = setTimeout(function() {
-      ping(0, 'entered');
-    }, 2000);
+    introEnterTime = Date.now();
   }
-
-  // Zdarzenia które generuje tylko prawdziwy użytkownik
   ['touchstart','touchmove','mousemove','mousedown','scroll','keydown'].forEach(function(ev) {
-    document.addEventListener(ev, scheduleHumanPing, { once: true, passive: true });
+    document.addEventListener(ev, onHuman, { once: true, passive: true });
   });
-
-  // Fallback: jeśli po 8s nadal brak interakcji — NIE wysyłamy (to bot)
-  setTimeout(function() {
-    if (!humanDetected) {
-      // cicho odrzucamy
-    }
-  }, 8000);
 })();
 </script>
 </body>
