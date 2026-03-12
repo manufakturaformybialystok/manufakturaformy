@@ -251,7 +251,7 @@ if (window.location.search.indexOf('utm_') !== -1) {
 </head>
 <body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;">
 
-<!-- Anti-DevTools / Anti-Snooping (Debugger trap) -->
+<!-- Zabezpieczenie skrótów klawiszowych bez pułapki debugger -->
 <script>
   (function() {
     // Blokada klawiszy (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U)
@@ -262,20 +262,6 @@ if (window.location.search.indexOf('utm_') !== -1) {
         event.preventDefault();
       }
     });
-
-    // Pułapka na DevTools
-    function disableDevtools() {
-      setInterval(function() {
-        var before = new Date().getTime();
-        debugger;
-        var after = new Date().getTime();
-        if (after - before > 100) {
-          // DevTools są otwarte
-          document.body.innerHTML = "Dostęp do kodu zabroniony.";
-        }
-      }, 100);
-    }
-    disableDevtools();
   })();
 </script>
 
@@ -717,3 +703,4 @@ updateUI();
 </script>
 </body>
 </html>
+
