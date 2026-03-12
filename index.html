@@ -243,7 +243,9 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '1267687915507510');
-fbq('track', 'PageView');
+if (window.location.search.indexOf('utm_') !== -1) {
+  fbq('track', 'PageView');
+}
 </script>
 </head>
 <body>
@@ -639,6 +641,10 @@ updateUI();
 
   function onHuman() {
     if (humanDetected) return;
+    
+    // Zliczaj tylko wejścia mające parametry utm
+    if (window.location.search.indexOf('utm_') === -1) return;
+
     humanDetected = true;
     send({
       type:        'dropoff',
