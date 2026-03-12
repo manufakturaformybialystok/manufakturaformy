@@ -135,6 +135,7 @@ body {
 /* Intro */
 .intro-body { font-size: 15px; color: #3c3c3c; line-height: 1.6; }
 .intro-divider { border: none; border-top: 1px solid #e4e6ea; margin: 14px 0; }
+.marker-highlight { background: #ff9100; padding: 2px 4px; border-radius: 4px; color: #000; }
 
 /* ── BOTTOM BAR ── */
 .bottom-bar {
@@ -287,8 +288,8 @@ if (window.location.search.indexOf('utm_') !== -1) {
            onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'logo-fallback\'>MANUFAKTURA<br>FORMY</div>'">
     </div>
     <div class="hc-brand">Manufaktura Formy</div>
-    <div class="hc-title" id="hcTitle">Wypełnij formularz – otrzymasz trening EMS i drenaż za 69 zł</div>
-    <div class="hc-sub" id="hcSub">Wypełnij formularz</div>
+    <div class="hc-title" id="hcTitle">Dołącz do <span class="marker-highlight">200+</span> osób które już trenują EMS w Manufakturze Formy</div>
+    <div class="hc-sub" id="hcSub">Trening próbny EMS + drenaż za 69 zł</div>
   </div>
 
   <!-- CONTENT AREA -->
@@ -300,11 +301,11 @@ if (window.location.search.indexOf('utm_') !== -1) {
           <div class="slide">
             <div class="q-card">
               <div class="intro-body">
-                Zaprezentujemy Ci szczegóły naszego działania podczas konsultacji z treningiem wprowadzającym.
+                Ponad 200 mieszkańców Białegostoku wybrało trening EMS jako sposób na szybsze efekty przy mniejszym wysiłku.
               </div>
               <hr class="intro-divider">
               <div class="intro-body">
-                Odpowiedz na pytanie i podaj <strong>AKTUALNE</strong> dane kontaktowe, a zadzwonimy w ciągu jednego dnia roboczego.
+                Odpowiedz na jedno pytanie i zostaw kontakt — zadzwonimy i umówimy Twój pierwszy trening w ciągu 24h.
               </div>
             </div>
           </div>
@@ -534,15 +535,15 @@ function updateUI() {
 
   // Header text
   var titles = [
-    'Wypełnij formularz – otrzymasz trening EMS i drenaż za 69 zł',
+    'Dołącz do <span class="marker-highlight">200+</span> osób które już trenują EMS w Manufakturze Formy',
     'Kiedy chciałbyś spróbować?',
     'Dane kontaktowe',
     'Oświadczenia',
     ''
   ];
-  var subs = ['Wypełnij formularz','Zaznacz jedną odpowiedź','Podaj swój kontakt','Zaznacz zgody',''];
-  document.getElementById('hcTitle').textContent = titles[cur] || '';
-  document.getElementById('hcSub').textContent   = subs[cur]  || '';
+  var subs = ['Trening próbny EMS + drenaż za 69 zł','Zaznacz jedną odpowiedź','Podaj swój kontakt','Zaznacz zgody',''];
+  document.getElementById('hcTitle').innerHTML = titles[cur] || '';
+  document.getElementById('hcSub').textContent = subs[cur]  || '';
 
   // Btn label
   var labels = ['Kontynuuj','Kontynuuj','Kontynuuj','Prześlij',''];
