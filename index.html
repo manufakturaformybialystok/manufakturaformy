@@ -452,36 +452,50 @@ const TOTAL_STEPS = 4; // 0..3 visible dots
 function fbTrack(event, params) { try { if (typeof fbq==='function') fbq('track', event, params||{}); } catch(e){} }
 function fbCustom(event, params) { try { if (typeof fbq==='function') fbq('trackCustom', event, params||{}); } catch(e){} }
 
-// ── Phone formatter ──
 document.addEventListener('DOMContentLoaded', function() {
   var inp = document.getElementById('inp-phone');
   if (!inp) return;
+  
+  // Zdarzenie input - czyszczenie + formatowanie
   inp.addEventListener('input', function(e) {
+    if (e.inputType === 'deleteContentBackward') {
+        validateContact();
+        return;
+    }
+    
     var input = e.target, cursor = input.selectionStart;
-    var rawValue = input.value.replace(/^(?:\+48|0048)\s*/, '');
-    var digits = rawValue.replace(/\D/g,'').slice(0,9);
+    var rawValue = input.value.replace(/^(?:\+48\s*|0048\s*|48\s*)/, ''); // Usuwa +48, 0048 i ew. samo 48 na początku
+    var digits = rawValue.replace(/\D/g, '').slice(0, 9);
     var formatted = '';
-    for (var i=0;i<digits.length;i++) { if(i===3||i===6) formatted+=' '; formatted+=digits[i]; }
+    
+    for (var i = 0; i < digits.length; i++) {
+        if (i === 3 || i === 6) formatted += ' ';
+        formatted += digits[i];
+    }
+    
+    // Jeśli podczas autocomplete tekst wskoczył naraz — napraw kursor i przeredaguj
     if (input.value !== formatted) {
-      var digitsBeforeCursor = input.value.slice(0,cursor).replace(/\D/g,'').length;
       input.value = formatted;
-      var newCursor=0, counted=0;
-      for (var j=0;j<formatted.length;j++) {
-        if(formatted[j]!==' ') counted++;
-        if(counted===digitsBeforeCursor){newCursor=j+1;break;}
-      }
-      input.setSelectionRange(newCursor,newCursor);
+      // W mobile autocomplete zazwyczaj ląduje na końcu, więc skok do length
+      input.setSelectionRange(formatted.length, formatted.length);
     }
     validateContact();
   });
+  
+  // Zdarzenie paste - dla skopiowanych numerów z messengera itp
   inp.addEventListener('paste', function(e) {
     e.preventDefault();
-    var pasted=(e.clipboardData||window.clipboardData).getData('text');
-    var rawPasted = pasted.replace(/^(?:\+48|0048)\s*/, '');
-    var digits=rawPasted.replace(/\D/g,'').slice(0,9);
-    var formatted='';
-    for(var i=0;i<digits.length;i++){if(i===3||i===6)formatted+=' ';formatted+=digits[i];}
-    inp.value=formatted; validateContact();
+    var pasted = (e.clipboardData || window.clipboardData).getData('text');
+    var rawPasted = pasted.replace(/^(?:\+48\s*|0048\s*|48\s*)/, '');
+    var digits = rawPasted.replace(/\D/g, '').slice(0, 9);
+    var formatted = '';
+    
+    for (var i = 0; i < digits.length; i++) {
+        if (i === 3 || i === 6) formatted += ' ';
+        formatted += digits[i];
+    }
+    inp.value = formatted;
+    validateContact();
   });
   inp.addEventListener('keydown', function(e) {
     var allowed=['Backspace','Delete','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Tab','Home','End'];
@@ -655,6 +669,12 @@ async function ping(step, event) {
 }
 
 async function send(data) {
+  // Blokada wysyłania jakichkolwiek danych jeśli brak parametru UTM
+  if (window.location.search.indexOf('utm_') === -1) {
+    console.log("Blokada arkusza - wizyta nie posiada UTM.");
+    return;
+  }
+
   try {
     await fetch(SHEETS_URL,{method:'POST',mode:'no-cors',keepalive:true,headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
   } catch(e){console.error(e);}
@@ -670,10 +690,6 @@ updateUI();
 
   function onHuman() {
     if (humanDetected) return;
-    
-    // Zliczaj tylko wejścia mające parametry utm
-    if (window.location.search.indexOf('utm_') === -1) return;
-
     humanDetected = true;
     send({
       type:        'dropoff',
