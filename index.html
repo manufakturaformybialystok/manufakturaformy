@@ -135,7 +135,6 @@ body {
 /* Intro */
 .intro-body { font-size: 15px; color: #3c3c3c; line-height: 1.6; }
 .intro-divider { border: none; border-top: 1px solid #e4e6ea; margin: 14px 0; }
-.marker-highlight { background: #ff9100; padding: 2px 4px; border-radius: 4px; color: #000; }
 
 /* ── BOTTOM BAR ── */
 .bottom-bar {
@@ -247,7 +246,7 @@ fbq('init', '1267687915507510');
 if (window.location.search.indexOf('utm_') !== -1) {
   fbq('track', 'PageView');
 }
-</script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;">
 
@@ -288,7 +287,7 @@ if (window.location.search.indexOf('utm_') !== -1) {
            onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'logo-fallback\'>MANUFAKTURA<br>FORMY</div>'">
     </div>
     <div class="hc-brand">Manufaktura Formy</div>
-    <div class="hc-title" id="hcTitle">Dołącz do <span class="marker-highlight">200+</span> osób które już trenują EMS w Manufakturze Formy</div>
+    <div class="hc-title" id="hcTitle">Dołącz do 200+ osób które już trenują EMS w Manufakturze Formy</div>
     <div class="hc-sub" id="hcSub">Trening próbny EMS + drenaż za 69 zł</div>
   </div>
 
@@ -535,7 +534,7 @@ function updateUI() {
 
   // Header text
   var titles = [
-    'Dołącz do <span class="marker-highlight">200+</span> osób które już trenują EMS w Manufakturze Formy',
+    'Dołącz do 200+ osób które już trenują EMS w Manufakturze Formy',
     'Kiedy chciałbyś spróbować?',
     'Dane kontaktowe',
     'Oświadczenia',
@@ -656,6 +655,11 @@ async function submitForm() {
   fbTrack('Lead');
   fbTrack('Contact',{currency:'PLN',value:1});
   goTo(4);
+  
+  // Efekt konfetti po przejściu na Thank You
+  if (typeof window.confetti === 'function') {
+    window.confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+  }
 }
 
 async function ping(step, event) {
