@@ -638,17 +638,19 @@ updateUI();
   function onHuman() {
     if (humanDetected) return;
     humanDetected = true;
-    send({
-      type:        'dropoff',
-      event:       'intro',
-      session_id:  SESSION_ID,
-      timestamp:   new Date().toISOString(),
-      step:        0,
-      step_name:   'intro',
-      utm_content:  UTM.content,
-      utm_campaign: UTM.campaign,
-      utm_source:   UTM.source,
-    });
+    setTimeout(function() {
+      send({
+        type:        'dropoff',
+        event:       'intro',
+        session_id:  SESSION_ID,
+        timestamp:   new Date().toISOString(),
+        step:        0,
+        step_name:   'intro',
+        utm_content:  UTM.content,
+        utm_campaign: UTM.campaign,
+        utm_source:   UTM.source,
+      });
+    }, 2000);
   }
 
   ['touchstart','touchmove','mousemove','mousedown','scroll','keydown'].forEach(function(ev) {
