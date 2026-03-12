@@ -592,7 +592,7 @@ async function submitForm() {
   var btn=document.getElementById('mainBtn');
   btn.disabled=true; btn.classList.add('loading');
   document.getElementById('btnLabel').textContent='Wysyłam…';
-  await sendSubmission({
+  await send({
     type:'submission',
     session_id: SESSION_ID,
     timestamp: new Date().toISOString(),
@@ -610,8 +610,8 @@ async function submitForm() {
   goTo(4);
 }
 
-function ping(step, event) {
-  send({
+async function ping(step, event) {
+  await send({
     type:'dropoff', event,
     session_id: SESSION_ID,
     timestamp: new Date().toISOString(),
@@ -621,20 +621,7 @@ function ping(step, event) {
   });
 }
 
-// dropoff — sendBeacon gwarantuje wysłanie nawet przy zamknięciu karty
-function send(data) {
-  try {
-    var blob = new Blob([JSON.stringify(data)], {type:'text/plain'});
-    navigator.sendBeacon(SHEETS_URL, blob);
-  } catch(e) {
-    try {
-      fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
-    } catch(e2){console.error(e2);}
-  }
-}
-
-// submission — fetch z await, czekamy na odpowiedź serwera
-async function sendSubmission(data) {
+async function send(data) {
   try {
     await fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
   } catch(e){console.error(e);}
