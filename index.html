@@ -243,10 +243,11 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '1267687915507510');
-if (window.location.search.indexOf('utm_') !== -1) {
-  fbq('track', 'PageView');
-}
+fbq('track', 'PageView');
 </script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1267687915507510&ev=PageView&noscript=1"
+/></noscript>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;">
@@ -703,4 +704,3 @@ updateUI();
 </script>
 </body>
 </html>
-
