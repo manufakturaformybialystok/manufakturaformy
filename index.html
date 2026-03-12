@@ -257,8 +257,8 @@ fbq('track', 'PageView');
            onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'logo-fallback\'>MANUFAKTURA<br>FORMY</div>'">
     </div>
     <div class="hc-brand">Manufaktura Formy</div>
-    <div class="hc-title" id="hcTitle">Dołącz do 200+ osób które już trenują EMS w Manufakturze Formy</div>
-    <div class="hc-sub" id="hcSub">Trening próbny EMS + drenaż za 69 zł</div>
+    <div class="hc-title" id="hcTitle">Wypełnij formularz – otrzymasz trening EMS i drenaż za 69 zł</div>
+    <div class="hc-sub" id="hcSub">Wypełnij formularz</div>
   </div>
 
   <!-- CONTENT AREA -->
@@ -270,11 +270,11 @@ fbq('track', 'PageView');
           <div class="slide">
             <div class="q-card">
               <div class="intro-body">
-                Ponad 200 mieszkańców Białegostoku wybrało trening EMS jako sposób na szybsze efekty przy mniejszym wysiłku.
+                Zaprezentujemy Ci szczegóły naszego działania podczas konsultacji z treningiem wprowadzającym.
               </div>
               <hr class="intro-divider">
               <div class="intro-body">
-                Odpowiedz na jedno pytanie i zostaw kontakt — zadzwonimy i umówimy Twój pierwszy trening w ciągu 24h.
+                Odpowiedz na pytanie i podaj <strong>AKTUALNE</strong> dane kontaktowe, a zadzwonimy w ciągu jednego dnia roboczego.
               </div>
             </div>
           </div>
@@ -427,7 +427,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if (!inp) return;
   inp.addEventListener('input', function(e) {
     var input = e.target, cursor = input.selectionStart;
-    var digits = input.value.replace(/\D/g,'').slice(0,9);
+    var rawValue = input.value.replace(/^(?:\+48|0048)\s*/, '');
+    var digits = rawValue.replace(/\D/g,'').slice(0,9);
     var formatted = '';
     for (var i=0;i<digits.length;i++) { if(i===3||i===6) formatted+=' '; formatted+=digits[i]; }
     if (input.value !== formatted) {
@@ -445,7 +446,8 @@ document.addEventListener('DOMContentLoaded', function() {
   inp.addEventListener('paste', function(e) {
     e.preventDefault();
     var pasted=(e.clipboardData||window.clipboardData).getData('text');
-    var digits=pasted.replace(/\D/g,'').slice(0,9);
+    var rawPasted = pasted.replace(/^(?:\+48|0048)\s*/, '');
+    var digits=rawPasted.replace(/\D/g,'').slice(0,9);
     var formatted='';
     for(var i=0;i<digits.length;i++){if(i===3||i===6)formatted+=' ';formatted+=digits[i];}
     inp.value=formatted; validateContact();
@@ -487,13 +489,13 @@ function updateUI() {
 
   // Header text
   var titles = [
-    'Dołącz do 200+ osób które już trenują EMS w Manufakturze Formy',
+    'Wypełnij formularz – otrzymasz trening EMS i drenaż za 69 zł',
     'Kiedy chciałbyś spróbować?',
     'Dane kontaktowe',
     'Oświadczenia',
     ''
   ];
-  var subs = ['Trening próbny EMS + drenaż za 69 zł','Zaznacz jedną odpowiedź','Podaj swój kontakt','Zaznacz zgody',''];
+  var subs = ['Wypełnij formularz','Zaznacz jedną odpowiedź','Podaj swój kontakt','Zaznacz zgody',''];
   document.getElementById('hcTitle').textContent = titles[cur] || '';
   document.getElementById('hcSub').textContent   = subs[cur]  || '';
 
@@ -623,7 +625,7 @@ async function ping(step, event) {
 
 async function send(data) {
   try {
-    await fetch(SHEETS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    await fetch(SHEETS_URL,{method:'POST',mode:'no-cors',keepalive:true,headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
   } catch(e){console.error(e);}
 }
 
@@ -638,19 +640,17 @@ updateUI();
   function onHuman() {
     if (humanDetected) return;
     humanDetected = true;
-    setTimeout(function() {
-      send({
-        type:        'dropoff',
-        event:       'intro',
-        session_id:  SESSION_ID,
-        timestamp:   new Date().toISOString(),
-        step:        0,
-        step_name:   'intro',
-        utm_content:  UTM.content,
-        utm_campaign: UTM.campaign,
-        utm_source:   UTM.source,
-      });
-    }, 2000);
+    send({
+      type:        'dropoff',
+      event:       'intro',
+      session_id:  SESSION_ID,
+      timestamp:   new Date().toISOString(),
+      step:        0,
+      step_name:   'intro',
+      utm_content:  UTM.content,
+      utm_campaign: UTM.campaign,
+      utm_source:   UTM.source,
+    });
   }
 
   ['touchstart','touchmove','mousemove','mousedown','scroll','keydown'].forEach(function(ev) {
