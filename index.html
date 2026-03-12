@@ -624,7 +624,7 @@ function ping(step, event) {
 // dropoff — sendBeacon gwarantuje wysłanie nawet przy zamknięciu karty
 function send(data) {
   try {
-    var blob = new Blob([JSON.stringify(data)], {type:'application/json'});
+    var blob = new Blob([JSON.stringify(data)], {type:'text/plain'});
     navigator.sendBeacon(SHEETS_URL, blob);
   } catch(e) {
     try {
