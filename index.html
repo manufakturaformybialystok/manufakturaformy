@@ -1051,11 +1051,13 @@
     updateUI();
 
     // ── Obliczanie czasu absolutnego (Zakończenie sesji) ─────────
+    let lastLogTime = 0;
     function logPageClose() {
-      if (window.pageClosedLogged) return;
-      window.pageClosedLogged = true;
+      var now = Date.now();
+      if (now - lastLogTime < 1000) return; // Zapobiega podwójnemu wysłaniu przy jednoczesnym pagehide i visibilitychange
+      lastLogTime = now;
       
-      var sec = Math.round((Date.now() - t0) / 1000);
+      var sec = Math.round((now - t0) / 1000);
       var m = Math.floor(sec / 60);
       var s = sec % 60;
       var formatCzas = (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
