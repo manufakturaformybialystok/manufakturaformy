@@ -1051,9 +1051,9 @@
     updateUI();
 
     // ── Obliczanie czasu absolutnego (Zakończenie sesji) ─────────
-    function logPageClose(isHeartbeat) {
-      if (!isHeartbeat && window.pageClosedLogged) return;
-      if (!isHeartbeat) window.pageClosedLogged = true;
+    function logPageClose() {
+      if (window.pageClosedLogged) return;
+      window.pageClosedLogged = true;
       
       var sec = Math.round((Date.now() - t0) / 1000);
       var m = Math.floor(sec / 60);
@@ -1062,7 +1062,7 @@
       
       var payloadData = {
         type: 'dropoff',
-        event: isHeartbeat ? (STEPS[cur] + '_czyta') : (STEPS[cur] + '_zamknieta'),
+        event: STEPS[cur] + '_zamknieta',
         session_id: SESSION_ID,
         timestamp: new Date().toISOString(),
         step: cur,
@@ -1078,68 +1078,36 @@
 
       if (window.location.search.indexOf('test=1') !== -1) return;
 
-      if (navigator.sendBeacon) {
-        var blob = new Blob([JSON.stringify(payloadData)], { type: 'text/plain;charset=utf-8' });
-        navigator.sendBeacon(SHEETS_URL, blob);
-      } else {
-        try {
-          fetch(SHEETS_URL, { 
-            method: 'POST', mode: 'no-cors', keepalive: true, 
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify(payloadData) 
-          });
-        } catch(e) {}
-      }
+      try {
+        fetch(SHEETS_URL, { 
+          method: 'POST', mode: 'no-cors', keepalive: true, 
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payloadData) 
+        });
+      } catch(e) {}
     }
-    
-    // Co 15 sekund aplikacja na bieżąco uzupełnienia czas, by uniknąć 00:00 nawet przy padzie systemu
-    setInterval(function() {
-      if (!window.pageClosedLogged) {
-        logPageClose(true);
-      }
-    }, 15000);
 
     document.addEventListener('visibilitychange', function() {
       if (document.visibilityState === 'hidden') {
-         logPageClose(false);
+         logPageClose();
       }
     });
-    window.addEventListener('pagehide', function() { logPageClose(false); });
+    window.addEventListener('pagehide', logPageClose);
 
-    // ── Intro tracking ───────────────────────────────────────────
-    // Przy pierwszej interakcji człowieka → zapisz wiersz z event: 'intro'
-    // Dalsze kroki aktualizują ten sam SESSION_ID
-    (function () {
-      var humanDetected = false;
-
-      function onHuman() {
-        if (humanDetected) return;
-        humanDetected = true;
-        
-        var timeSpent = Math.round((Date.now() - t0) / 1000);
-        
-        var m = Math.floor(timeSpent / 60);
-        var s = timeSpent % 60;
-        var formatCzas = (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
-        
-        send({
-          type: 'dropoff',
-          event: 'intro',
-          session_id: SESSION_ID,
-          timestamp: new Date().toISOString(),
-          step: 0,
-          step_name: 'intro',
-          czas_wypelniania: formatCzas,
-          utm_content: UTM.content,
-          utm_campaign: UTM.campaign,
-          utm_source: UTM.source,
-        });
-      }
-
-      ['touchstart', 'touchmove', 'mousemove', 'mousedown', 'scroll', 'keydown'].forEach(function (ev) {
-        document.addEventListener(ev, onHuman, { once: true, passive: true });
-      });
-    })();
+    // ── Intro tracking (Start) ─────────────────────────────────────────
+    // Wysyła powiadomienie na sam start (przy załadowaniu stony), czas 00:00
+    send({
+      type: 'dropoff',
+      event: 'wejscie_na_strone',
+      session_id: SESSION_ID,
+      timestamp: new Date().toISOString(),
+      step: 0,
+      step_name: 'intro',
+      czas_wypelniania: '00:00',
+      utm_content: UTM.content,
+      utm_campaign: UTM.campaign,
+      utm_source: UTM.source,
+    });
   </script>
 </body>
 
