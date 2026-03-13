@@ -1041,8 +1041,9 @@
     updateUI();
 
     // ── Obliczanie czasu absolutnego (Zakończenie sesji) ─────────
-    document.addEventListener('visibilitychange', function() {
-      if (document.visibilityState === 'hidden') {
+    function logPageClose() {
+      if (!window.pageClosedLogged) {
+        window.pageClosedLogged = true;
         send({
           type: 'dropoff',
           event: 'page_closed',
@@ -1058,7 +1059,15 @@
           utm_source: UTM.source
         });
       }
+    }
+    
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'hidden') {
+        logPageClose();
+      }
     });
+    window.addEventListener('pagehide', logPageClose);
+    window.addEventListener('unload', logPageClose);
 
     // ── Intro tracking ───────────────────────────────────────────
     // Przy pierwszej interakcji człowieka → zapisz wiersz z event: 'intro'
@@ -1069,6 +1078,9 @@
       function onHuman() {
         if (humanDetected) return;
         humanDetected = true;
+        
+        var timeSpent = Math.round((Date.now() - t0) / 1000);
+        
         send({
           type: 'dropoff',
           event: 'intro',
@@ -1076,13 +1088,14 @@
           timestamp: new Date().toISOString(),
           step: 0,
           step_name: 'intro',
+          czas_wypelniania: timeSpent + 's',
           utm_content: UTM.content,
           utm_campaign: UTM.campaign,
           utm_source: UTM.source,
         });
       }
 
-      ['touchstart', 'touchmove', 'mousemove', 'mousedown', 'scroll', 'keydown', 'pagehide', 'visibilitychange'].forEach(function (ev) {
+      ['touchstart', 'touchmove', 'mousemove', 'mousedown', 'scroll', 'keydown'].forEach(function (ev) {
         document.addEventListener(ev, onHuman, { once: true, passive: true });
       });
     })();
