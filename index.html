@@ -597,8 +597,10 @@
 
 <body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;">
 
+  <!-- Zabezpieczenie skrótów klawiszowych bez pułapki debugger -->
   <script>
     (function () {
+      // Blokada klawiszy (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U)
       document.addEventListener('keydown', function (event) {
         if (event.keyCode === 123 ||
           (event.ctrlKey && event.shiftKey && (event.keyCode === 73 || event.keyCode === 74)) ||
@@ -747,7 +749,7 @@
         <button class="btn-rejection-back" onclick="hideRejection()">← Wróć do formularza</button>
       </div>
 
-    </div><!-- /content-area -->
+    </div><!-- /content-area-slides -->
 
     <!-- BOTTOM BAR -->
     <div class="bottom-bar" id="bottomBar">
@@ -764,7 +766,8 @@
       <button class="btn-back-link" id="backBtn" onclick="prevSlide()" style="display:none">Wstecz</button>
     </div>
 
-  </div><!-- /fb-wrapper -->
+  </div><!-- /content-area -->
+  </div>
 
   <script>
     // ══ CONFIG ══
@@ -783,14 +786,14 @@
     let cur = 0;
     let selectedIdx = null;
     const ans = { q1: null, name: "", phone: "", cbPhone: false };
-    const t0 = Date.now(); // ← punkt startowy, nigdy nie zmieniany
+    const t0 = Date.now();
     const LABELS = [
       'Narazie nie chcę próbować',
       'W następnym tygodniu — odezwijcie się do mnie',
       'Chcę spróbować w tym tygodniu 💪'
     ];
     const STEPS = ['intro', 'pytanie_kiedy', 'dane_kontaktowe', 'zgody', 'podziekowanie'];
-    const TOTAL_STEPS = 4;
+    const TOTAL_STEPS = 4; // 0..3 visible dots
 
     // FB Pixel
     function fbTrack(event, params) { try { if (typeof fbq === 'function') fbq('track', event, params || {}); } catch (e) { } }
@@ -800,32 +803,40 @@
       var inp = document.getElementById('inp-phone');
       if (!inp) return;
 
+      // Zdarzenie input - czyszczenie + formatowanie
       inp.addEventListener('input', function (e) {
         if (e.inputType === 'deleteContentBackward') {
           validateContact();
           return;
         }
-        var input = e.target;
-        var rawValue = input.value.replace(/^(?:\+48\s*|0048\s*|48\s*)/, '');
+
+        var input = e.target, cursor = input.selectionStart;
+        var rawValue = input.value.replace(/^(?:\+48\s*|0048\s*|48\s*)/, ''); // Usuwa +48, 0048 i ew. samo 48 na początku
         var digits = rawValue.replace(/\D/g, '').slice(0, 9);
         var formatted = '';
+
         for (var i = 0; i < digits.length; i++) {
           if (i === 3 || i === 6) formatted += ' ';
           formatted += digits[i];
         }
+
+        // Jeśli podczas autocomplete tekst wskoczył naraz — napraw kursor i przeredaguj
         if (input.value !== formatted) {
           input.value = formatted;
+          // W mobile autocomplete zazwyczaj ląduje na końcu, więc skok do length
           input.setSelectionRange(formatted.length, formatted.length);
         }
         validateContact();
       });
 
+      // Zdarzenie paste - dla skopiowanych numerów z messengera itp
       inp.addEventListener('paste', function (e) {
         e.preventDefault();
         var pasted = (e.clipboardData || window.clipboardData).getData('text');
         var rawPasted = pasted.replace(/^(?:\+48\s*|0048\s*|48\s*)/, '');
         var digits = rawPasted.replace(/\D/g, '').slice(0, 9);
         var formatted = '';
+
         for (var i = 0; i < digits.length; i++) {
           if (i === 3 || i === 6) formatted += ' ';
           formatted += digits[i];
@@ -833,7 +844,6 @@
         inp.value = formatted;
         validateContact();
       });
-
       inp.addEventListener('keydown', function (e) {
         var allowed = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Tab', 'Home', 'End'];
         if (allowed.indexOf(e.key) !== -1 || e.ctrlKey || e.metaKey) return;
@@ -854,6 +864,7 @@
     function prevSlide() { if (cur > 0) goTo(cur - 1); }
 
     function updateUI() {
+      // Dots: show for slides 0-3
       for (var i = 0; i < TOTAL_STEPS; i++) {
         var d = document.getElementById('dot' + i);
         if (!d) continue;
@@ -861,9 +872,14 @@
         if (i < cur) d.classList.add('done');
         else if (i === cur) d.classList.add('active');
       }
+
+      // Back button
       document.getElementById('backBtn').style.display = (cur > 0 && cur < 4) ? 'block' : 'none';
+
+      // Bottom bar visibility
       document.getElementById('bottomBar').style.display = cur === 4 ? 'none' : '';
 
+      // Header text
       var titles = [
         'EMS robi robotę. Ty musisz tylko przyjść 💪',
         'Kiedy chciałbyś spróbować?',
@@ -875,9 +891,11 @@
       document.getElementById('hcTitle').innerHTML = titles[cur] || '';
       document.getElementById('hcSub').textContent = subs[cur] || '';
 
+      // Btn label
       var labels = ['Umów trening próbny →', 'Kontynuuj', 'Kontynuuj', 'Prześlij', ''];
       document.getElementById('btnLabel').textContent = labels[cur] || 'Kontynuuj';
 
+      // Btn disabled state
       var btn = document.getElementById('mainBtn');
       btn.disabled = false;
       if (cur === 1 && selectedIdx === null) btn.disabled = true;
@@ -972,6 +990,7 @@
         type: 'submission',
         session_id: SESSION_ID,
         timestamp: new Date().toISOString(),
+        czas_wypelniania: Math.round((Date.now() - t0) / 1000) + 's',
         imie_nazwisko: ans.name,
         telefon: ans.phone,
         kiedy_trening: ans.q1,
@@ -983,6 +1002,8 @@
       fbTrack('Lead');
       fbTrack('Contact', { currency: 'PLN', value: 1 });
       goTo(4);
+
+      // Efekt konfetti po przejściu na Thank You
       if (typeof window.confetti === 'function') {
         window.confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
       }
@@ -999,37 +1020,41 @@
       });
     }
 
-    // ── SEND ──
-    // Zawsze nadpisuje czas od załadowania strony — liczy absolutny czas sesji
     async function send(data) {
+      // Blokada zapisu dla Ciebie (administratora)
+      // Kiedy testujesz stronę (żeby nie psuć statystyk), wejdź przez link: ?test=1
       if (window.location.search.indexOf('test=1') !== -1) {
-        console.log("Blokada arkusza - włączony tryb testowy.", data);
+        console.log("Blokada arkusza - włączony tryb testowy.");
         return;
       }
 
-      // Zawsze nadpisz czas — aktualny moment minus start strony
-      data.czas_wypelniania = Math.round((Date.now() - t0) / 1000) + 's';
+      // Bezwarunkowo dodajemy zaktualizowany czas trwania całej sesji do każdych danych
+      if (!data.czas_wypelniania) {
+        data.czas_wypelniania = Math.round((Date.now() - t0) / 1000) + 's';
+      }
 
-      const body = JSON.stringify(data);
-
-      // Przy zamknięciu strony sendBeacon jest gwarantowany przez przeglądarkę
+      // Jeśli to zdarzenie zamknięcia okna (page_closed), przeglądarki mogą anulować zwykły fetch.
+      // Używamy `navigator.sendBeacon` opakowując dane, lub zostawiamy fetch z keepalive.
+      // Wykorzystanie 'text/plain' do sendBeacon powala ominąć blokady CORS przed lotem wstępnym (preflight).
       if (data.event === 'page_closed' && navigator.sendBeacon) {
-        navigator.sendBeacon(SHEETS_URL, new Blob([body], { type: 'application/json' }));
+        navigator.sendBeacon(SHEETS_URL, JSON.stringify(data));
         return;
       }
 
       try {
-        await fetch(SHEETS_URL, {
-          method: 'POST', mode: 'no-cors', keepalive: true,
-          headers: { 'Content-Type': 'application/json' },
-          body
+        await fetch(SHEETS_URL, { 
+          method: 'POST', 
+          mode: 'no-cors', 
+          keepalive: true, 
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
+          body: JSON.stringify(data) 
         });
       } catch (e) { console.error(e); }
     }
 
     updateUI();
 
-    // ── Zamknięcie strony ──
+    // ── Obliczanie czasu absolutnego (Zakończenie sesji) ─────────
     function logPageClose() {
       if (!window.pageClosedLogged) {
         window.pageClosedLogged = true;
@@ -1049,8 +1074,8 @@
         });
       }
     }
-
-    document.addEventListener('visibilitychange', function () {
+    
+    document.addEventListener('visibilitychange', function() {
       if (document.visibilityState === 'hidden') {
         logPageClose();
       }
@@ -1058,15 +1083,18 @@
     window.addEventListener('pagehide', logPageClose);
     window.addEventListener('unload', logPageClose);
 
-    // ── Intro tracking ──
+    // ── Intro tracking ───────────────────────────────────────────
+    // Przy pierwszej interakcji człowieka → zapisz wiersz z event: 'intro'
+    // Dalsze kroki aktualizują ten sam SESSION_ID
     (function () {
       var humanDetected = false;
 
       function onHuman() {
         if (humanDetected) return;
         humanDetected = true;
-
-        // Nie ustawiamy czas_wypelniania — send() sam policzy aktualny czas
+        
+        var timeSpent = Math.round((Date.now() - t0) / 1000);
+        
         send({
           type: 'dropoff',
           event: 'intro',
@@ -1074,6 +1102,7 @@
           timestamp: new Date().toISOString(),
           step: 0,
           step_name: 'intro',
+          czas_wypelniania: timeSpent + 's',
           utm_content: UTM.content,
           utm_campaign: UTM.campaign,
           utm_source: UTM.source,
