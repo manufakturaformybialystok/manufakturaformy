@@ -1095,15 +1095,14 @@
     window.addEventListener('pagehide', logPageClose);
 
     // ── Intro tracking (Start) ─────────────────────────────────────────
-    // Wysyła powiadomienie na sam start (przy załadowaniu stony), czas 00:00
+    // Wysyła domyślny `intro` w celu oznaczenia wejścia z czasem załadowania = 00:00
     send({
       type: 'dropoff',
-      event: 'wejscie_na_strone',
+      event: 'intro',
       session_id: SESSION_ID,
       timestamp: new Date().toISOString(),
       step: 0,
       step_name: 'intro',
-      czas_wypelniania: '00:00',
       utm_content: UTM.content,
       utm_campaign: UTM.campaign,
       utm_source: UTM.source,
