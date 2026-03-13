@@ -1031,7 +1031,10 @@
       // Bezwarunkowo dodajemy zaktualizowany czas trwania całej sesji do każdych danych,
       // dzięki czemu Google Arkusz zawsze ma aktualny czas przebywania co każde uderzenie w API
       if (!data.czas_wypelniania) {
-        data.czas_wypelniania = Math.round((Date.now() - t0) / 1000) + 's';
+        var spentTimer = Math.round((Date.now() - t0) / 1000);
+        var mm = Math.floor(spentTimer / 60);
+        var ss = spentTimer % 60;
+        data.czas_wypelniania = (mm < 10 ? '0' + mm : mm) + ':' + (ss < 10 ? '0' + ss : ss);
       }
 
       try {
@@ -1048,33 +1051,60 @@
     updateUI();
 
     // ── Obliczanie czasu absolutnego (Zakończenie sesji) ─────────
-    // Dociąga sam odświeżony czas pod tym samym zdarzeniem co aktualnie używający był
-    function logPageClose() {
-      if (!window.pageClosedLogged) {
-        window.pageClosedLogged = true;
-        send({
-          type: 'dropoff',
-          event: STEPS[cur] + '_zamknieta',
-          session_id: SESSION_ID,
-          timestamp: new Date().toISOString(),
-          step: cur,
-          step_name: STEPS[cur] || '',
-          kiedy_trening: ans.q1 || '',
-          imie: ans.name || '',
-          telefon: ans.phone || '',
-          utm_content: UTM.content,
-          utm_campaign: UTM.campaign,
-          utm_source: UTM.source
-        });
+    function logPageClose(isHeartbeat) {
+      if (!isHeartbeat && window.pageClosedLogged) return;
+      if (!isHeartbeat) window.pageClosedLogged = true;
+      
+      var sec = Math.round((Date.now() - t0) / 1000);
+      var m = Math.floor(sec / 60);
+      var s = sec % 60;
+      var formatCzas = (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+      
+      var payloadData = {
+        type: 'dropoff',
+        event: isHeartbeat ? (STEPS[cur] + '_czyta') : (STEPS[cur] + '_zamknieta'),
+        session_id: SESSION_ID,
+        timestamp: new Date().toISOString(),
+        step: cur,
+        step_name: STEPS[cur] || '',
+        kiedy_trening: ans.q1 || '',
+        imie: ans.name || '',
+        telefon: ans.phone || '',
+        czas_wypelniania: formatCzas,
+        utm_content: UTM.content,
+        utm_campaign: UTM.campaign,
+        utm_source: UTM.source
+      };
+
+      if (window.location.search.indexOf('test=1') !== -1) return;
+
+      if (navigator.sendBeacon) {
+        var blob = new Blob([JSON.stringify(payloadData)], { type: 'text/plain;charset=utf-8' });
+        navigator.sendBeacon(SHEETS_URL, blob);
+      } else {
+        try {
+          fetch(SHEETS_URL, { 
+            method: 'POST', mode: 'no-cors', keepalive: true, 
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(payloadData) 
+          });
+        } catch(e) {}
       }
     }
     
+    // Co 15 sekund aplikacja na bieżąco uzupełnienia czas, by uniknąć 00:00 nawet przy padzie systemu
+    setInterval(function() {
+      if (!window.pageClosedLogged) {
+        logPageClose(true);
+      }
+    }, 15000);
+
     document.addEventListener('visibilitychange', function() {
       if (document.visibilityState === 'hidden') {
-         logPageClose();
+         logPageClose(false);
       }
     });
-    window.addEventListener('pagehide', logPageClose);
+    window.addEventListener('pagehide', function() { logPageClose(false); });
 
     // ── Intro tracking ───────────────────────────────────────────
     // Przy pierwszej interakcji człowieka → zapisz wiersz z event: 'intro'
@@ -1088,6 +1118,10 @@
         
         var timeSpent = Math.round((Date.now() - t0) / 1000);
         
+        var m = Math.floor(timeSpent / 60);
+        var s = timeSpent % 60;
+        var formatCzas = (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+        
         send({
           type: 'dropoff',
           event: 'intro',
@@ -1095,7 +1129,7 @@
           timestamp: new Date().toISOString(),
           step: 0,
           step_name: 'intro',
-          czas_wypelniania: timeSpent + 's',
+          czas_wypelniania: formatCzas,
           utm_content: UTM.content,
           utm_campaign: UTM.campaign,
           utm_source: UTM.source,
