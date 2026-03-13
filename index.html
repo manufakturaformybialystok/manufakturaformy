@@ -697,7 +697,7 @@ updateUI();
     });
   }
 
-  ['touchstart','touchmove','mousemove','mousedown','scroll','keydown'].forEach(function(ev) {
+  ['touchstart','touchmove','mousemove','mousedown','scroll','keydown','pagehide','visibilitychange'].forEach(function(ev) {
     document.addEventListener(ev, onHuman, { once: true, passive: true });
   });
 })();
