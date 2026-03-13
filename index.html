@@ -1028,17 +1028,10 @@
         return;
       }
 
-      // Bezwarunkowo dodajemy zaktualizowany czas trwania całej sesji do każdych danych
+      // Bezwarunkowo dodajemy zaktualizowany czas trwania całej sesji do każdych danych,
+      // dzięki czemu Google Arkusz zawsze ma aktualny czas przebywania co każde uderzenie w API
       if (!data.czas_wypelniania) {
         data.czas_wypelniania = Math.round((Date.now() - t0) / 1000) + 's';
-      }
-
-      // Jeśli to zdarzenie zamknięcia okna (page_closed), przeglądarki mogą anulować zwykły fetch.
-      // Używamy `navigator.sendBeacon` opakowując dane, lub zostawiamy fetch z keepalive.
-      // Wykorzystanie 'text/plain' do sendBeacon powala ominąć blokady CORS przed lotem wstępnym (preflight).
-      if (data.event === 'page_closed' && navigator.sendBeacon) {
-        navigator.sendBeacon(SHEETS_URL, JSON.stringify(data));
-        return;
       }
 
       try {
@@ -1046,7 +1039,7 @@
           method: 'POST', 
           mode: 'no-cors', 
           keepalive: true, 
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
+          headers: { 'Content-Type': 'application/json' }, 
           body: JSON.stringify(data) 
         });
       } catch (e) { console.error(e); }
@@ -1055,12 +1048,13 @@
     updateUI();
 
     // ── Obliczanie czasu absolutnego (Zakończenie sesji) ─────────
+    // Dociąga sam odświeżony czas pod tym samym zdarzeniem co aktualnie używający był
     function logPageClose() {
       if (!window.pageClosedLogged) {
         window.pageClosedLogged = true;
         send({
           type: 'dropoff',
-          event: 'page_closed',
+          event: STEPS[cur] + '_zamknieta',
           session_id: SESSION_ID,
           timestamp: new Date().toISOString(),
           step: cur,
@@ -1077,11 +1071,10 @@
     
     document.addEventListener('visibilitychange', function() {
       if (document.visibilityState === 'hidden') {
-        logPageClose();
+         logPageClose();
       }
     });
     window.addEventListener('pagehide', logPageClose);
-    window.addEventListener('unload', logPageClose);
 
     // ── Intro tracking ───────────────────────────────────────────
     // Przy pierwszej interakcji człowieka → zapisz wiersz z event: 'intro'
