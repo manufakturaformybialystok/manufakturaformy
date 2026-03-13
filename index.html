@@ -1028,12 +1028,37 @@
         return;
       }
 
+      // Bezwarunkowo dodajemy zaktualizowany czas trwania całej sesji do każdych danych
+      if (!data.czas_wypelniania) {
+        data.czas_wypelniania = Math.round((Date.now() - t0) / 1000) + 's';
+      }
+
       try {
         await fetch(SHEETS_URL, { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
       } catch (e) { console.error(e); }
     }
 
     updateUI();
+
+    // ── Obliczanie czasu absolutnego (Zakończenie sesji) ─────────
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'hidden') {
+        send({
+          type: 'dropoff',
+          event: 'page_closed',
+          session_id: SESSION_ID,
+          timestamp: new Date().toISOString(),
+          step: cur,
+          step_name: STEPS[cur] || '',
+          kiedy_trening: ans.q1 || '',
+          imie: ans.name || '',
+          telefon: ans.phone || '',
+          utm_content: UTM.content,
+          utm_campaign: UTM.campaign,
+          utm_source: UTM.source
+        });
+      }
+    });
 
     // ── Intro tracking ───────────────────────────────────────────
     // Przy pierwszej interakcji człowieka → zapisz wiersz z event: 'intro'
