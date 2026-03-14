@@ -2,1114 +2,1208 @@
 <html lang="pl">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Manufaktura Formy – Formularz</title>
-  <style>
-    *,
-    *::before,
-    *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    html,
-    body {
-      height: 100%;
-      overflow-x: hidden;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: #f0f2f5;
-      min-height: 100svh;
-    }
-
-    /* ── WRAPPER ── */
-    .fb-wrapper {
-      width: 100%;
-      min-height: 100svh;
-      display: flex;
-      flex-direction: column;
-      background: #fff;
-    }
-
-    /* ── HEADER SECTION ── */
-    .header-section {
-      background: #fff;
-      padding: 28px 24px 18px;
-      text-align: center;
-      border-bottom: 1px solid #e4e6ea;
-    }
-
-    .logo-circle {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      overflow: hidden;
-      margin: 0 auto 12px;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, .15);
-      background: #1877f2;
-    }
-
-    .logo-circle img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .logo-fallback {
-      width: 100%;
-      height: 100%;
-      background: #1877f2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 800;
-      color: #fff;
-      text-align: center;
-      line-height: 1.3;
-      letter-spacing: .3px;
-    }
-
-    .hc-brand {
-      font-size: 14px;
-      color: #65676b;
-      margin-bottom: 8px;
-    }
-
-    .hc-title {
-      font-size: 20px;
-      font-weight: 700;
-      color: #050505;
-      line-height: 1.3;
-      margin-bottom: 6px;
-    }
-
-    .hc-sub {
-      font-size: 14px;
-      color: #65676b;
-    }
-
-    /* ── CONTENT AREA ── */
-    .content-area {
-      flex: 1;
-      background: #f0f2f5;
-      padding: 12px 0 0;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* ── SLIDE SYSTEM ── */
-    .slides-outer {
-      overflow: hidden;
-      flex: 1;
-    }
-
-    .slides-inner {
-      display: flex;
-      transition: transform .3s cubic-bezier(.4, 0, .2, 1);
-      will-change: transform;
-      height: 100%;
-    }
-
-    .slide {
-      min-width: 100%;
-      width: 100%;
-      flex-shrink: 0;
-      padding: 0 16px;
-    }
-
-    /* ── QUESTION BLOCK ── */
-    .q-card {
-      background: #fff;
-      border-radius: 8px;
-      padding: 16px 16px;
-    }
-
-    .q-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: #050505;
-      line-height: 1.4;
-      margin-bottom: 2px;
-    }
-
-    .q-sub {
-      font-size: 13px;
-      color: #65676b;
-      line-height: 1.4;
-      margin-bottom: 10px;
-    }
-
-    /* Radio: label LEFT, circle RIGHT */
-    .radio-list {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .radio-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 15px 0;
-      border-bottom: 1px solid #f0f2f5;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .radio-item:last-child {
-      border-bottom: none;
-    }
-
-    .radio-label {
-      font-size: 15px;
-      color: #050505;
-      line-height: 1.4;
-      padding-right: 14px;
-      flex: 1;
-    }
-
-    .radio-circle {
-      width: 24px;
-      height: 24px;
-      flex-shrink: 0;
-      border-radius: 50%;
-      border: 2px solid #bcc0c4;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background .12s, border-color .12s;
-    }
-
-    .radio-item.selected .radio-circle {
-      border-color: #1877f2;
-      background: #1877f2;
-    }
-
-    .radio-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #fff;
-      display: none;
-    }
-
-    .radio-item.selected .radio-dot {
-      display: block;
-    }
-
-    /* Checkboxes: label LEFT, box RIGHT */
-    .cb-list {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .cb-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 15px 0;
-      border-bottom: 1px solid #f0f2f5;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .cb-item:last-child {
-      border-bottom: none;
-    }
-
-    .cb-label {
-      font-size: 15px;
-      color: #050505;
-      line-height: 1.4;
-      padding-right: 14px;
-      flex: 1;
-    }
-
-    .cb-box {
-      width: 24px;
-      height: 24px;
-      flex-shrink: 0;
-      border: 2px solid #bcc0c4;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background .12s, border-color .12s;
-    }
-
-    .cb-item.checked .cb-box {
-      background: #1877f2;
-      border-color: #1877f2;
-    }
-
-    .cb-item.checked .cb-box::after {
-      content: '✓';
-      color: #fff;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    /* Input fields */
-    .input-group {
-      margin-bottom: 20px;
-    }
-
-    .input-label {
-      font-size: 12px;
-      color: #65676b;
-      margin-bottom: 4px;
-      display: block;
-    }
-
-    .input-field {
-      width: 100%;
-      border: none;
-      border-bottom: 1.5px solid #e4e6ea;
-      padding: 6px 0 8px;
-      font-size: 17px;
-      color: #050505;
-      outline: none;
-      background: transparent;
-      font-family: inherit;
-      transition: border-color .15s;
-    }
-
-    .input-field:focus {
-      border-bottom-color: #1877f2;
-    }
-
-    .input-field::placeholder {
-      color: #bcc0c4;
-    }
-
-    .input-hint {
-      font-size: 11px;
-      color: #65676b;
-      margin-top: 4px;
-      line-height: 1.4;
-    }
-
-    .input-error {
-      font-size: 11px;
-      color: #e02020;
-      margin-top: 4px;
-      line-height: 1.4;
-      display: none;
-    }
-
-    .input-field.error {
-      border-bottom-color: #e02020;
-    }
-
-    /* Legal */
-    .legal-text {
-      font-size: 11px;
-      color: #65676b;
-      line-height: 1.55;
-      margin-top: 14px;
-    }
-
-    .legal-link {
-      color: #1877f2;
-      text-decoration: none;
-    }
-
-    /* Intro */
-    .intro-body {
-      font-size: 15px;
-      color: #3c3c3c;
-      line-height: 1.6;
-    }
-
-    .intro-divider {
-      border: none;
-      border-top: 1px solid #e4e6ea;
-      margin: 14px 0;
-    }
-
-    /* ── BOTTOM BAR ── */
-    .bottom-bar {
-      background: #fff;
-      border-top: 1px solid #e4e6ea;
-      padding: 10px 16px 28px;
-      position: sticky;
-      bottom: 0;
-      z-index: 10;
-    }
-
-    .progress-dots {
-      display: flex;
-      gap: 5px;
-      justify-content: flex-start;
-      margin-bottom: 10px;
-    }
-
-    .dot {
-      height: 5px;
-      border-radius: 3px;
-      background: #dddfe2;
-      transition: width .3s, background .3s;
-      width: 28px;
-    }
-
-    .dot.active {
-      background: #1877f2;
-      width: 38px;
-    }
-
-    .dot.done {
-      background: #1877f2;
-    }
-
-    .btn-next {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      padding: 14px;
-      background: #1877f2;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 17px;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background .12s;
-    }
-
-    .btn-next:active {
-      background: #145dbf;
-    }
-
-    .btn-next:disabled {
-      background: #bcc0c4;
-      cursor: default;
-    }
-
-    .btn-next.loading .spinner {
-      display: block;
-    }
-
-    .btn-next.loading .btn-label {
-      opacity: .7;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    .spinner {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      border: 2px solid rgba(255, 255, 255, .4);
-      border-top-color: #fff;
-      animation: spin .7s linear infinite;
-      display: none;
-      flex-shrink: 0;
-    }
-
-    .btn-back-link {
-      display: block;
-      text-align: center;
-      font-size: 13px;
-      color: #65676b;
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
-      padding: 8px 0 0;
-      text-decoration: underline;
-    }
-
-    /* ── REJECTION ── */
-    .rejection-screen {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 24px;
-      text-align: center;
-      background: #fff;
-      flex: 1;
-    }
-
-    .rejection-screen.active {
-      display: flex;
-    }
-
-    .rejection-emoji {
-      font-size: 52px;
-      margin-bottom: 20px;
-    }
-
-    .rejection-title {
-      font-size: 20px;
-      font-weight: 700;
-      color: #050505;
-      margin-bottom: 12px;
-      line-height: 1.3;
-    }
-
-    .rejection-sub {
-      font-size: 14px;
-      color: #65676b;
-      line-height: 1.6;
-      margin-bottom: 28px;
-    }
-
-    .btn-ig {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af, #515bd4);
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      padding: 13px 24px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: none;
-      font-family: inherit;
-      margin-bottom: 16px;
-    }
-
-    .btn-ig svg {
-      width: 22px;
-      height: 22px;
-      fill: #fff;
-      flex-shrink: 0;
-    }
-
-    .btn-rejection-back {
-      font-size: 14px;
-      color: #65676b;
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
-      text-decoration: underline;
-      padding: 8px;
-    }
-
-    /* ── THANK YOU ── */
-    .thankyou-wrap {
-      text-align: center;
-      padding: 8px 0;
-    }
-
-    .ty-check {
-      font-size: 48px;
-      margin-bottom: 16px;
-    }
-
-    .ty-title {
-      font-size: 19px;
-      font-weight: 700;
-      color: #050505;
-      margin-bottom: 10px;
-    }
-
-    .ty-body {
-      font-size: 14px;
-      color: #3c3c3c;
-      line-height: 1.55;
-      margin-bottom: 8px;
-    }
-
-    .ty-footer {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding-top: 14px;
-      border-top: 1px solid #e4e6ea;
-      font-size: 13px;
-      color: #65676b;
-      margin-top: 14px;
-    }
-
-    /* Desktop */
-    @media (min-width: 520px) {
-      body {
-        display: flex;
-        align-items: flex-start;
-        justify-content: center;
-        padding: 40px 24px;
-        background: #f0f2f5;
-      }
-
-      .fb-wrapper {
-        width: 420px;
-        min-height: unset;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, .15);
-      }
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(10px)
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0)
-      }
-    }
-
-    .fb-wrapper {
-      animation: fadeInUp .2s ease;
-    }
-  </style>
-
-  <script>
-    !function (f, b, e, v, n, t, s) {
-      if (f.fbq) return; n = f.fbq = function () {
-        n.callMethod ?
-        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-      };
-      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
-      n.queue = []; t = b.createElement(e); t.async = !0;
-      t.src = v; s = b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t, s)
-    }(window, document, 'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1267687915507510');
-    fbq('track', 'PageView');
-  </script>
-  <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=1267687915507510&ev=PageView&noscript=1" /></noscript>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Manufaktura Formy – Formularz</title>
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #f0f2f5;
+            min-height: 100svh;
+        }
+
+        /* ── WRAPPER ── */
+        .fb-wrapper {
+            width: 100%;
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+        }
+
+        /* ── HEADER SECTION ── */
+        .header-section {
+            background: #fff;
+            padding: 28px 24px 18px;
+            text-align: center;
+            border-bottom: 1px solid #e4e6ea;
+        }
+
+        .logo-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 12px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .15);
+            background: #1877f2;
+        }
+
+        .logo-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .logo-fallback {
+            width: 100%;
+            height: 100%;
+            background: #1877f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 800;
+            color: #fff;
+            text-align: center;
+            line-height: 1.3;
+            letter-spacing: .3px;
+        }
+
+        .hc-brand {
+            font-size: 14px;
+            color: #65676b;
+            margin-bottom: 8px;
+        }
+
+        .hc-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #050505;
+            line-height: 1.3;
+            margin-bottom: 6px;
+        }
+
+        .hc-sub {
+            font-size: 14px;
+            color: #65676b;
+        }
+
+        /* ── CONTENT AREA ── */
+        .content-area {
+            flex: 1;
+            background: #f0f2f5;
+            padding: 12px 0 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── SLIDE SYSTEM ── */
+        .slides-outer {
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .slides-inner {
+            display: flex;
+            transition: transform .3s cubic-bezier(.4, 0, .2, 1);
+            will-change: transform;
+            height: 100%;
+        }
+
+        .slide {
+            min-width: 100%;
+            width: 100%;
+            flex-shrink: 0;
+            padding: 0 16px;
+        }
+
+        /* ── QUESTION BLOCK ── */
+        .q-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 16px 16px;
+        }
+
+        .q-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #050505;
+            line-height: 1.4;
+            margin-bottom: 2px;
+        }
+
+        .q-sub {
+            font-size: 13px;
+            color: #65676b;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        /* Radio: label LEFT, circle RIGHT */
+        .radio-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f2f5;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .radio-item:last-child {
+            border-bottom: none;
+        }
+
+        .radio-label {
+            font-size: 15px;
+            color: #050505;
+            line-height: 1.4;
+            padding-right: 14px;
+            flex: 1;
+        }
+
+        .radio-circle {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            border: 2px solid #bcc0c4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .12s, border-color .12s;
+        }
+
+        .radio-item.selected .radio-circle {
+            border-color: #1877f2;
+            background: #1877f2;
+        }
+
+        .radio-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #fff;
+            display: none;
+        }
+
+        .radio-item.selected .radio-dot {
+            display: block;
+        }
+
+        /* Checkboxes: label LEFT, box RIGHT */
+        .cb-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cb-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f2f5;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .cb-item:last-child {
+            border-bottom: none;
+        }
+
+        .cb-label {
+            font-size: 15px;
+            color: #050505;
+            line-height: 1.4;
+            padding-right: 14px;
+            flex: 1;
+        }
+
+        .cb-box {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            border: 2px solid #bcc0c4;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .12s, border-color .12s;
+        }
+
+        .cb-item.checked .cb-box {
+            background: #1877f2;
+            border-color: #1877f2;
+        }
+
+        .cb-item.checked .cb-box::after {
+            content: '✓';
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        /* Input fields */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            font-size: 12px;
+            color: #65676b;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .input-field {
+            width: 100%;
+            border: none;
+            border-bottom: 1.5px solid #e4e6ea;
+            padding: 6px 0 8px;
+            font-size: 17px;
+            color: #050505;
+            outline: none;
+            background: transparent;
+            font-family: inherit;
+            transition: border-color .15s;
+        }
+
+        .input-field:focus {
+            border-bottom-color: #1877f2;
+        }
+
+        .input-field::placeholder {
+            color: #bcc0c4;
+        }
+
+        .input-hint {
+            font-size: 11px;
+            color: #65676b;
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        .input-error {
+            font-size: 11px;
+            color: #e02020;
+            margin-top: 4px;
+            line-height: 1.4;
+            display: none;
+        }
+
+        .input-field.error {
+            border-bottom-color: #e02020;
+        }
+
+        /* Legal */
+        .legal-text {
+            font-size: 11px;
+            color: #65676b;
+            line-height: 1.55;
+            margin-top: 14px;
+        }
+
+        .legal-link {
+            color: #1877f2;
+            text-decoration: none;
+        }
+
+        /* Intro */
+        .intro-body {
+            font-size: 15px;
+            color: #3c3c3c;
+            line-height: 1.6;
+        }
+
+        .intro-divider {
+            border: none;
+            border-top: 1px solid #e4e6ea;
+            margin: 14px 0;
+        }
+
+        /* VSL Video Wrapper */
+        .vsl-video-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            background: #000;
+            cursor: pointer;
+            aspect-ratio: 16 / 9;
+        }
+
+        .vsl-cover-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .vsl-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 64px;
+            height: 64px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            transition: background 0.2s;
+        }
+
+        .vsl-video-wrapper:hover .vsl-play-btn {
+            background: #1877f2;
+        }
+
+        .vsl-play-icon {
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 12px 0 12px 20px;
+            border-color: transparent transparent transparent #fff;
+            margin-left: 6px;
+        }
+
+        /* ── BOTTOM BAR ── */
+        .bottom-bar {
+            background: #fff;
+            border-top: 1px solid #e4e6ea;
+            padding: 10px 16px 28px;
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
+        }
+
+        .progress-dots {
+            display: flex;
+            gap: 5px;
+            justify-content: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .dot {
+            height: 5px;
+            border-radius: 3px;
+            background: #dddfe2;
+            transition: width .3s, background .3s;
+            width: 28px;
+        }
+
+        .dot.active {
+            background: #1877f2;
+            width: 38px;
+        }
+
+        .dot.done {
+            background: #1877f2;
+        }
+
+        .btn-next {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 14px;
+            background: #1877f2;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background .12s;
+        }
+
+        .btn-next:active {
+            background: #145dbf;
+        }
+
+        .btn-next:disabled {
+            background: #bcc0c4;
+            cursor: default;
+        }
+
+        .btn-next.loading .spinner {
+            display: block;
+        }
+
+        .btn-next.loading .btn-label {
+            opacity: .7;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, .4);
+            border-top-color: #fff;
+            animation: spin .7s linear infinite;
+            display: none;
+            flex-shrink: 0;
+        }
+
+        .btn-back-link {
+            display: block;
+            text-align: center;
+            font-size: 13px;
+            color: #65676b;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            padding: 8px 0 0;
+            text-decoration: underline;
+        }
+
+        /* ── REJECTION ── */
+        .rejection-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+            text-align: center;
+            background: #fff;
+            flex: 1;
+        }
+
+        .rejection-screen.active {
+            display: flex;
+        }
+
+        .rejection-emoji {
+            font-size: 52px;
+            margin-bottom: 20px;
+        }
+
+        .rejection-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #050505;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .rejection-sub {
+            font-size: 14px;
+            color: #65676b;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .btn-ig {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af, #515bd4);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 13px 24px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: inherit;
+            margin-bottom: 16px;
+        }
+
+        .btn-ig svg {
+            width: 22px;
+            height: 22px;
+            fill: #fff;
+            flex-shrink: 0;
+        }
+
+        .btn-rejection-back {
+            font-size: 14px;
+            color: #65676b;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            text-decoration: underline;
+            padding: 8px;
+        }
+
+        /* ── THANK YOU ── */
+        .thankyou-wrap {
+            text-align: center;
+            padding: 8px 0;
+        }
+
+        .ty-check {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .ty-title {
+            font-size: 19px;
+            font-weight: 700;
+            color: #050505;
+            margin-bottom: 10px;
+        }
+
+        .ty-body {
+            font-size: 14px;
+            color: #3c3c3c;
+            line-height: 1.55;
+            margin-bottom: 8px;
+        }
+
+        .ty-footer {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding-top: 14px;
+            border-top: 1px solid #e4e6ea;
+            font-size: 13px;
+            color: #65676b;
+            margin-top: 14px;
+        }
+
+        /* Desktop */
+        @media (min-width: 520px) {
+            body {
+                display: flex;
+                align-items: flex-start;
+                justify-content: center;
+                padding: 40px 24px;
+                background: #f0f2f5;
+            }
+
+            .fb-wrapper {
+                width: 420px;
+                min-height: unset;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 2px 12px rgba(0, 0, 0, .15);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .fb-wrapper {
+            animation: fadeInUp .2s ease;
+        }
+    </style>
+
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1267687915507510');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=1267687915507510&ev=PageView&noscript=1" /></noscript>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 
 <body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;">
 
-  <!-- Zabezpieczenie skrótów klawiszowych bez pułapki debugger -->
-  <script>
-    (function () {
-      // Blokada klawiszy (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U)
-      document.addEventListener('keydown', function (event) {
-        if (event.keyCode === 123 ||
-          (event.ctrlKey && event.shiftKey && (event.keyCode === 73 || event.keyCode === 74)) ||
-          (event.ctrlKey && event.keyCode === 85)) {
-          event.preventDefault();
-        }
-      });
-    })();
-  </script>
+    <!-- Zabezpieczenie skrótów klawiszowych bez pułapki debugger -->
+    <script>
+        (function () {
+            // Blokada klawiszy (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U)
+            document.addEventListener('keydown', function (event) {
+                if (event.keyCode === 123 ||
+                    (event.ctrlKey && event.shiftKey && (event.keyCode === 73 || event.keyCode === 74)) ||
+                    (event.ctrlKey && event.keyCode === 85)) {
+                    event.preventDefault();
+                }
+            });
+        })();
+    </script>
 
-  <div class="fb-wrapper">
+    <div class="fb-wrapper">
 
-    <!-- HEADER SECTION -->
-    <div class="header-section" id="headerCard">
-      <div class="logo-circle">
-        <img src="https://lh3.googleusercontent.com/d/18mEyEP41W-2NXRbPbsCetiXB_BAchfST" alt="Manufaktura Formy"
-          onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'logo-fallback\'>MANUFAKTURA<br>FORMY</div>'">
-      </div>
-      <div class="hc-brand">Manufaktura Formy</div>
-      <div class="hc-title" id="hcTitle">Dołącz do <span style="background: none; padding: 0;">200+</span> osób które
-        już trenują EMS w Manufakturze Formy</div>
-      <div class="hc-sub" id="hcSub">Trening próbny EMS + drenaż za 69 zł</div>
+        <!-- HEADER SECTION -->
+        <div class="header-section" id="headerCard">
+            <div class="logo-circle">
+                <img src="https://lh3.googleusercontent.com/d/18mEyEP41W-2NXRbPbsCetiXB_BAchfST" alt="Manufaktura Formy"
+                    onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'logo-fallback\'>MANUFAKTURA<br>FORMY</div>'">
+            </div>
+            <div class="hc-brand">Manufaktura Formy</div>
+            <div class="hc-title" id="hcTitle">Dołącz do <span style="background: none; padding: 0;">200+</span> osób
+                które
+                już trenują EMS w Manufakturze Formy</div>
+            <div class="hc-sub" id="hcSub">Trening próbny EMS + drenaż za 69 zł</div>
+        </div>
+
+        <!-- CONTENT AREA -->
+        <div class="content-area" id="cardsArea">
+            <div class="slides-outer">
+                <div class="slides-inner" id="slidesInner">
+
+                    <!-- SLIDE 0: INTRO -->
+                    <div class="slide">
+                        <div class="q-card">
+
+                            <!-- VSL Vimeo + Custom Cover -->
+                            <div class="vsl-video-wrapper" onclick="loadVimeoVideo(this)">
+                                <img class="vsl-cover-img"
+                                    src="https://lh3.googleusercontent.com/d/1Cn4gjzd8ygImTxv64WFd4lXZ4u18Wgzn"
+                                    alt="Odtwórz wideo">
+                                <div class="vsl-play-btn">
+                                    <div class="vsl-play-icon"></div>
+                                </div>
+                            </div>
+
+                            <div class="intro-body">
+                                Ponad 200 mieszkańców Białegostoku wybrało trening EMS jako sposób na szybsze efekty
+                                przy mniejszym
+                                wysiłku.
+                            </div>
+                            <hr class="intro-divider">
+                            <div class="intro-body">
+                                Odpowiedz na jedno pytanie i zostaw kontakt — zadzwonimy i umówimy Twój pierwszy trening
+                                w ciągu 24h.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SLIDE 1: KIEDY -->
+                    <div class="slide">
+                        <div class="q-card">
+                            <div class="q-title">Kiedy chciałbyś spróbować pierwszego treningu?</div>
+                            <div class="q-sub">Zaznacz jedną odpowiedź</div>
+                            <div class="radio-list" id="q1-options">
+                                <div class="radio-item" onclick="selectOption(0)">
+                                    <span class="radio-label">Narazie nie chcę próbować</span>
+                                    <div class="radio-circle">
+                                        <div class="radio-dot"></div>
+                                    </div>
+                                </div>
+                                <div class="radio-item" onclick="selectOption(1)">
+                                    <span class="radio-label">W następnym tygodniu — odezwijcie się do mnie</span>
+                                    <div class="radio-circle">
+                                        <div class="radio-dot"></div>
+                                    </div>
+                                </div>
+                                <div class="radio-item" onclick="selectOption(2)">
+                                    <span class="radio-label">Chcę spróbować w tym tygodniu 💪</span>
+                                    <div class="radio-circle">
+                                        <div class="radio-dot"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SLIDE 2: KONTAKT -->
+                    <div class="slide">
+                        <div class="q-card">
+                            <div class="q-title">Informacje kontaktowe ℹ️</div>
+                            <div class="q-sub">Zostaw kontakt — oddzwonimy i umówimy trening próbny</div>
+                            <div class="input-group">
+                                <label class="input-label">Imię i nazwisko</label>
+                                <input class="input-field" id="inp-name" type="text" placeholder="Wprowadź odpowiedź."
+                                    oninput="validateContact()" autocomplete="name">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Numer telefonu</label>
+                                <input class="input-field" id="inp-phone" type="tel" placeholder="123 456 789"
+                                    autocomplete="tel">
+                                <div class="input-hint" id="phone-hint">Podaj 9-cyfrowy numer, np. 123 456 789</div>
+                                <div class="input-error" id="phone-error">Podaj pełny numer — 9 cyfr w formacie 123 456
+                                    789</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SLIDE 3: ZGODY -->
+                    <div class="slide">
+                        <div class="q-card">
+                            <div class="q-title">Oświadczam, że</div>
+                            <div class="q-sub">Zaznacz wszystkie pasujące odpowiedzi</div>
+                            <div class="cb-list">
+                                <div class="cb-item" id="cb-phone" onclick="toggleCheckbox('cb-phone')">
+                                    <span class="cb-label">Wyrażam zgodę na kontakt tel. oraz akceptuję <a
+                                            href="polityka.html" target="_blank" onclick="event.stopPropagation()"
+                                            style="color: #65676b; text-decoration: underline;">Politykę
+                                            Prywatności</a></span>
+                                    <div class="cb-box"></div>
+                                </div>
+                            </div>
+                            <div class="legal-text">
+                                Poprzez kliknięcie przycisku Prześlij wyrażasz zgodę na przesłanie Twoich informacji
+                                stronie Manufaktura
+                                Formy Białystok, która zobowiązuje się do korzystania z nich zgodnie z własnymi
+                                zasadami.<br><br>
+                                <a href="#" class="legal-link">Wyświetl Zasady dotyczące danych na Facebooku.</a><br>
+                                <a href="polityka.html" target="_blank" class="legal-link"
+                                    style="color: #bcc0c4; text-decoration: none;">Polityka Prywatności Manufaktura
+                                    Formy</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SLIDE 4: DZIĘKUJEMY -->
+                    <div class="slide">
+                        <div class="q-card">
+                            <div class="thankyou-wrap">
+                                <div class="ty-check">✅</div>
+                                <div class="ty-title">Dziękujemy bardzo!</div>
+                                <div class="ty-body">Skontaktujemy się z Tobą w ciągu 24h.</div>
+                                <div class="ty-body">Jeśli nie chcesz czekać możesz zadzwonić i umówić się już TERAZ!
+                                </div>
+                                <div class="ty-footer">
+                                    <span>ℹ️</span>
+                                    <span>Twoje odpowiedzi zostały przesłane.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- REJECTION -->
+            <div class="rejection-screen" id="rejectionScreen">
+                <div class="rejection-emoji">🙏</div>
+                <div class="rejection-title">Rozumiemy, że na razie to nie ten moment</div>
+                <div class="rejection-sub">
+                    Gdy będziesz gotowy/gotowa — jesteśmy tutaj!<br><br>
+                    Tymczasem zapraszamy na nasz Instagram, gdzie pokazujemy efekty treningów EMS, porady i życie studia
+                    na co
+                    dzień 💪
+                </div>
+                <a class="btn-ig" href="https://www.instagram.com/manufakturaformy.bialystok" target="_blank">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                    </svg>
+                    Obserwuj nas na Instagramie
+                </a>
+                <button class="btn-rejection-back" onclick="hideRejection()">← Wróć do formularza</button>
+            </div>
+
+        </div><!-- /content-area-slides -->
+
+        <!-- BOTTOM BAR -->
+        <div class="bottom-bar" id="bottomBar">
+            <div class="progress-dots" id="progressDots">
+                <div class="dot active" id="dot0"></div>
+                <div class="dot" id="dot1"></div>
+                <div class="dot" id="dot2"></div>
+                <div class="dot" id="dot3"></div>
+            </div>
+            <button class="btn-next" id="mainBtn" onclick="handleNext()">
+                <span class="btn-label" id="btnLabel">Umów trening próbny →</span>
+                <div class="spinner"></div>
+            </button>
+            <button class="btn-back-link" id="backBtn" onclick="prevSlide()" style="display:none">Wstecz</button>
+        </div>
+
+    </div><!-- /content-area -->
     </div>
 
-    <!-- CONTENT AREA -->
-    <div class="content-area" id="cardsArea">
-      <div class="slides-outer">
-        <div class="slides-inner" id="slidesInner">
+    <script>
+        // ══ VIMEO LOADER ══
+        function loadVimeoVideo(el) {
+            if (el.dataset.loaded) return;
+            el.dataset.loaded = "true";
+            el.querySelector(".vsl-play-btn").style.display = "none";
 
-          <!-- SLIDE 0: INTRO -->
-          <div class="slide">
-            <div class="q-card">
-              <div class="intro-body">
-                Ponad 200 mieszkańców Białegostoku wybrało trening EMS jako sposób na szybsze efekty przy mniejszym
-                wysiłku.
-              </div>
-              <hr class="intro-divider">
-              <div class="intro-body">
-                Odpowiedz na jedno pytanie i zostaw kontakt — zadzwonimy i umówimy Twój pierwszy trening w ciągu 24h.
-              </div>
-            </div>
-          </div>
+            var iframe = document.createElement("iframe");
+            iframe.src = "https://player.vimeo.com/video/1173562142?autoplay=1&title=0&byline=0&portrait=0&controls=0&dnt=1";
+            iframe.style.position = "absolute";
+            iframe.style.top = "0";
+            iframe.style.left = "0";
+            iframe.style.width = "100%";
+            iframe.style.height = "100%";
+            iframe.style.border = "none";
+            iframe.setAttribute("allow", "autoplay; fullscreen");
+            iframe.setAttribute("allowfullscreen", "");
 
-          <!-- SLIDE 1: KIEDY -->
-          <div class="slide">
-            <div class="q-card">
-              <div class="q-title">Kiedy chciałbyś spróbować pierwszego treningu?</div>
-              <div class="q-sub">Zaznacz jedną odpowiedź</div>
-              <div class="radio-list" id="q1-options">
-                <div class="radio-item" onclick="selectOption(0)">
-                  <span class="radio-label">Narazie nie chcę próbować</span>
-                  <div class="radio-circle">
-                    <div class="radio-dot"></div>
-                  </div>
-                </div>
-                <div class="radio-item" onclick="selectOption(1)">
-                  <span class="radio-label">W następnym tygodniu — odezwijcie się do mnie</span>
-                  <div class="radio-circle">
-                    <div class="radio-dot"></div>
-                  </div>
-                </div>
-                <div class="radio-item" onclick="selectOption(2)">
-                  <span class="radio-label">Chcę spróbować w tym tygodniu 💪</span>
-                  <div class="radio-circle">
-                    <div class="radio-dot"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- SLIDE 2: KONTAKT -->
-          <div class="slide">
-            <div class="q-card">
-              <div class="q-title">Informacje kontaktowe ℹ️</div>
-              <div class="q-sub">Zostaw kontakt — oddzwonimy i umówimy trening próbny</div>
-              <div class="input-group">
-                <label class="input-label">Imię i nazwisko</label>
-                <input class="input-field" id="inp-name" type="text" placeholder="Wprowadź odpowiedź."
-                  oninput="validateContact()" autocomplete="name">
-              </div>
-              <div class="input-group">
-                <label class="input-label">Numer telefonu</label>
-                <input class="input-field" id="inp-phone" type="tel" placeholder="123 456 789" autocomplete="tel">
-                <div class="input-hint" id="phone-hint">Podaj 9-cyfrowy numer, np. 123 456 789</div>
-                <div class="input-error" id="phone-error">Podaj pełny numer — 9 cyfr w formacie 123 456 789</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- SLIDE 3: ZGODY -->
-          <div class="slide">
-            <div class="q-card">
-              <div class="q-title">Oświadczam, że</div>
-              <div class="q-sub">Zaznacz wszystkie pasujące odpowiedzi</div>
-              <div class="cb-list">
-                <div class="cb-item" id="cb-phone" onclick="toggleCheckbox('cb-phone')">
-                  <span class="cb-label">Wyrażam zgodę na kontakt tel. oraz akceptuję <a href="polityka.html" target="_blank" onclick="event.stopPropagation()" style="color: #65676b; text-decoration: underline;">Politykę Prywatności</a></span>
-                  <div class="cb-box"></div>
-                </div>
-              </div>
-              <div class="legal-text">
-                Poprzez kliknięcie przycisku Prześlij wyrażasz zgodę na przesłanie Twoich informacji stronie Manufaktura
-                Formy Białystok, która zobowiązuje się do korzystania z nich zgodnie z własnymi zasadami.<br><br>
-                <a href="#" class="legal-link">Wyświetl Zasady dotyczące danych na Facebooku.</a><br>
-                <a href="polityka.html" target="_blank" class="legal-link" style="color: #bcc0c4; text-decoration: none;">Polityka Prywatności Manufaktura Formy</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- SLIDE 4: DZIĘKUJEMY -->
-          <div class="slide">
-            <div class="q-card">
-              <div class="thankyou-wrap">
-                <div class="ty-check">✅</div>
-                <div class="ty-title">Dziękujemy bardzo!</div>
-                <div class="ty-body">Skontaktujemy się z Tobą w ciągu 24h.</div>
-                <div class="ty-body">Jeśli nie chcesz czekać możesz zadzwonić i umówić się już TERAZ!</div>
-                <div class="ty-footer">
-                  <span>ℹ️</span>
-                  <span>Twoje odpowiedzi zostały przesłane.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- REJECTION -->
-      <div class="rejection-screen" id="rejectionScreen">
-        <div class="rejection-emoji">🙏</div>
-        <div class="rejection-title">Rozumiemy, że na razie to nie ten moment</div>
-        <div class="rejection-sub">
-          Gdy będziesz gotowy/gotowa — jesteśmy tutaj!<br><br>
-          Tymczasem zapraszamy na nasz Instagram, gdzie pokazujemy efekty treningów EMS, porady i życie studia na co
-          dzień 💪
-        </div>
-        <a class="btn-ig" href="https://www.instagram.com/manufakturaformy.bialystok" target="_blank">
-          <svg viewBox="0 0 24 24">
-            <path
-              d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-          </svg>
-          Obserwuj nas na Instagramie
-        </a>
-        <button class="btn-rejection-back" onclick="hideRejection()">← Wróć do formularza</button>
-      </div>
-
-    </div><!-- /content-area-slides -->
-
-    <!-- BOTTOM BAR -->
-    <div class="bottom-bar" id="bottomBar">
-      <div class="progress-dots" id="progressDots">
-        <div class="dot active" id="dot0"></div>
-        <div class="dot" id="dot1"></div>
-        <div class="dot" id="dot2"></div>
-        <div class="dot" id="dot3"></div>
-      </div>
-      <button class="btn-next" id="mainBtn" onclick="handleNext()">
-        <span class="btn-label" id="btnLabel">Umów trening próbny →</span>
-        <div class="spinner"></div>
-      </button>
-      <button class="btn-back-link" id="backBtn" onclick="prevSlide()" style="display:none">Wstecz</button>
-    </div>
-
-  </div><!-- /content-area -->
-  </div>
-
-  <script>
-    // ══ CONFIG ══
-    const _0x1a2b = ["\x68\x74\x74\x70\x73\x3a\x2f\x2f\x73\x63\x72\x69\x70\x74\x2e\x67\x6f\x6f\x67\x6c\x65\x2e\x63\x6f\x6d\x2f\x6d\x61\x63\x72\x6f\x73\x2f\x73\x2f\x41\x4b\x66\x79\x63\x62\x78\x38\x75\x31\x67\x59\x34\x76\x46\x68\x6a\x54\x67\x63\x79\x45\x38\x5a\x35\x4d\x79\x50\x6a\x32\x2d\x4a\x55\x44\x78\x72\x2d\x5f\x34\x38\x38\x6f\x51\x33\x4b\x66\x7a\x42\x6a\x4d\x4e\x6b\x73\x54\x75\x61\x77\x6e\x56\x6f\x4d\x71\x30\x5f\x51\x59\x4f\x79\x64\x51\x53\x68\x67\x51\x2f\x65\x78\x65\x63"];
-    const SHEETS_URL = _0x1a2b[0];
-
-    const p = new URLSearchParams(window.location.search);
-    const UTM = {
-      source: p.get('utm_source') || 'brak',
-      medium: p.get('utm_medium') || 'brak',
-      campaign: p.get('utm_campaign') || 'brak',
-      content: p.get('utm_content') || 'brak',
-    };
-    const SESSION_ID = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-
-    let cur = 0;
-    let selectedIdx = null;
-    const ans = { q1: null, name: "", phone: "", cbPhone: false };
-    const t0 = Date.now();
-    const LABELS = [
-      'Narazie nie chcę próbować',
-      'W następnym tygodniu — odezwijcie się do mnie',
-      'Chcę spróbować w tym tygodniu 💪'
-    ];
-    const STEPS = ['intro', 'pytanie_kiedy', 'dane_kontaktowe', 'zgody', 'podziekowanie'];
-    const TOTAL_STEPS = 4; // 0..3 visible dots
-
-    // FB Pixel
-    function fbTrack(event, params) { try { if (typeof fbq === 'function') fbq('track', event, params || {}); } catch (e) { } }
-    function fbCustom(event, params) { try { if (typeof fbq === 'function') fbq('trackCustom', event, params || {}); } catch (e) { } }
-
-    document.addEventListener('DOMContentLoaded', function () {
-      var inp = document.getElementById('inp-phone');
-      if (!inp) return;
-
-      // Zdarzenie input - czyszczenie + formatowanie
-      inp.addEventListener('input', function (e) {
-        if (e.inputType === 'deleteContentBackward') {
-          validateContact();
-          return;
+            el.appendChild(iframe);
+            el.style.cursor = "default";
         }
 
-        var input = e.target, cursor = input.selectionStart;
-        var rawValue = input.value.replace(/^(?:\+48\s*|0048\s*|48\s*)/, ''); // Usuwa +48, 0048 i ew. samo 48 na początku
-        var digits = rawValue.replace(/\D/g, '').slice(0, 9);
-        var formatted = '';
+        // ══ CONFIG ══
+        const _0x1a2b = ["\x68\x74\x74\x70\x73\x3a\x2f\x2f\x73\x63\x72\x69\x70\x74\x2e\x67\x6f\x6f\x67\x6c\x65\x2e\x63\x6f\x6d\x2f\x6d\x61\x63\x72\x6f\x73\x2f\x73\x2f\x41\x4b\x66\x79\x63\x62\x78\x38\x75\x31\x67\x59\x34\x76\x46\x68\x6a\x54\x67\x63\x79\x45\x38\x5a\x35\x4d\x79\x50\x6a\x32\x2d\x4a\x55\x44\x78\x72\x2d\x5f\x34\x38\x38\x6f\x51\x33\x4b\x66\x7a\x42\x6a\x4d\x4e\x6b\x73\x54\x75\x61\x77\x6e\x56\x6f\x4d\x71\x30\x5f\x51\x59\x4f\x79\x64\x51\x53\x68\x67\x51\x2f\x65\x78\x65\x63"];
+        const SHEETS_URL = _0x1a2b[0];
 
-        for (var i = 0; i < digits.length; i++) {
-          if (i === 3 || i === 6) formatted += ' ';
-          formatted += digits[i];
+        const p = new URLSearchParams(window.location.search);
+        const UTM = {
+            source: p.get('utm_source') || 'brak',
+            medium: p.get('utm_medium') || 'brak',
+            campaign: p.get('utm_campaign') || 'brak',
+            content: p.get('utm_content') || 'brak',
+        };
+        const SESSION_ID = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+
+        let cur = 0;
+        let selectedIdx = null;
+        const ans = { q1: null, name: "", phone: "", cbPhone: false };
+        const t0 = Date.now();
+        const LABELS = [
+            'Narazie nie chcę próbować',
+            'W następnym tygodniu — odezwijcie się do mnie',
+            'Chcę spróbować w tym tygodniu 💪'
+        ];
+        const STEPS = ['intro', 'pytanie_kiedy', 'dane_kontaktowe', 'zgody', 'podziekowanie'];
+        const TOTAL_STEPS = 4; // 0..3 visible dots
+
+        // FB Pixel
+        function fbTrack(event, params) { try { if (typeof fbq === 'function') fbq('track', event, params || {}); } catch (e) { } }
+        function fbCustom(event, params) { try { if (typeof fbq === 'function') fbq('trackCustom', event, params || {}); } catch (e) { } }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var inp = document.getElementById('inp-phone');
+            if (!inp) return;
+
+            // Zdarzenie input - czyszczenie + formatowanie
+            inp.addEventListener('input', function (e) {
+                if (e.inputType === 'deleteContentBackward') {
+                    validateContact();
+                    return;
+                }
+
+                var input = e.target, cursor = input.selectionStart;
+                var rawValue = input.value.replace(/^(?:\+48\s*|0048\s*|48\s*)/, ''); // Usuwa +48, 0048 i ew. samo 48 na początku
+                var digits = rawValue.replace(/\D/g, '').slice(0, 9);
+                var formatted = '';
+
+                for (var i = 0; i < digits.length; i++) {
+                    if (i === 3 || i === 6) formatted += ' ';
+                    formatted += digits[i];
+                }
+
+                // Jeśli podczas autocomplete tekst wskoczył naraz — napraw kursor i przeredaguj
+                if (input.value !== formatted) {
+                    input.value = formatted;
+                    // W mobile autocomplete zazwyczaj ląduje na końcu, więc skok do length
+                    input.setSelectionRange(formatted.length, formatted.length);
+                }
+                validateContact();
+            });
+
+            // Zdarzenie paste - dla skopiowanych numerów z messengera itp
+            inp.addEventListener('paste', function (e) {
+                e.preventDefault();
+                var pasted = (e.clipboardData || window.clipboardData).getData('text');
+                var rawPasted = pasted.replace(/^(?:\+48\s*|0048\s*|48\s*)/, '');
+                var digits = rawPasted.replace(/\D/g, '').slice(0, 9);
+                var formatted = '';
+
+                for (var i = 0; i < digits.length; i++) {
+                    if (i === 3 || i === 6) formatted += ' ';
+                    formatted += digits[i];
+                }
+                inp.value = formatted;
+                validateContact();
+            });
+            inp.addEventListener('keydown', function (e) {
+                var allowed = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Tab', 'Home', 'End'];
+                if (allowed.indexOf(e.key) !== -1 || e.ctrlKey || e.metaKey) return;
+                if (!/^\d$/.test(e.key)) e.preventDefault();
+            });
+        });
+
+        // ── NAV ──
+        function goTo(n) {
+            document.getElementById('slidesInner').style.transform = `translateX(-${n * 100}%)`;
+            cur = n;
+            updateUI();
+            if (n === 1) fbCustom('FormStep1_Pytanie');
+            if (n === 2) fbCustom('FormStep2_Kontakt');
+            if (n === 3) fbCustom('FormStep3_Zgody');
+            if (n > 0) ping(n, 'entered');
+        }
+        function prevSlide() { if (cur > 0) goTo(cur - 1); }
+
+        function updateUI() {
+            // Dots: show for slides 0-3
+            for (var i = 0; i < TOTAL_STEPS; i++) {
+                var d = document.getElementById('dot' + i);
+                if (!d) continue;
+                d.className = 'dot';
+                if (i < cur) d.classList.add('done');
+                else if (i === cur) d.classList.add('active');
+            }
+
+            // Back button
+            document.getElementById('backBtn').style.display = (cur > 0 && cur < 4) ? 'block' : 'none';
+
+            // Bottom bar visibility
+            document.getElementById('bottomBar').style.display = cur === 4 ? 'none' : '';
+
+            // Header text
+            var titles = [
+                'EMS robi robotę. Ty musisz tylko przyjść 💪',
+                'Kiedy chciałbyś spróbować?',
+                'Dane kontaktowe',
+                'Oświadczenia',
+                ''
+            ];
+            var subs = ['Trening próbny EMS + drenaż za 69 zł', 'Zaznacz jedną odpowiedź', 'Podaj swój kontakt', 'Zaznacz zgody', ''];
+            document.getElementById('hcTitle').innerHTML = titles[cur] || '';
+            document.getElementById('hcSub').textContent = subs[cur] || '';
+
+            // Btn label
+            var labels = ['Umów trening próbny →', 'Kontynuuj', 'Kontynuuj', 'Prześlij', ''];
+            document.getElementById('btnLabel').textContent = labels[cur] || 'Kontynuuj';
+
+            // Btn disabled state
+            var btn = document.getElementById('mainBtn');
+            btn.disabled = false;
+            if (cur === 1 && selectedIdx === null) btn.disabled = true;
+            if (cur === 2) validateContact();
+            if (cur === 3 && !ans.cbPhone) btn.disabled = true;
         }
 
-        // Jeśli podczas autocomplete tekst wskoczył naraz — napraw kursor i przeredaguj
-        if (input.value !== formatted) {
-          input.value = formatted;
-          // W mobile autocomplete zazwyczaj ląduje na końcu, więc skok do length
-          input.setSelectionRange(formatted.length, formatted.length);
+        function handleNext() {
+            if (cur === 0) { goTo(1); return; }
+            if (cur === 1) { handleQ1Next(); return; }
+            if (cur === 2) { goTo(3); return; }
+            if (cur === 3) { submitForm(); return; }
         }
-        validateContact();
-      });
 
-      // Zdarzenie paste - dla skopiowanych numerów z messengera itp
-      inp.addEventListener('paste', function (e) {
-        e.preventDefault();
-        var pasted = (e.clipboardData || window.clipboardData).getData('text');
-        var rawPasted = pasted.replace(/^(?:\+48\s*|0048\s*|48\s*)/, '');
-        var digits = rawPasted.replace(/\D/g, '').slice(0, 9);
-        var formatted = '';
-
-        for (var i = 0; i < digits.length; i++) {
-          if (i === 3 || i === 6) formatted += ' ';
-          formatted += digits[i];
+        // ── Q1 ──
+        function handleQ1Next() {
+            if (selectedIdx === 0) {
+                send({
+                    type: 'dropoff', event: 'narazie_nie_chce',
+                    session_id: SESSION_ID,
+                    timestamp: new Date().toISOString(),
+                    step: 1, step_name: 'pytanie_kiedy',
+                    kiedy_trening: LABELS[0],
+                    utm_content: UTM.content, utm_campaign: UTM.campaign, utm_source: UTM.source,
+                });
+                showRejection();
+            } else {
+                goTo(2);
+            }
         }
-        inp.value = formatted;
-        validateContact();
-      });
-      inp.addEventListener('keydown', function (e) {
-        var allowed = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Tab', 'Home', 'End'];
-        if (allowed.indexOf(e.key) !== -1 || e.ctrlKey || e.metaKey) return;
-        if (!/^\d$/.test(e.key)) e.preventDefault();
-      });
-    });
 
-    // ── NAV ──
-    function goTo(n) {
-      document.getElementById('slidesInner').style.transform = `translateX(-${n * 100}%)`;
-      cur = n;
-      updateUI();
-      if (n === 1) fbCustom('FormStep1_Pytanie');
-      if (n === 2) fbCustom('FormStep2_Kontakt');
-      if (n === 3) fbCustom('FormStep3_Zgody');
-      if (n > 0) ping(n, 'entered');
-    }
-    function prevSlide() { if (cur > 0) goTo(cur - 1); }
+        function showRejection() {
+            document.querySelector('.slides-outer').style.display = 'none';
+            document.getElementById('bottomBar').style.display = 'none';
+            document.getElementById('headerCard').style.display = 'none';
+            document.getElementById('rejectionScreen').classList.add('active');
+        }
+        function hideRejection() {
+            document.querySelector('.slides-outer').style.display = '';
+            document.getElementById('bottomBar').style.display = '';
+            document.getElementById('headerCard').style.display = '';
+            document.getElementById('rejectionScreen').classList.remove('active');
+            selectedIdx = null; ans.q1 = null;
+            document.getElementById('q1-options').querySelectorAll('.radio-item').forEach(el => el.classList.remove('selected'));
+            document.getElementById('mainBtn').disabled = true;
+            goTo(1);
+        }
 
-    function updateUI() {
-      // Dots: show for slides 0-3
-      for (var i = 0; i < TOTAL_STEPS; i++) {
-        var d = document.getElementById('dot' + i);
-        if (!d) continue;
-        d.className = 'dot';
-        if (i < cur) d.classList.add('done');
-        else if (i === cur) d.classList.add('active');
-      }
+        // ── OPTIONS ──
+        function selectOption(i) {
+            selectedIdx = i;
+            document.getElementById('q1-options').querySelectorAll('.radio-item')
+                .forEach((el, j) => el.classList.toggle('selected', j === i));
+            ans.q1 = LABELS[i];
+            document.getElementById('mainBtn').disabled = false;
+        }
 
-      // Back button
-      document.getElementById('backBtn').style.display = (cur > 0 && cur < 4) ? 'block' : 'none';
+        function validateContact() {
+            ans.name = document.getElementById('inp-name').value.trim();
+            var phoneInput = document.getElementById('inp-phone');
+            var digits = phoneInput.value.replace(/\D/g, '');
+            var phoneValid = digits.length === 9;
+            var phoneTouched = digits.length > 0;
+            ans.phone = phoneInput.value.trim();
+            var hint = document.getElementById('phone-hint');
+            var err = document.getElementById('phone-error');
+            if (phoneTouched && !phoneValid) {
+                phoneInput.classList.add('error');
+                err.style.display = 'block'; hint.style.display = 'none';
+            } else {
+                phoneInput.classList.remove('error');
+                err.style.display = 'none'; hint.style.display = 'block';
+            }
+            document.getElementById('mainBtn').disabled = !(ans.name.length > 1 && phoneValid);
+        }
 
-      // Bottom bar visibility
-      document.getElementById('bottomBar').style.display = cur === 4 ? 'none' : '';
+        function toggleCheckbox(id) {
+            var el = document.getElementById(id);
+            el.classList.toggle('checked');
+            if (id === 'cb-phone') {
+                ans.cbPhone = el.classList.contains('checked');
+                document.getElementById('mainBtn').disabled = !ans.cbPhone;
+            }
+        }
 
-      // Header text
-      var titles = [
-        'EMS robi robotę. Ty musisz tylko przyjść 💪',
-        'Kiedy chciałbyś spróbować?',
-        'Dane kontaktowe',
-        'Oświadczenia',
-        ''
-      ];
-      var subs = ['Trening próbny EMS + drenaż za 69 zł', 'Zaznacz jedną odpowiedź', 'Podaj swój kontakt', 'Zaznacz zgody', ''];
-      document.getElementById('hcTitle').innerHTML = titles[cur] || '';
-      document.getElementById('hcSub').textContent = subs[cur] || '';
+        // ── SUBMIT ──
+        async function submitForm() {
+            var btn = document.getElementById('mainBtn');
+            btn.disabled = true; btn.classList.add('loading');
+            document.getElementById('btnLabel').textContent = 'Wysyłam…';
+            await send({
+                type: 'submission',
+                session_id: SESSION_ID,
+                timestamp: new Date().toISOString(),
+                czas_wypelniania: Math.round((Date.now() - t0) / 1000) + 's',
+                imie_nazwisko: ans.name,
+                telefon: ans.phone,
+                kiedy_trening: ans.q1,
+                utm_content: UTM.content, utm_campaign: UTM.campaign,
+                utm_source: UTM.source, utm_medium: UTM.medium,
+                zgoda_telefon: ans.cbPhone ? 'TAK' : 'NIE',
+            });
+            btn.classList.remove('loading');
+            fbTrack('Lead');
+            fbTrack('Contact', { currency: 'PLN', value: 1 });
+            goTo(4);
 
-      // Btn label
-      var labels = ['Umów trening próbny →', 'Kontynuuj', 'Kontynuuj', 'Prześlij', ''];
-      document.getElementById('btnLabel').textContent = labels[cur] || 'Kontynuuj';
+            // Efekt konfetti po przejściu na Thank You
+            if (typeof window.confetti === 'function') {
+                window.confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+            }
+        }
 
-      // Btn disabled state
-      var btn = document.getElementById('mainBtn');
-      btn.disabled = false;
-      if (cur === 1 && selectedIdx === null) btn.disabled = true;
-      if (cur === 2) validateContact();
-      if (cur === 3 && !ans.cbPhone) btn.disabled = true;
-    }
+        async function ping(step, event) {
+            await send({
+                type: 'dropoff', event,
+                session_id: SESSION_ID,
+                timestamp: new Date().toISOString(),
+                step, step_name: STEPS[step] || '',
+                imie: ans.name, telefon: ans.phone,
+                utm_content: UTM.content, utm_campaign: UTM.campaign, utm_source: UTM.source,
+            });
+        }
 
-    function handleNext() {
-      if (cur === 0) { goTo(1); return; }
-      if (cur === 1) { handleQ1Next(); return; }
-      if (cur === 2) { goTo(3); return; }
-      if (cur === 3) { submitForm(); return; }
-    }
+        async function send(data) {
+            // Blokada zapisu dla Ciebie (administratora)
+            // Kiedy testujesz stronę (żeby nie psuć statystyk), wejdź przez link: ?test=1
+            if (window.location.search.indexOf('test=1') !== -1) {
+                console.log("Blokada arkusza - włączony tryb testowy.");
+                return;
+            }
 
-    // ── Q1 ──
-    function handleQ1Next() {
-      if (selectedIdx === 0) {
+            // Bezwarunkowo dodajemy zaktualizowany czas trwania całej sesji do każdych danych,
+            // dzięki czemu Google Arkusz zawsze ma aktualny czas przebywania co każde uderzenie w API
+            if (!data.czas_wypelniania) {
+                var spentTimer = Math.round((Date.now() - t0) / 1000);
+                var mm = Math.floor(spentTimer / 60);
+                var ss = spentTimer % 60;
+                data.czas_wypelniania = (mm < 10 ? '0' + mm : mm) + ':' + (ss < 10 ? '0' + ss : ss);
+            }
+
+            try {
+                await fetch(SHEETS_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    keepalive: true,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+            } catch (e) { console.error(e); }
+        }
+
+        updateUI();
+
+        // ── Obliczanie czasu absolutnego (Zakończenie sesji) ─────────
+        let lastLogTime = 0;
+        function logPageClose() {
+            var now = Date.now();
+            if (now - lastLogTime < 1000) return; // Zapobiega podwójnemu wysłaniu przy jednoczesnym pagehide i visibilitychange
+            lastLogTime = now;
+
+            var sec = Math.round((now - t0) / 1000);
+            var m = Math.floor(sec / 60);
+            var s = sec % 60;
+            var formatCzas = (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+
+            var payloadData = {
+                type: 'dropoff',
+                event: STEPS[cur] + '_zamknieta',
+                session_id: SESSION_ID,
+                timestamp: new Date().toISOString(),
+                step: cur,
+                step_name: STEPS[cur] || '',
+                kiedy_trening: ans.q1 || '',
+                imie: ans.name || '',
+                telefon: ans.phone || '',
+                czas_wypelniania: formatCzas,
+                utm_content: UTM.content,
+                utm_campaign: UTM.campaign,
+                utm_source: UTM.source
+            };
+
+            if (window.location.search.indexOf('test=1') !== -1) return;
+
+            try {
+                fetch(SHEETS_URL, {
+                    method: 'POST', mode: 'no-cors', keepalive: true,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payloadData)
+                });
+            } catch (e) { }
+        }
+
+        document.addEventListener('visibilitychange', function () {
+            if (document.visibilityState === 'hidden') {
+                logPageClose();
+            }
+        });
+        window.addEventListener('pagehide', logPageClose);
+
+        // ── Intro tracking (Start) ─────────────────────────────────────────
+        // Wysyła domyślny `intro` w celu oznaczenia wejścia z czasem załadowania = 00:00
         send({
-          type: 'dropoff', event: 'narazie_nie_chce',
-          session_id: SESSION_ID,
-          timestamp: new Date().toISOString(),
-          step: 1, step_name: 'pytanie_kiedy',
-          kiedy_trening: LABELS[0],
-          utm_content: UTM.content, utm_campaign: UTM.campaign, utm_source: UTM.source,
+            type: 'dropoff',
+            event: 'intro',
+            session_id: SESSION_ID,
+            timestamp: new Date().toISOString(),
+            step: 0,
+            step_name: 'intro',
+            utm_content: UTM.content,
+            utm_campaign: UTM.campaign,
+            utm_source: UTM.source,
         });
-        showRejection();
-      } else {
-        goTo(2);
-      }
-    }
-
-    function showRejection() {
-      document.querySelector('.slides-outer').style.display = 'none';
-      document.getElementById('bottomBar').style.display = 'none';
-      document.getElementById('headerCard').style.display = 'none';
-      document.getElementById('rejectionScreen').classList.add('active');
-    }
-    function hideRejection() {
-      document.querySelector('.slides-outer').style.display = '';
-      document.getElementById('bottomBar').style.display = '';
-      document.getElementById('headerCard').style.display = '';
-      document.getElementById('rejectionScreen').classList.remove('active');
-      selectedIdx = null; ans.q1 = null;
-      document.getElementById('q1-options').querySelectorAll('.radio-item').forEach(el => el.classList.remove('selected'));
-      document.getElementById('mainBtn').disabled = true;
-      goTo(1);
-    }
-
-    // ── OPTIONS ──
-    function selectOption(i) {
-      selectedIdx = i;
-      document.getElementById('q1-options').querySelectorAll('.radio-item')
-        .forEach((el, j) => el.classList.toggle('selected', j === i));
-      ans.q1 = LABELS[i];
-      document.getElementById('mainBtn').disabled = false;
-    }
-
-    function validateContact() {
-      ans.name = document.getElementById('inp-name').value.trim();
-      var phoneInput = document.getElementById('inp-phone');
-      var digits = phoneInput.value.replace(/\D/g, '');
-      var phoneValid = digits.length === 9;
-      var phoneTouched = digits.length > 0;
-      ans.phone = phoneInput.value.trim();
-      var hint = document.getElementById('phone-hint');
-      var err = document.getElementById('phone-error');
-      if (phoneTouched && !phoneValid) {
-        phoneInput.classList.add('error');
-        err.style.display = 'block'; hint.style.display = 'none';
-      } else {
-        phoneInput.classList.remove('error');
-        err.style.display = 'none'; hint.style.display = 'block';
-      }
-      document.getElementById('mainBtn').disabled = !(ans.name.length > 1 && phoneValid);
-    }
-
-    function toggleCheckbox(id) {
-      var el = document.getElementById(id);
-      el.classList.toggle('checked');
-      if (id === 'cb-phone') {
-        ans.cbPhone = el.classList.contains('checked');
-        document.getElementById('mainBtn').disabled = !ans.cbPhone;
-      }
-    }
-
-    // ── SUBMIT ──
-    async function submitForm() {
-      var btn = document.getElementById('mainBtn');
-      btn.disabled = true; btn.classList.add('loading');
-      document.getElementById('btnLabel').textContent = 'Wysyłam…';
-      await send({
-        type: 'submission',
-        session_id: SESSION_ID,
-        timestamp: new Date().toISOString(),
-        czas_wypelniania: Math.round((Date.now() - t0) / 1000) + 's',
-        imie_nazwisko: ans.name,
-        telefon: ans.phone,
-        kiedy_trening: ans.q1,
-        utm_content: UTM.content, utm_campaign: UTM.campaign,
-        utm_source: UTM.source, utm_medium: UTM.medium,
-        zgoda_telefon: ans.cbPhone ? 'TAK' : 'NIE',
-      });
-      btn.classList.remove('loading');
-      fbTrack('Lead');
-      fbTrack('Contact', { currency: 'PLN', value: 1 });
-      goTo(4);
-
-      // Efekt konfetti po przejściu na Thank You
-      if (typeof window.confetti === 'function') {
-        window.confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-      }
-    }
-
-    async function ping(step, event) {
-      await send({
-        type: 'dropoff', event,
-        session_id: SESSION_ID,
-        timestamp: new Date().toISOString(),
-        step, step_name: STEPS[step] || '',
-        imie: ans.name, telefon: ans.phone,
-        utm_content: UTM.content, utm_campaign: UTM.campaign, utm_source: UTM.source,
-      });
-    }
-
-    async function send(data) {
-      // Blokada zapisu dla Ciebie (administratora)
-      // Kiedy testujesz stronę (żeby nie psuć statystyk), wejdź przez link: ?test=1
-      if (window.location.search.indexOf('test=1') !== -1) {
-        console.log("Blokada arkusza - włączony tryb testowy.");
-        return;
-      }
-
-      // Bezwarunkowo dodajemy zaktualizowany czas trwania całej sesji do każdych danych,
-      // dzięki czemu Google Arkusz zawsze ma aktualny czas przebywania co każde uderzenie w API
-      if (!data.czas_wypelniania) {
-        var spentTimer = Math.round((Date.now() - t0) / 1000);
-        var mm = Math.floor(spentTimer / 60);
-        var ss = spentTimer % 60;
-        data.czas_wypelniania = (mm < 10 ? '0' + mm : mm) + ':' + (ss < 10 ? '0' + ss : ss);
-      }
-
-      try {
-        await fetch(SHEETS_URL, { 
-          method: 'POST', 
-          mode: 'no-cors', 
-          keepalive: true, 
-          headers: { 'Content-Type': 'application/json' }, 
-          body: JSON.stringify(data) 
-        });
-      } catch (e) { console.error(e); }
-    }
-
-    updateUI();
-
-    // ── Obliczanie czasu absolutnego (Zakończenie sesji) ─────────
-    let lastLogTime = 0;
-    function logPageClose() {
-      var now = Date.now();
-      if (now - lastLogTime < 1000) return; // Zapobiega podwójnemu wysłaniu przy jednoczesnym pagehide i visibilitychange
-      lastLogTime = now;
-      
-      var sec = Math.round((now - t0) / 1000);
-      var m = Math.floor(sec / 60);
-      var s = sec % 60;
-      var formatCzas = (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
-      
-      var payloadData = {
-        type: 'dropoff',
-        event: STEPS[cur] + '_zamknieta',
-        session_id: SESSION_ID,
-        timestamp: new Date().toISOString(),
-        step: cur,
-        step_name: STEPS[cur] || '',
-        kiedy_trening: ans.q1 || '',
-        imie: ans.name || '',
-        telefon: ans.phone || '',
-        czas_wypelniania: formatCzas,
-        utm_content: UTM.content,
-        utm_campaign: UTM.campaign,
-        utm_source: UTM.source
-      };
-
-      if (window.location.search.indexOf('test=1') !== -1) return;
-
-      try {
-        fetch(SHEETS_URL, { 
-          method: 'POST', mode: 'no-cors', keepalive: true, 
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payloadData) 
-        });
-      } catch(e) {}
-    }
-
-    document.addEventListener('visibilitychange', function() {
-      if (document.visibilityState === 'hidden') {
-         logPageClose();
-      }
-    });
-    window.addEventListener('pagehide', logPageClose);
-
-    // ── Intro tracking (Start) ─────────────────────────────────────────
-    // Wysyła domyślny `intro` w celu oznaczenia wejścia z czasem załadowania = 00:00
-    send({
-      type: 'dropoff',
-      event: 'intro',
-      session_id: SESSION_ID,
-      timestamp: new Date().toISOString(),
-      step: 0,
-      step_name: 'intro',
-      utm_content: UTM.content,
-      utm_campaign: UTM.campaign,
-      utm_source: UTM.source,
-    });
-  </script>
+    </script>
 </body>
 
 </html>
