@@ -1031,40 +1031,36 @@
 
         function initCustomVideo() {
             var iframe = document.createElement("iframe");
-            // controls=0 ukrywa natywne sterowanie vimeo, używamy autoplay=1, dodajemy dnt=1
-            iframe.src = "https://player.vimeo.com/video/1173562142?controls=0&autoplay=1&muted=0&title=0&byline=0&portrait=0&dnt=1";
+            // controls=0 ukrywa natywne sterowanie vimeo, używamy autoplay=1 + muted=1 by bezbłędnie wejść
+            iframe.src = "https://player.vimeo.com/video/1173562142?controls=0&autoplay=1&muted=1&title=0&byline=0&portrait=0&dnt=1";
             iframe.setAttribute("allow", "autoplay; fullscreen");
             document.getElementById('vimeoPlayerContainer').appendChild(iframe);
 
             vimeoPlayer = new Vimeo.Player(iframe);
 
             vimeoPlayer.ready().then(function () {
-                // Po załadowaniu ukrywamy stałą okładkę, vimeo samo wyświetli miniaturkę
-                document.getElementById('vslCover').style.display = 'none';
+                // Po załadowaniu iframe ustawiamy poprawny, wyciszony stan UI
+                setMutedUI(true);
 
-                // Próba autoplay z dźwiękiem
-                vimeoPlayer.setVolume(1).then(() => {
-                    vimeoPlayer.play().then(() => {
-                        // Udało się odtworzyć z dźwiękiem (np. na komputerze przy niektórych ustawieniach)
-                        setPlaying(true);
-                        setMutedUI(false);
-                        document.getElementById('initialPlayOverlay').style.display = 'none';
-                    }).catch(function (error) {
-                        if (error.name === 'NotAllowedError') {
-                            // Przeglądarka zablokowała dźwięk
-                            vimeoPlayer.setVolume(0).then(() => {
-                                vimeoPlayer.play().then(() => {
-                                    setPlaying(true);
-                                    setMutedUI(true);
-                                    document.getElementById('initialPlayOverlay').style.display = 'none';
-                                    document.getElementById('unmuteOverlay').style.display = 'flex';
-                                });
-                            });
-                        } else {
-                            // Autoplay całkowicie zablokowane (np. low power mode)
-                            setPlaying(false);
-                        }
-                    });
+                // Vimeo ma w URL muted=1 i autoplay=1, co u większości zadziała niemal od razu,
+                // ale "dobijamy" je wywołując play, żeby uchwycić moment ruszenia do zdjęcia okładki
+                vimeoPlayer.play().then(() => {
+                    setPlaying(true);
+                    
+                    // Chowamy naszą niestandardową okładkę DOPIERO kiedy wideo naprawdę gra
+                    // dzięki temu nie będziemy mieć ułamka sekundy czarnego okna ładowania Vimeo
+                    setTimeout(() => {
+                        document.getElementById('vslCover').style.display = 'none';
+                    }, 100);
+
+                    document.getElementById('initialPlayOverlay').style.display = 'none';
+                    document.getElementById('unmuteOverlay').style.display = 'flex';
+
+                }).catch(function (error) {
+                    // Autoplay jest wymuszenie zablokowane przez telefon (bateria, Low Power Mode).
+                    setPlaying(false);
+                    // Tutaj od razu kryjemy vslCover, by chociaż natywna miniatura Vimeo służyła za tło
+                    document.getElementById('vslCover').style.display = 'none';
                 });
             });
 
