@@ -1260,6 +1260,10 @@
         function goTo(n) {
             document.getElementById('slidesInner').style.transform = `translateX(-${n * 100}%)`;
             cur = n;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Czasem dla pewności scrollujemy też główny kontener na mobile
+            document.querySelector('.fb-wrapper').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
             updateUI();
             if (n === 1) fbCustom('FormStep1_Pytanie');
             if (n === 2) fbCustom('FormStep2_Kontakt');
