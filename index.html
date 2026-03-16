@@ -1049,6 +1049,9 @@
         let vimeoPlayer = null;
         let isPlaying = false;
         let isMuted = false;
+        let maxWatchSec = 0;
+        let maxPercent = 0;
+        let videoStatsSent = false;
 
         function initCustomVideo() {
             var iframe = document.createElement("iframe");
@@ -1086,8 +1089,11 @@
             });
 
             vimeoPlayer.on('timeupdate', function (data) {
-                var percent = (data.percent * 100) + '%';
-                document.getElementById('progressFill').style.width = percent;
+                var percent = (data.percent * 100);
+                document.getElementById('progressFill').style.width = percent + '%';
+                
+                if (data.seconds > maxWatchSec) maxWatchSec = data.seconds;
+                if (percent > maxPercent) maxPercent = percent;
             });
 
             vimeoPlayer.on('play', function () { setPlaying(true); });
@@ -1291,6 +1297,18 @@
             inner.style.transform = `translateX(-${n * 100}%)`;
 
             cur = n;
+
+            // Tracking video stats when navigating away from slide 0 for the first time
+            if (n > 0 && maxWatchSec > 0 && !videoStatsSent) {
+                videoStatsSent = true;
+                send({
+                    type: 'video_stats',
+                    session_id: SESSION_ID,
+                    watch_time_sec: Math.round(maxWatchSec),
+                    percent_watched: Math.round(maxPercent),
+                    krok: 'przeszedl_dalej'
+                });
+            }
 
             // Wait for transition to finish before hiding inactive
             setTimeout(() => {
@@ -1513,6 +1531,17 @@
             var m = Math.floor(sec / 60);
             var s = sec % 60;
             var formatCzas = (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+
+            if (cur === 0 && maxWatchSec > 0 && !videoStatsSent) {
+                videoStatsSent = true;
+                send({
+                    type: 'video_stats',
+                    session_id: SESSION_ID,
+                    watch_time_sec: Math.round(maxWatchSec),
+                    percent_watched: Math.round(maxPercent),
+                    krok: 'zamknal_film'
+                });
+            }
 
             var payloadData = {
                 type: 'dropoff',
