@@ -112,9 +112,9 @@
 
         .slides-inner {
             display: flex;
-            transition: transform .3s cubic-bezier(.4, 0, .2, 1);
-            will-change: transform;
-            height: 100%;
+            align-items: flex-start;
+            transition: transform .3s cubic-bezier(.4, 0, .2, 1), height .3s cubic-bezier(.4, 0, .2, 1);
+            will-change: transform, height;
         }
 
         .slide {
@@ -1203,6 +1203,7 @@
         function fbCustom(event, params) { try { if (typeof fbq === 'function') fbq('trackCustom', event, params || {}); } catch (e) { } }
 
         document.addEventListener('DOMContentLoaded', function () {
+            initSlides();
             initCustomVideo();
 
             var inp = document.getElementById('inp-phone');
@@ -1257,13 +1258,55 @@
         });
 
         // ── NAV ──
+        function initSlides() {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach((s, i) => {
+                if (i !== 0) {
+                    s.style.height = '0';
+                    s.style.overflow = 'hidden';
+                    s.style.visibility = 'hidden';
+                }
+            });
+        }
+
         function goTo(n) {
-            document.getElementById('slidesInner').style.transform = `translateX(-${n * 100}%)`;
+            const inner = document.getElementById('slidesInner');
+            const slides = document.querySelectorAll('.slide');
+
+            // Fix container height to current so we can animate
+            inner.style.height = inner.offsetHeight + 'px';
+
+            // Show target slide
+            slides[n].style.height = 'auto';
+            slides[n].style.visibility = 'visible';
+            slides[n].style.overflow = 'visible';
+
+            // Trigger reflow
+            void inner.offsetHeight;
+
+            // Animate to new height
+            inner.style.height = slides[n].offsetHeight + 'px';
+
+            // Animate translation
+            inner.style.transform = `translateX(-${n * 100}%)`;
+
             cur = n;
+
+            // Wait for transition to finish before hiding inactive
+            setTimeout(() => {
+                slides.forEach((s, idx) => {
+                    if (idx !== n) {
+                        s.style.height = '0';
+                        s.style.overflow = 'hidden';
+                        s.style.visibility = 'hidden';
+                    }
+                });
+                inner.style.height = 'auto'; // allow slide to resize dynamically
+            }, 300);
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            // Czasem dla pewności scrollujemy też główny kontener na mobile
             document.querySelector('.fb-wrapper').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            
+
             updateUI();
             if (n === 1) fbCustom('FormStep1_Pytanie');
             if (n === 2) fbCustom('FormStep2_Kontakt');
