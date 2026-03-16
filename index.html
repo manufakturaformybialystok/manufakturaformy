@@ -874,6 +874,10 @@
                                 </div>
                             </div>
 
+                            <button class="btn-next" style="margin-bottom: 24px; margin-top: 8px;" onclick="goTo(1)">
+                                Odbierz trening za 69 zł →
+                            </button>
+
                             <div class="intro-body">
                                 Ponad 200 mieszkańców Białegostoku wybrało trening EMS jako sposób na szybsze efekty
                                 przy mniejszym
@@ -883,6 +887,23 @@
                             <div class="intro-body">
                                 Odpowiedz na jedno pytanie i zostaw kontakt — zadzwonimy i umówimy Twój pierwszy trening
                                 w ciągu 24h.
+                            </div>
+
+                            <!-- Opinie Google -->
+                            <div class="reviews-section"
+                                style="margin-top: 24px; display: flex; flex-direction: column; gap: 12px;">
+                                <img src="https://lh3.googleusercontent.com/d/1GGCNQ-YWMhR6VWcW_HobPZeCX89TiAA3"
+                                    alt="Opinia Google 1"
+                                    style="width: 100%; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+                                <img src="https://lh3.googleusercontent.com/d/1d3xsrVcFCEV8titdanK7quqP7UF6j0-4"
+                                    alt="Opinia Google 2"
+                                    style="width: 100%; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+                                <img src="https://lh3.googleusercontent.com/d/1jJnBVotzv2B2PxNL8YzVMf-DZ_ZbrkrM"
+                                    alt="Opinia Google 3"
+                                    style="width: 100%; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+                                <img src="https://lh3.googleusercontent.com/d/1q0a5DLbE4N0_29BS8l9OzbzGQFTC3fg-"
+                                    alt="Opinia Google 5"
+                                    style="width: 100%; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
                             </div>
                         </div>
                     </div>
@@ -1014,7 +1035,7 @@
                 <div class="dot" id="dot3"></div>
             </div>
             <button class="btn-next" id="mainBtn" onclick="handleNext()">
-                <span class="btn-label" id="btnLabel">Umów trening próbny →</span>
+                <span class="btn-label" id="btnLabel">Odbierz trening za 69 zł →</span>
                 <div class="spinner"></div>
             </button>
             <button class="btn-back-link" id="backBtn" onclick="prevSlide()" style="display:none">Wstecz</button>
@@ -1046,7 +1067,7 @@
                 // ale "dobijamy" je wywołując play, żeby uchwycić moment ruszenia do zdjęcia okładki
                 vimeoPlayer.play().then(() => {
                     setPlaying(true);
-                    
+
                     // Chowamy naszą niestandardową okładkę DOPIERO kiedy wideo naprawdę gra
                     // dzięki temu nie będziemy mieć ułamka sekundy czarnego okna ładowania Vimeo
                     setTimeout(() => {
@@ -1276,7 +1297,7 @@
             document.getElementById('hcSub').textContent = subs[cur] || '';
 
             // Btn label
-            var labels = ['Umów trening próbny →', 'Kontynuuj', 'Kontynuuj', 'Prześlij', ''];
+            var labels = ['Odbierz trening za 69 zł →', 'Kontynuuj', 'Kontynuuj', 'Prześlij', ''];
             document.getElementById('btnLabel').textContent = labels[cur] || 'Kontynuuj';
 
             // Btn disabled state
