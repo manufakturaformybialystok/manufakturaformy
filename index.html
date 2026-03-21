@@ -9,16 +9,16 @@
 
 <style>
 :root {
-  --black: #0a0a0a;
+  --black: #2b2b2b;
   --white: #fafaf8;
-  --cream: #f5f2ec;
-  --accent: #2563eb;
-  --accent-light: #dbeafe;
-  --muted: #6b7280;
-  --border: #e5e0d8;
+  --cream: #f5f1e8;
+  --accent: #e8430a;
+  --accent-light: #fde8e1;
+  --muted: #7a7068;
+  --border: #e2dbd0;
   --card: #ffffff;
-  --green: #16a34a;
-  --red: #dc2626;
+  --green: #3a7d44;
+  --red: #c0392b;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -51,7 +51,7 @@ nav {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(245, 242, 236, 0.88);
+  background: rgba(245, 241, 232, 0.92);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   padding: 14px 24px;
@@ -79,7 +79,7 @@ nav {
 }
 
 .nav-cta {
-  background: var(--black);
+  background: var(--accent);
   color: var(--white);
   padding: 10px 20px;
   border-radius: 100px;
@@ -89,11 +89,11 @@ nav {
   transition: background 0.2s;
   white-space: nowrap;
 }
-.nav-cta:hover { background: var(--accent); }
+.nav-cta:hover { background: #c93a08; }
 
 /* ── HERO ── */
 .hero {
-  padding: 72px 24px 64px;
+  padding: 48px 20px 48px;
   max-width: 700px;
   margin: 0 auto;
   text-align: center;
@@ -200,7 +200,7 @@ nav {
   align-items: center;
   gap: 8px;
 }
-.btn-primary:hover { background: var(--accent); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(37,99,235,0.25); }
+.btn-primary:hover { background: #c93a08; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(232,67,10,0.3); }
 
 .btn-secondary {
   background: transparent;
@@ -273,7 +273,7 @@ section {
 .section-inner {
   max-width: 780px;
   margin: 0 auto;
-  padding: 72px 24px;
+  padding: 52px 20px;
 }
 
 .section-label {
@@ -741,7 +741,7 @@ section {
 }
 
 .modal-header {
-  background: var(--black);
+  background: #2b2b2b;
   padding: 24px;
   color: var(--white);
   position: relative;
@@ -1000,7 +1000,7 @@ section {
   gap: 8px;
 }
 
-.form-btn-next:hover { background: var(--accent); }
+.form-btn-next:hover { background: #c93a08; }
 .form-btn-next:disabled { background: #d1d5db; cursor: default; }
 
 .form-btn-next.loading .spinner { display: block; }
@@ -1114,7 +1114,115 @@ footer {
 
 footer a { color: #9ca3af; text-decoration: none; }
 
-/* ── RESPONSIVE ── */
+
+/* ── MOBILE FIRST ENHANCEMENTS ── */
+.hero-stats {
+  gap: 20px;
+}
+
+.hero-cta-group {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.hero-cta-group .btn-primary,
+.hero-cta-group .btn-secondary {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+
+.benefits-grid {
+  grid-template-columns: 1fr;
+}
+
+.reviews-grid {
+  grid-template-columns: 1fr;
+}
+
+/* Desktop overrides */
+@media (min-width: 600px) {
+  .hero {
+    padding: 72px 32px 64px;
+  }
+  .section-inner {
+    padding: 72px 32px;
+  }
+  .hero-cta-group {
+    flex-direction: row;
+    align-items: center;
+  }
+  .hero-cta-group .btn-primary,
+  .hero-cta-group .btn-secondary {
+    width: auto;
+  }
+  .benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .reviews-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  nav {
+    padding: 14px 32px;
+  }
+  .nav-logo {
+    font-size: 15px;
+  }
+  .nav-logo img {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* Callout section mobile */
+.callout-section {
+  padding: 52px 20px;
+}
+
+@media (min-width: 600px) {
+  .callout-section {
+    padding: 72px 32px;
+  }
+}
+
+/* CTA section mobile */
+.cta-section {
+  padding: 60px 20px;
+}
+
+@media (min-width: 600px) {
+  .cta-section {
+    padding: 80px 32px;
+  }
+}
+
+/* Included card mobile */
+.included-price-new {
+  font-size: 48px;
+}
+
+/* Pain list mobile */
+.pain-item {
+  padding: 16px 20px;
+}
+
+/* FAQ mobile */
+.faq-q {
+  padding: 18px 20px;
+  font-size: 14px;
+}
+
+.faq-a {
+  padding: 0 20px 18px;
+  font-size: 13px;
+}
+
+/* Stats mobile */
+.stat-num {
+  font-size: 24px;
+}
+
+/* ── RESPONSIVE (legacy) ── */
 @media (max-width: 640px) {
   .hero { padding: 48px 20px 40px; }
   .section-inner { padding: 56px 20px; }
