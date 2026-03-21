@@ -1,1596 +1,1859 @@
 <!DOCTYPE html>
 <html lang="pl">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Manufaktura Formy – Formularz</title>
-    <style>
-        *,
-        *::before,
-        *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html,
-        body {
-            height: 100%;
-            overflow-x: hidden;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: #f0f2f5;
-            min-height: 100svh;
-        }
-
-        /* ── WRAPPER ── */
-        .fb-wrapper {
-            width: 100%;
-            min-height: 100svh;
-            display: flex;
-            flex-direction: column;
-            background: #fff;
-        }
-
-        /* ── HEADER SECTION ── */
-        .header-section {
-            background: #fff;
-            padding: 28px 24px 18px;
-            text-align: center;
-            border-bottom: 1px solid #e4e6ea;
-        }
-
-        .logo-circle {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            overflow: hidden;
-            margin: 0 auto 12px;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, .15);
-            background: #1877f2;
-        }
-
-        .logo-circle img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .logo-fallback {
-            width: 100%;
-            height: 100%;
-            background: #1877f2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            font-weight: 800;
-            color: #fff;
-            text-align: center;
-            line-height: 1.3;
-            letter-spacing: .3px;
-        }
-
-        .hc-brand {
-            font-size: 14px;
-            color: #65676b;
-            margin-bottom: 8px;
-        }
-
-        .hc-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #050505;
-            line-height: 1.3;
-            margin-bottom: 6px;
-        }
-
-        .hc-sub {
-            font-size: 14px;
-            color: #65676b;
-        }
-
-        /* ── CONTENT AREA ── */
-        .content-area {
-            flex: 1;
-            background: #f0f2f5;
-            padding: 12px 0 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* ── SLIDE SYSTEM ── */
-        .slides-outer {
-            overflow: hidden;
-            flex: 1;
-        }
-
-        .slides-inner {
-            display: flex;
-            align-items: flex-start;
-            transition: transform .3s cubic-bezier(.4, 0, .2, 1), height .3s cubic-bezier(.4, 0, .2, 1);
-            will-change: transform, height;
-        }
-
-        .slide {
-            min-width: 100%;
-            width: 100%;
-            flex-shrink: 0;
-            padding: 0 16px;
-        }
-
-        /* ── QUESTION BLOCK ── */
-        .q-card {
-            background: #fff;
-            border-radius: 8px;
-            padding: 16px 16px;
-        }
-
-        .q-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #050505;
-            line-height: 1.4;
-            margin-bottom: 2px;
-        }
-
-        .q-sub {
-            font-size: 13px;
-            color: #65676b;
-            line-height: 1.4;
-            margin-bottom: 10px;
-        }
-
-        /* Radio: label LEFT, circle RIGHT */
-        .radio-list {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .radio-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 0;
-            border-bottom: 1px solid #f0f2f5;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .radio-item:last-child {
-            border-bottom: none;
-        }
-
-        .radio-label {
-            font-size: 15px;
-            color: #050505;
-            line-height: 1.4;
-            padding-right: 14px;
-            flex: 1;
-        }
-
-        .radio-circle {
-            width: 24px;
-            height: 24px;
-            flex-shrink: 0;
-            border-radius: 50%;
-            border: 2px solid #bcc0c4;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background .12s, border-color .12s;
-        }
-
-        .radio-item.selected .radio-circle {
-            border-color: #1877f2;
-            background: #1877f2;
-        }
-
-        .radio-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #fff;
-            display: none;
-        }
-
-        .radio-item.selected .radio-dot {
-            display: block;
-        }
-
-        /* Checkboxes: label LEFT, box RIGHT */
-        .cb-list {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .cb-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 0;
-            border-bottom: 1px solid #f0f2f5;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .cb-item:last-child {
-            border-bottom: none;
-        }
-
-        .cb-label {
-            font-size: 15px;
-            color: #050505;
-            line-height: 1.4;
-            padding-right: 14px;
-            flex: 1;
-        }
-
-        .cb-box {
-            width: 24px;
-            height: 24px;
-            flex-shrink: 0;
-            border: 2px solid #bcc0c4;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background .12s, border-color .12s;
-        }
-
-        .cb-item.checked .cb-box {
-            background: #1877f2;
-            border-color: #1877f2;
-        }
-
-        .cb-item.checked .cb-box::after {
-            content: '✓';
-            color: #fff;
-            font-size: 14px;
-            font-weight: 700;
-        }
-
-        /* Input fields */
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-label {
-            font-size: 12px;
-            color: #65676b;
-            margin-bottom: 4px;
-            display: block;
-        }
-
-        .input-field {
-            width: 100%;
-            border: none;
-            border-bottom: 1.5px solid #e4e6ea;
-            padding: 6px 0 8px;
-            font-size: 17px;
-            color: #050505;
-            outline: none;
-            background: transparent;
-            font-family: inherit;
-            transition: border-color .15s;
-        }
-
-        .input-field:focus {
-            border-bottom-color: #1877f2;
-        }
-
-        .input-field::placeholder {
-            color: #bcc0c4;
-        }
-
-        .input-hint {
-            font-size: 11px;
-            color: #65676b;
-            margin-top: 4px;
-            line-height: 1.4;
-        }
-
-        .input-error {
-            font-size: 11px;
-            color: #e02020;
-            margin-top: 4px;
-            line-height: 1.4;
-            display: none;
-        }
-
-        .input-field.error {
-            border-bottom-color: #e02020;
-        }
-
-        /* Legal */
-        .legal-text {
-            font-size: 11px;
-            color: #65676b;
-            line-height: 1.55;
-            margin-top: 14px;
-        }
-
-        .legal-link {
-            color: #1877f2;
-            text-decoration: none;
-        }
-
-        /* Intro */
-        .intro-body {
-            font-size: 15px;
-            color: #3c3c3c;
-            line-height: 1.6;
-        }
-
-        .intro-divider {
-            border: none;
-            border-top: 1px solid #e4e6ea;
-            margin: 14px 0;
-        }
-
-        /* VSL Video Wrapper */
-        .vsl-video-wrapper {
-            position: relative;
-            width: 100%;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 16px;
-            background: #000;
-            aspect-ratio: 16 / 9;
-        }
-
-        #vimeoPlayerContainer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            /* Pozwala kliknięciom przechodzić do naszego overlay'a */
-        }
-
-        #vimeoPlayerContainer iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .vsl-cover-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            pointer-events: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 2;
-        }
-
-        .custom-video-controls {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-            display: flex;
-            align-items: center;
-            padding: 10px 12px;
-            z-index: 10;
-            transition: opacity 0.3s;
-            opacity: 0;
-        }
-
-        .vsl-video-wrapper:hover .custom-video-controls,
-        .custom-video-controls.visible {
-            opacity: 1;
-        }
-
-        .ctrl-btn {
-            background: none;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            flex-shrink: 0;
-        }
-
-        .ctrl-btn svg {
-            width: 24px;
-            height: 24px;
-            fill: #fff;
-            transition: transform 0.2s;
-        }
-
-        .ctrl-btn:active svg {
-            transform: scale(0.9);
-        }
-
-        .ctrl-progress {
-            flex: 1;
-            height: 20px;
-            margin: 0 12px;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .ctrl-progress-bg {
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 2px;
-            position: absolute;
-        }
-
-        .ctrl-progress-fill {
-            height: 4px;
-            background: #1877f2;
-            border-radius: 2px;
-            width: 0%;
-            position: absolute;
-            pointer-events: none;
-        }
-
-        .initial-play-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: 5;
-            cursor: pointer;
-        }
-
-        .vsl-play-btn {
-            width: 64px;
-            height: 64px;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s;
-        }
-
-        .initial-play-overlay:hover .vsl-play-btn {
-            background: #1877f2;
-        }
-
-        .vsl-play-icon {
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: 12px 0 12px 20px;
-            border-color: transparent transparent transparent #fff;
-            margin-left: 6px;
-        }
-
-        .unmute-overlay {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(0, 0, 0, 0.6);
-            color: #fff;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            z-index: 15;
-            cursor: pointer;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            animation: pulse-unmute 2s infinite;
-        }
-
-        @keyframes pulse-unmute {
-            0% {
-                box-shadow: 0 0 0 0 rgba(24, 119, 242, 0.7);
-            }
-
-            70% {
-                box-shadow: 0 0 0 10px rgba(24, 119, 242, 0);
-            }
-
-            100% {
-                box-shadow: 0 0 0 0 rgba(24, 119, 242, 0);
-            }
-        }
-
-        .unmute-overlay svg {
-            width: 18px;
-            height: 18px;
-            fill: #fff;
-        }
-
-        /* ── BOTTOM BAR ── */
-        .bottom-bar {
-            background: #fff;
-            border-top: 1px solid #e4e6ea;
-            padding: 10px 16px 28px;
-            position: sticky;
-            bottom: 0;
-            z-index: 10;
-        }
-
-        .progress-dots {
-            display: flex;
-            gap: 5px;
-            justify-content: flex-start;
-            margin-bottom: 10px;
-        }
-
-        .dot {
-            height: 5px;
-            border-radius: 3px;
-            background: #dddfe2;
-            transition: width .3s, background .3s;
-            width: 28px;
-        }
-
-        .dot.active {
-            background: #1877f2;
-            width: 38px;
-        }
-
-        .dot.done {
-            background: #1877f2;
-        }
-
-        .btn-next {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            padding: 14px;
-            background: #1877f2;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 17px;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: inherit;
-            transition: background .12s;
-        }
-
-        .btn-next:active {
-            background: #145dbf;
-        }
-
-        .btn-next:disabled {
-            background: #bcc0c4;
-            cursor: default;
-        }
-
-        .btn-next.loading .spinner {
-            display: block;
-        }
-
-        .btn-next.loading .btn-label {
-            opacity: .7;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .spinner {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, .4);
-            border-top-color: #fff;
-            animation: spin .7s linear infinite;
-            display: none;
-            flex-shrink: 0;
-        }
-
-        .btn-back-link {
-            display: block;
-            text-align: center;
-            font-size: 13px;
-            color: #65676b;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-family: inherit;
-            padding: 8px 0 0;
-            text-decoration: underline;
-        }
-
-        /* ── REJECTION ── */
-        .rejection-screen {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 24px;
-            text-align: center;
-            background: #fff;
-            flex: 1;
-        }
-
-        .rejection-screen.active {
-            display: flex;
-        }
-
-        .rejection-emoji {
-            font-size: 52px;
-            margin-bottom: 20px;
-        }
-
-        .rejection-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #050505;
-            margin-bottom: 12px;
-            line-height: 1.3;
-        }
-
-        .rejection-sub {
-            font-size: 14px;
-            color: #65676b;
-            line-height: 1.6;
-            margin-bottom: 28px;
-        }
-
-        .btn-ig {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af, #515bd4);
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            padding: 13px 24px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            text-decoration: none;
-            font-family: inherit;
-            margin-bottom: 16px;
-        }
-
-        .btn-ig svg {
-            width: 22px;
-            height: 22px;
-            fill: #fff;
-            flex-shrink: 0;
-        }
-
-        .btn-rejection-back {
-            font-size: 14px;
-            color: #65676b;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-family: inherit;
-            text-decoration: underline;
-            padding: 8px;
-        }
-
-        /* ── THANK YOU ── */
-        .thankyou-wrap {
-            text-align: center;
-            padding: 8px 0;
-        }
-
-        .ty-check {
-            font-size: 48px;
-            margin-bottom: 16px;
-        }
-
-        .ty-title {
-            font-size: 19px;
-            font-weight: 700;
-            color: #050505;
-            margin-bottom: 10px;
-        }
-
-        .ty-body {
-            font-size: 14px;
-            color: #3c3c3c;
-            line-height: 1.55;
-            margin-bottom: 8px;
-        }
-
-        .ty-footer {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding-top: 14px;
-            border-top: 1px solid #e4e6ea;
-            font-size: 13px;
-            color: #65676b;
-            margin-top: 14px;
-        }
-
-        /* Desktop */
-        @media (min-width: 520px) {
-            body {
-                display: flex;
-                align-items: flex-start;
-                justify-content: center;
-                padding: 40px 24px;
-                background: #f0f2f5;
-            }
-
-            .fb-wrapper {
-                width: 420px;
-                min-height: unset;
-                border-radius: 12px;
-                overflow: hidden;
-                box-shadow: 0 2px 12px rgba(0, 0, 0, .15);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(10px)
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0)
-            }
-        }
-
-        .fb-wrapper {
-            animation: fadeInUp .2s ease;
-        }
-    </style>
-
-    <script>
-        !function (f, b, e, v, n, t, s) {
-            if (f.fbq) return; n = f.fbq = function () {
-                n.callMethod ?
-                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-            };
-            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
-            n.queue = []; t = b.createElement(e); t.async = !0;
-            t.src = v; s = b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t, s)
-        }(window, document, 'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '1267687915507510');
-        fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-            src="https://www.facebook.com/tr?id=1267687915507510&ev=PageView&noscript=1" /></noscript>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="https://player.vimeo.com/api/player.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manufaktura Formy – Trening EMS Białystok</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --black: #0a0a0a;
+  --white: #fafaf8;
+  --cream: #f5f2ec;
+  --accent: #2563eb;
+  --accent-light: #dbeafe;
+  --muted: #6b7280;
+  --border: #e5e0d8;
+  --card: #ffffff;
+  --green: #16a34a;
+  --red: #dc2626;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--black);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Syne', sans-serif;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(245, 242, 236, 0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-logo img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.nav-cta {
+  background: var(--black);
+  color: var(--white);
+  padding: 10px 20px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.nav-cta:hover { background: var(--accent); }
+
+/* ── HERO ── */
+.hero {
+  padding: 72px 24px 64px;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.hero-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.hero h1 {
+  font-size: clamp(38px, 7vw, 64px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+  color: var(--black);
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.hero-sub {
+  font-size: 17px;
+  color: var(--muted);
+  line-height: 1.65;
+  margin-bottom: 36px;
+  font-weight: 300;
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--black);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.hero-cta-group {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 36px;
+}
+
+.btn-primary {
+  background: var(--black);
+  color: var(--white);
+  padding: 16px 32px;
+  border-radius: 100px;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-primary:hover { background: var(--accent); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(37,99,235,0.25); }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--black);
+  padding: 16px 24px;
+  border-radius: 100px;
+  font-size: 15px;
+  font-weight: 400;
+  text-decoration: none;
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.btn-secondary:hover { border-color: var(--black); }
+
+/* ── OFFER BANNER ── */
+.offer-banner {
+  background: var(--black);
+  color: var(--white);
+  padding: 20px 24px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.offer-banner-inner {
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.offer-price-old {
+  font-size: 15px;
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+.offer-price-new {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: #60a5fa;
+}
+
+.offer-label {
+  font-size: 14px;
+  color: #d1d5db;
+}
+
+.offer-spots {
+  background: #dc2626;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ── SECTION ── */
+section {
+  position: relative;
+  z-index: 1;
+}
+
+.section-inner {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 72px 24px;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-size: clamp(26px, 5vw, 42px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.section-sub {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+/* ── BENEFITS ── */
+.benefits-section {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 40px;
+}
+
+.benefit-card {
+  background: var(--white);
+  padding: 28px 28px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.benefit-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--cream);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.benefit-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.benefit-body {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+/* ── PAIN POINTS ── */
+.pain-section {
+  background: var(--black);
+  color: var(--white);
+}
+
+.pain-section .section-label { color: #6b7280; }
+.pain-section .section-title { color: var(--white); }
+.pain-section .section-sub { color: #9ca3af; }
+
+.pain-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 40px;
+  border: 1px solid #1f2937;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.pain-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 1px solid #1f2937;
+  transition: background 0.2s;
+}
+
+.pain-item:last-child { border-bottom: none; }
+.pain-item:hover { background: #111827; }
+
+.pain-x {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #7f1d1d;
+  color: #fca5a5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.pain-text {
+  font-size: 15px;
+  color: #d1d5db;
+  line-height: 1.5;
+}
+
+/* ── CALLOUT ── */
+.callout-section {
+  background: var(--accent);
+  color: var(--white);
+  text-align: center;
+  padding: 64px 24px;
+}
+
+.callout-inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.callout-tag {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #bfdbfe;
+  margin-bottom: 20px;
+}
+
+.callout-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.callout-sub {
+  font-size: 16px;
+  color: #bfdbfe;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* ── SOCIAL PROOF ── */
+.proof-section {
+  background: var(--cream);
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.review-img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  display: block;
+}
+
+/* ── FOR WHOM ── */
+.forwho-section {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.forwho-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+@media (max-width: 580px) {
+  .forwho-grid { grid-template-columns: 1fr; }
+}
+
+.forwho-card {
+  border-radius: 16px;
+  padding: 28px;
+}
+
+.forwho-card.yes {
+  background: #f0fdf4;
+  border: 1.5px solid #bbf7d0;
+}
+
+.forwho-card.no {
+  background: #fef2f2;
+  border: 1.5px solid #fecaca;
+}
+
+.forwho-card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.forwho-card.yes .forwho-card-title { color: #15803d; }
+.forwho-card.no .forwho-card-title { color: #dc2626; }
+
+.forwho-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.forwho-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #374151;
+}
+
+.forwho-item-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  margin-top: 1px;
+}
+
+.yes .forwho-item-icon { background: #dcfce7; color: #16a34a; }
+.no .forwho-item-icon { background: #fee2e2; color: #dc2626; }
+
+/* ── WHAT'S INCLUDED ── */
+.included-section {
+  background: var(--cream);
+}
+
+.included-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 40px;
+  margin-top: 40px;
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.included-price-block {
+  flex-shrink: 0;
+}
+
+.included-price-label {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.included-price-new {
+  font-family: 'Syne', sans-serif;
+  font-size: 52px;
+  font-weight: 800;
+  color: var(--black);
+  line-height: 1;
+}
+
+.included-price-old {
+  font-size: 18px;
+  color: #9ca3af;
+  text-decoration: line-through;
+  margin-top: 4px;
+}
+
+.included-price-note {
+  font-size: 12px;
+  color: var(--green);
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+.included-divider {
+  width: 1px;
+  background: var(--border);
+  align-self: stretch;
+  flex-shrink: 0;
+}
+
+@media (max-width: 580px) {
+  .included-divider { display: none; }
+  .included-card { flex-direction: column; gap: 24px; }
+}
+
+.included-list-block { flex: 1; }
+
+.included-list-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.included-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.included-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #374151;
+}
+
+.included-check {
+  width: 20px;
+  height: 20px;
+  background: #dcfce7;
+  color: #16a34a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── FAQ ── */
+.faq-section {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+}
+
+.faq-list {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--border);
+}
+
+.faq-item:last-child { border-bottom: none; }
+
+.faq-q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  cursor: pointer;
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--black);
+  user-select: none;
+  transition: background 0.15s;
+}
+
+.faq-q:hover { background: var(--cream); }
+
+.faq-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 14px;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.faq-item.open .faq-icon {
+  background: var(--black);
+  color: var(--white);
+  transform: rotate(45deg);
+}
+
+.faq-a {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.65;
+  padding: 0 24px 20px;
+  display: none;
+}
+
+.faq-item.open .faq-a { display: block; }
+
+/* ── FORM MODAL ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-box {
+  background: var(--white);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.2);
+  overflow: hidden;
+  animation: modal-up 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+
+@keyframes modal-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header {
+  background: var(--black);
+  padding: 24px;
+  color: var(--white);
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: #ffffff20;
+  border: none;
+  color: var(--white);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.modal-close:hover { background: #ffffff30; }
+
+.modal-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.modal-logo-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ffffff30;
+}
+
+.modal-brand {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+.modal-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 4px;
+}
+
+.modal-sub {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+/* Slides inside modal */
+.form-slides {
+  overflow: hidden;
+}
+
+.form-slides-inner {
+  display: flex;
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+
+.form-slide {
+  min-width: 100%;
+}
+
+/* Progress dots */
+.modal-progress {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.modal-dot {
+  height: 4px;
+  border-radius: 2px;
+  background: #e5e7eb;
+  transition: width 0.3s, background 0.3s;
+  width: 24px;
+}
+
+.modal-dot.active {
+  background: var(--accent);
+  width: 36px;
+}
+
+.modal-dot.done {
+  background: var(--accent);
+}
+
+/* Radio */
+.form-q-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.form-q-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.radio-list, .cb-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.radio-item, .cb-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid #f3f4f6;
+  cursor: pointer;
+  user-select: none;
+}
+
+.radio-item:last-child, .cb-item:last-child { border-bottom: none; }
+
+.radio-label, .cb-label {
+  font-size: 15px;
+  line-height: 1.4;
+  padding-right: 12px;
+  flex: 1;
+  color: var(--black);
+}
+
+.cb-label a { color: var(--muted); }
+
+.radio-circle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #d1d5db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.12s;
+}
+
+.radio-item.selected .radio-circle {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.radio-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  display: none;
+}
+
+.radio-item.selected .radio-dot { display: block; }
+
+.cb-box {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #d1d5db;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.12s;
+}
+
+.cb-item.checked .cb-box {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.cb-item.checked .cb-box::after {
+  content: '✓';
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Input fields */
+.input-group { margin-bottom: 18px; }
+
+.input-label {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 4px;
+  display: block;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.input-field {
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid #e5e7eb;
+  padding: 6px 0 8px;
+  font-size: 17px;
+  color: var(--black);
+  outline: none;
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  transition: border-color 0.15s;
+}
+
+.input-field:focus { border-bottom-color: var(--accent); }
+.input-field.error { border-bottom-color: var(--red); }
+.input-field::placeholder { color: #d1d5db; }
+
+.input-hint, .input-error {
+  font-size: 11px;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.input-hint { color: var(--muted); }
+.input-error { color: var(--red); display: none; }
+
+.legal-text {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-top: 12px;
+}
+
+.legal-link { color: var(--accent); text-decoration: none; }
+
+/* Form buttons */
+.form-btn-next {
+  width: 100%;
+  padding: 14px;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Syne', sans-serif;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.form-btn-next:hover { background: var(--accent); }
+.form-btn-next:disabled { background: #d1d5db; cursor: default; }
+
+.form-btn-next.loading .spinner { display: block; }
+.form-btn-next.loading .btn-label { opacity: 0.7; }
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  animation: spin 0.7s linear infinite;
+  display: none;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.form-btn-back {
+  display: block;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  padding: 8px 0 0;
+  text-decoration: underline;
+  width: 100%;
+}
+
+/* Rejection inside modal */
+.rejection-slide {
+  text-align: center;
+  padding: 8px 0;
+}
+
+.rejection-emoji { font-size: 40px; margin-bottom: 14px; }
+.rejection-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.rejection-sub { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
+
+.btn-ig {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: 'DM Sans', sans-serif;
+  margin-bottom: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+.btn-rejection-back {
+  font-size: 13px;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  text-decoration: underline;
+  padding: 6px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Thank you */
+.thankyou-slide {
+  text-align: center;
+  padding: 8px 0;
+}
+
+.ty-check { font-size: 44px; margin-bottom: 14px; }
+.ty-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+.ty-body { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 8px; }
+.ty-divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+.ty-small { font-size: 12px; color: var(--muted); }
+
+/* ── CTA SECTION ── */
+.cta-section {
+  background: var(--cream);
+  text-align: center;
+  padding: 80px 24px;
+}
+
+.cta-section-inner {
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.cta-section .section-title { margin-bottom: 12px; }
+.cta-section .section-sub { margin-bottom: 32px; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--black);
+  color: #6b7280;
+  text-align: center;
+  padding: 32px 24px;
+  font-size: 13px;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+}
+
+footer a { color: #9ca3af; text-decoration: none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .hero { padding: 48px 20px 40px; }
+  .section-inner { padding: 56px 20px; }
+  .included-card { padding: 24px; }
+  .included-price-new { font-size: 40px; }
+  .modal-body { padding: 20px; }
+  .modal-header { padding: 20px; }
+  .nav { padding: 12px 16px; }
+}
+
+/* ── ANIMATIONS ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: none;
+}
+
+</style>
+
+<!-- Facebook Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1267687915507510');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1267687915507510&ev=PageView&noscript=1"/></noscript>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 
-<body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;">
+<body>
 
-    <!-- Zabezpieczenie skrótów klawiszowych bez pułapki debugger -->
-    <script>
-        (function () {
-            // Blokada klawiszy (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U)
-            document.addEventListener('keydown', function (event) {
-                if (event.keyCode === 123 ||
-                    (event.ctrlKey && event.shiftKey && (event.keyCode === 73 || event.keyCode === 74)) ||
-                    (event.ctrlKey && event.keyCode === 85)) {
-                    event.preventDefault();
-                }
-            });
-        })();
-    </script>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="https://lh3.googleusercontent.com/d/18mEyEP41W-2NXRbPbsCetiXB_BAchfST" alt="Manufaktura Formy" onerror="this.style.display='none'">
+    Manufaktura Formy
+  </div>
+  <a href="#" class="nav-cta" onclick="openModal();return false;">Trening próbny 69 zł →</a>
+</nav>
 
-    <div class="fb-wrapper">
+<!-- HERO -->
+<section>
+  <div class="hero">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Otwarta rekrutacja · Białystok
+    </div>
+    <h1>Raz w tygodniu.<br>20 minut.<br><em>I tyle.</em></h1>
+    <p class="hero-sub">Szukamy 8 osób, które chcą poczuć się lepiej we własnym ciele — bez poświęcania całego dnia na siłownię. EMS to realne wzmocnienie mięśni, bez obciążania stawów.</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">200+</div>
+        <div class="stat-label">osób trenuje z nami</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">20 min</div>
+        <div class="stat-label">jeden trening</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">8</div>
+        <div class="stat-label">wolnych miejsc</div>
+      </div>
+    </div>
+    <div class="hero-cta-group">
+      <a href="#" class="btn-primary" onclick="openModal();return false;">Odbierz trening próbny →</a>
+      <a href="#jak-dziala" class="btn-secondary">Jak działa EMS?</a>
+    </div>
+  </div>
+</section>
 
-        <!-- HEADER SECTION -->
-        <div class="header-section" id="headerCard">
-            <div class="logo-circle">
-                <img src="https://lh3.googleusercontent.com/d/18mEyEP41W-2NXRbPbsCetiXB_BAchfST" alt="Manufaktura Formy"
-                    onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'logo-fallback\'>MANUFAKTURA<br>FORMY</div>'">
-            </div>
-            <div class="hc-brand">Manufaktura Formy</div>
-            <div class="hc-title" id="hcTitle">Dołącz do <span style="background: none; padding: 0;">200+</span> osób
-                które
-                już trenują EMS w Manufakturze Formy</div>
-            <div class="hc-sub" id="hcSub">Trening próbny EMS w suchych kombinezonach + drenaż limfatyczny w PROMOCJI za
-                69 zł</div>
+<!-- OFFER BANNER -->
+<div class="offer-banner">
+  <div class="offer-banner-inner">
+    <span class="offer-spots">Ostatnie miejsca!</span>
+    <span class="offer-label">Trening próbny EMS + drenaż limfatyczny</span>
+    <span class="offer-price-old">237 zł</span>
+    <span class="offer-price-new">69 zł</span>
+  </div>
+</div>
+
+<!-- BENEFITS -->
+<section class="benefits-section" id="jak-dziala">
+  <div class="section-inner">
+    <div class="section-label fade-up">Co daje EMS?</div>
+    <h2 class="section-title fade-up">Czego możesz się spodziewać</h2>
+    <p class="section-sub fade-up">EMS (elektrostymulacja mięśni) wywodzi się z fizjoterapii. W 20 minut angażuje głębokie partie mięśni, których zwykły trening często nie dosięga.</p>
+
+    <div class="benefits-grid fade-up">
+      <div class="benefit-card">
+        <div class="benefit-icon">🦴</div>
+        <div>
+          <div class="benefit-title">Plecy przestają boleć</div>
+          <div class="benefit-body">Mięśnie wokół kręgosłupa wzmacniają się — to jeden z najczęstszych efektów, o których mówią nasi klienci po kilku treningach.</div>
         </div>
-
-        <!-- CONTENT AREA -->
-        <div class="content-area" id="cardsArea">
-            <div class="slides-outer">
-                <div class="slides-inner" id="slidesInner">
-
-                    <!-- SLIDE 0: INTRO -->
-                    <div class="slide">
-                        <div class="q-card">
-
-                            <!-- VSL Vimeo + Custom Controls -->
-                            <div class="vsl-video-wrapper" id="vslWrapper">
-                                <div id="vimeoPlayerContainer"></div>
-                                <img class="vsl-cover-img" id="vslCover"
-                                    src="https://lh3.googleusercontent.com/d/1Cn4gjzd8ygImTxv64WFd4lXZ4u18Wgzn"
-                                    alt="Odtwórz wideo">
-
-                                <div class="unmute-overlay" id="unmuteOverlay" onclick="forceUnmute(event)"
-                                    style="display:none;">
-                                    <svg viewBox="0 0 24 24">
-                                        <path
-                                            d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
-                                    </svg>
-                                    Włącz dźwięk
-                                </div>
-
-                                <div class="initial-play-overlay" id="initialPlayOverlay" onclick="overlayPlay(event)">
-                                    <div class="vsl-play-btn">
-                                        <div class="vsl-play-icon"></div>
-                                    </div>
-                                </div>
-
-                                <div class="custom-video-controls" id="customControls">
-                                    <button class="ctrl-btn" id="btnPlayPause" onclick="togglePlayPause(event)">
-                                        <svg id="icon-play" viewBox="0 0 24 24" style="display:none;">
-                                            <path d="M8 5v14l11-7z" />
-                                        </svg>
-                                        <svg id="icon-pause" viewBox="0 0 24 24">
-                                            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-                                        </svg>
-                                    </button>
-                                    <div class="ctrl-progress" id="progressContainer" onclick="seekVideo(event)">
-                                        <div class="ctrl-progress-bg"></div>
-                                        <div class="ctrl-progress-fill" id="progressFill"></div>
-                                    </div>
-                                    <button class="ctrl-btn" id="btnMute" onclick="toggleMute(event)">
-                                        <!-- Sound on -->
-                                        <svg id="icon-sound" viewBox="0 0 24 24">
-                                            <path
-                                                d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
-                                        </svg>
-                                        <!-- Sound muted (crossed) -->
-                                        <svg id="icon-muted" style="display:none;" viewBox="0 0 24 24">
-                                            <path
-                                                d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <button class="btn-next" style="margin-bottom: 24px; margin-top: 8px;" onclick="goTo(1)">
-                                Odbierz trening za 69 zł →
-                            </button>
-
-                            <div class="intro-body">
-                                Ponad 200 mieszkańców Białegostoku wybrało trening EMS jako sposób na szybsze efekty
-                                przy mniejszym
-                                wysiłku.
-                            </div>
-                            <hr class="intro-divider">
-                            <div class="intro-body">
-                                Odpowiedz na jedno pytanie i zostaw kontakt — zadzwonimy i umówimy Twój pierwszy trening
-                                w ciągu 24h.
-                            </div>
-
-                            <!-- Opinie Google -->
-                            <div class="reviews-section"
-                                style="margin-top: 24px; display: flex; flex-direction: column; gap: 12px;">
-                                <img src="https://lh3.googleusercontent.com/d/1GGCNQ-YWMhR6VWcW_HobPZeCX89TiAA3"
-                                    alt="Opinia Google 1"
-                                    style="width: 100%; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
-                                <img src="https://lh3.googleusercontent.com/d/1d3xsrVcFCEV8titdanK7quqP7UF6j0-4"
-                                    alt="Opinia Google 2"
-                                    style="width: 100%; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
-                                <img src="https://lh3.googleusercontent.com/d/1jJnBVotzv2B2PxNL8YzVMf-DZ_ZbrkrM"
-                                    alt="Opinia Google 3"
-                                    style="width: 100%; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
-                                <img src="https://lh3.googleusercontent.com/d/1q0a5DLbE4N0_29BS8l9OzbzGQFTC3fg-"
-                                    alt="Opinia Google 5"
-                                    style="width: 100%; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- SLIDE 1: KIEDY -->
-                    <div class="slide">
-                        <div class="q-card">
-                            <div class="q-title">Kiedy chcesz spróbować pierwszego treningu?</div>
-                            <div class="q-sub">Zaznacz jedną odpowiedź</div>
-                            <div class="radio-list" id="q1-options">
-                                <div class="radio-item" onclick="selectOption(0)">
-                                    <span class="radio-label">Narazie nie chcę próbować</span>
-                                    <div class="radio-circle">
-                                        <div class="radio-dot"></div>
-                                    </div>
-                                </div>
-                                <div class="radio-item" onclick="selectOption(1)">
-                                    <span class="radio-label">W następnym tygodniu — odezwijcie się do mnie</span>
-                                    <div class="radio-circle">
-                                        <div class="radio-dot"></div>
-                                    </div>
-                                </div>
-                                <div class="radio-item" onclick="selectOption(2)">
-                                    <span class="radio-label">Chcę spróbować w tym tygodniu 💪</span>
-                                    <div class="radio-circle">
-                                        <div class="radio-dot"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- SLIDE 2: KONTAKT -->
-                    <div class="slide">
-                        <div class="q-card">
-                            <div class="q-title">Informacje kontaktowe ℹ️</div>
-                            <div class="q-sub">Zostaw kontakt — oddzwonimy i umówimy trening próbny</div>
-                            <div class="input-group">
-                                <label class="input-label">Imię i nazwisko</label>
-                                <input class="input-field" id="inp-name" type="text" placeholder="Wprowadź odpowiedź."
-                                    oninput="validateContact()" autocomplete="name">
-                            </div>
-                            <div class="input-group">
-                                <label class="input-label">Numer telefonu</label>
-                                <input class="input-field" id="inp-phone" type="tel" placeholder="123 456 789"
-                                    autocomplete="tel">
-                                <div class="input-hint" id="phone-hint">Podaj 9-cyfrowy numer, np. 123 456 789</div>
-                                <div class="input-error" id="phone-error">Podaj pełny numer — 9 cyfr w formacie 123 456
-                                    789</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- SLIDE 3: ZGODY -->
-                    <div class="slide">
-                        <div class="q-card">
-                            <div class="q-title">Oświadczam, że</div>
-                            <div class="q-sub">Zaznacz wszystkie pasujące odpowiedzi</div>
-                            <div class="cb-list">
-                                <div class="cb-item" id="cb-phone" onclick="toggleCheckbox('cb-phone')">
-                                    <span class="cb-label">Wyrażam zgodę na kontakt tel. oraz akceptuję <a
-                                            href="polityka.html" target="_blank" onclick="event.stopPropagation()"
-                                            style="color: #65676b; text-decoration: underline;">Politykę
-                                            Prywatności</a></span>
-                                    <div class="cb-box"></div>
-                                </div>
-                            </div>
-                            <div class="legal-text">
-                                Poprzez kliknięcie przycisku Prześlij wyrażasz zgodę na przesłanie Twoich informacji
-                                stronie Manufaktura
-                                Formy Białystok, która zobowiązuje się do korzystania z nich zgodnie z własnymi
-                                zasadami.<br><br>
-                                <a href="#" class="legal-link">Wyświetl Zasady dotyczące danych na Facebooku.</a><br>
-                                <a href="polityka.html" target="_blank" class="legal-link"
-                                    style="color: #bcc0c4; text-decoration: none;">Polityka Prywatności Manufaktura
-                                    Formy</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- SLIDE 4: DZIĘKUJEMY -->
-                    <div class="slide">
-                        <div class="q-card">
-                            <div class="thankyou-wrap">
-                                <div class="ty-check">✅</div>
-                                <div class="ty-title">Dziękujemy bardzo!</div>
-                                <div class="ty-body">Skontaktujemy się z Tobą w ciągu 24h.</div>
-                                <div class="ty-body">Jeśli nie chcesz czekać możesz zadzwonić i umówić się już TERAZ!
-                                </div>
-                                <div class="ty-footer">
-                                    <span>ℹ️</span>
-                                    <span>Twoje odpowiedzi zostały przesłane.</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- REJECTION -->
-            <div class="rejection-screen" id="rejectionScreen">
-                <div class="rejection-emoji">🙏</div>
-                <div class="rejection-title">Rozumiemy, że na razie to nie ten moment</div>
-                <div class="rejection-sub">
-                    Gdy będziesz gotowy/gotowa — jesteśmy tutaj!<br><br>
-                    Tymczasem zapraszamy na nasz Instagram, gdzie pokazujemy efekty treningów EMS, porady i życie studia
-                    na co
-                    dzień 💪
-                </div>
-                <a class="btn-ig" href="https://www.instagram.com/manufakturaformy.bialystok" target="_blank">
-                    <svg viewBox="0 0 24 24">
-                        <path
-                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                    </svg>
-                    Obserwuj nas na Instagramie
-                </a>
-                <button class="btn-rejection-back" onclick="hideRejection()">← Wróć do formularza</button>
-            </div>
-
-        </div><!-- /content-area-slides -->
-
-        <!-- BOTTOM BAR -->
-        <div class="bottom-bar" id="bottomBar">
-            <div class="progress-dots" id="progressDots">
-                <div class="dot active" id="dot0"></div>
-                <div class="dot" id="dot1"></div>
-                <div class="dot" id="dot2"></div>
-                <div class="dot" id="dot3"></div>
-            </div>
-            <button class="btn-next" id="mainBtn" onclick="handleNext()">
-                <span class="btn-label" id="btnLabel">Odbierz trening za 69 zł →</span>
-                <div class="spinner"></div>
-            </button>
-            <button class="btn-back-link" id="backBtn" onclick="prevSlide()" style="display:none">Wstecz</button>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">💪</div>
+        <div>
+          <div class="benefit-title">Ciało się ujędrnia</div>
+          <div class="benefit-body">EMS angażuje głębsze warstwy mięśni. Efekt napięcia i ujędrnienia jest widoczny — a następnego dnia normalnie funkcjonujesz.</div>
         </div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🛡️</div>
+        <div>
+          <div class="benefit-title">Stawy są bezpieczne</div>
+          <div class="benefit-body">Trening odbywa się bez obciążania stawów. Dlatego EMS powstał w fizjoterapii i sprawdza się u osób z kontuzjami lub bólem kolan i bioder.</div>
+        </div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">⚡</div>
+        <div>
+          <div class="benefit-title">Energia wraca</div>
+          <div class="benefit-body">Wielu klientów mówi o wyraźnie lepszym samopoczuciu już po kilku sesjach — lepszy sen, mniej napięcia, więcej energii w ciągu dnia.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    </div><!-- /content-area -->
+<!-- PAIN POINTS -->
+<section class="pain-section">
+  <div class="section-inner">
+    <div class="section-label fade-up">Czy to brzmi znajomo?</div>
+    <h2 class="section-title fade-up">Siedzący tryb życia boli — dosłownie</h2>
+    <p class="section-sub fade-up">Jeśli masz ból pleców, ciągłe zmęczenie i brak czasu — to nie jest kolejna propozycja „ćwicz więcej". EMS to konkretna pomoc dla konkretnych problemów.</p>
+
+    <div class="pain-list fade-up">
+      <div class="pain-item">
+        <div class="pain-x">✕</div>
+        <div class="pain-text">Plecy bolą po całym dniu przy biurku i nic nie pomaga</div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-x">✕</div>
+        <div class="pain-text">Chcesz ćwiczyć, ale godzinna wizyta na siłowni to zbyt duże wyzwanie logistycznie</div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-x">✕</div>
+        <div class="pain-text">Jesteś zmęczony/a — ale wiesz, że ruch by pomógł, gdybyś tylko miał/a siłę zacząć</div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-x">✕</div>
+        <div class="pain-text">Masz kontuzję lub ból stawów i zwykłe ćwiczenia po prostu nie wchodzą w grę</div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-x">✕</div>
+        <div class="pain-text">Ciało jest wiotkie mimo że stronisz od słodyczy i starasz się dbać o siebie</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALLOUT -->
+<div class="callout-section fade-up">
+  <div class="callout-inner">
+    <div class="callout-tag">⚡ Dlaczego EMS działa</div>
+    <div class="callout-title">Nauczę Cię poczuć własne mięśnie — nawet jeśli lata nie ćwiczyłeś/aś</div>
+    <p class="callout-sub">Elektrostymulacja angażuje mięśnie bez przeciążania ciała. Raz w tygodniu. 20 minut. W suchych kombinezonach — bez mokrych żeli i nieprzyjemnych procedur.</p>
+  </div>
+</div>
+
+<!-- SOCIAL PROOF -->
+<section class="proof-section">
+  <div class="section-inner">
+    <div class="section-label fade-up">Opinie klientów</div>
+    <h2 class="section-title fade-up">Co mówią osoby, które już trenują</h2>
+
+    <div class="reviews-grid fade-up">
+      <img class="review-img" src="https://lh3.googleusercontent.com/d/1GGCNQ-YWMhR6VWcW_HobPZeCX89TiAA3" alt="Opinia Google 1">
+      <img class="review-img" src="https://lh3.googleusercontent.com/d/1d3xsrVcFCEV8titdanK7quqP7UF6j0-4" alt="Opinia Google 2">
+      <img class="review-img" src="https://lh3.googleusercontent.com/d/1jJnBVotzv2B2PxNL8YzVMf-DZ_ZbrkrM" alt="Opinia Google 3">
+      <img class="review-img" src="https://lh3.googleusercontent.com/d/1q0a5DLbE4N0_29BS8l9OzbzGQFTC3fg-" alt="Opinia Google 4">
+    </div>
+  </div>
+</section>
+
+<!-- FOR WHOM -->
+<section class="forwho-section">
+  <div class="section-inner">
+    <div class="section-label fade-up">Sprawdź, czy to dla Ciebie</div>
+    <h2 class="section-title fade-up">EMS nie jest dla każdego</h2>
+    <p class="section-sub fade-up">Zależy nam na dobrym dopasowaniu — żebyś po pierwszym treningu wiedział/a, że to ma sens właśnie dla Ciebie.</p>
+
+    <div class="forwho-grid fade-up">
+      <div class="forwho-card yes">
+        <div class="forwho-card-title">
+          <span>✓</span> EMS jest dla Ciebie, jeśli:
+        </div>
+        <ul class="forwho-list">
+          <li class="forwho-item">
+            <div class="forwho-item-icon">✓</div>
+            Masz ból pleców lub siedzący tryb życia
+          </li>
+          <li class="forwho-item">
+            <div class="forwho-item-icon">✓</div>
+            Chcesz ćwiczyć, ale brakuje Ci czasu lub siły na siłownię
+          </li>
+          <li class="forwho-item">
+            <div class="forwho-item-icon">✓</div>
+            Jesteś po kontuzji lub masz ostrożność w kwestii stawów
+          </li>
+          <li class="forwho-item">
+            <div class="forwho-item-icon">✓</div>
+            Zależy Ci na realnym wyniku, nie na modzie na trening
+          </li>
+        </ul>
+      </div>
+      <div class="forwho-card no">
+        <div class="forwho-card-title">
+          <span>✕</span> EMS NIE JEST dla Ciebie, jeśli:
+        </div>
+        <ul class="forwho-list">
+          <li class="forwho-item">
+            <div class="forwho-item-icon">✕</div>
+            Masz rozrusznik serca lub aktywne implanty elektroniczne
+          </li>
+          <li class="forwho-item">
+            <div class="forwho-item-icon">✕</div>
+            Jesteś w ciąży
+          </li>
+          <li class="forwho-item">
+            <div class="forwho-item-icon">✕</div>
+            Masz ostrą infekcję lub gorączkę
+          </li>
+          <li class="forwho-item">
+            <div class="forwho-item-icon">✕</div>
+            Szukasz magicznej pigułki bez żadnego wysiłku z Twojej strony
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INCLUDED -->
+<section class="included-section">
+  <div class="section-inner">
+    <div class="section-label fade-up">Trening próbny</div>
+    <h2 class="section-title fade-up">Co dostajesz za 69 zł</h2>
+    <p class="section-sub fade-up">Zamiast opowiadać — po prostu pokaż Ci jak to działa. Pierwszy trening to kompletne doświadczenie, nie promocyjny skrót.</p>
+
+    <div class="included-card fade-up">
+      <div class="included-price-block">
+        <div class="included-price-label">Cena treningu próbnego</div>
+        <div class="included-price-new">69 zł</div>
+        <div class="included-price-old">wartość 237 zł</div>
+        <div class="included-price-note">✓ Oszczędzasz 168 zł</div>
+      </div>
+      <div class="included-divider"></div>
+      <div class="included-list-block">
+        <div class="included-list-title">Co wchodzi w skład:</div>
+        <ul class="included-list">
+          <li class="included-item">
+            <div class="included-check">✓</div>
+            <span><strong>Rozmowa wstępna</strong> — o Twoich celach i aktualnym stanie zdrowia</span>
+          </li>
+          <li class="included-item">
+            <div class="included-check">✓</div>
+            <span><strong>Pełny trening EMS 20 min</strong> — pod okiem doświadczonego trenera</span>
+          </li>
+          <li class="included-item">
+            <div class="included-check">✓</div>
+            <span><strong>Drenaż limfatyczny (presoterapia)</strong> — na zakończenie sesji</span>
+          </li>
+          <li class="included-item">
+            <div class="included-check">✓</div>
+            <span><strong>Suche kombinezony</strong> — bez żeli, bez mokrych procedur</span>
+          </li>
+          <li class="included-item">
+            <div class="included-check">✓</div>
+            <span><strong>Kameralna atmosfera</strong> — poczujesz się jak u siebie w domu</span>
+          </li>
+        </ul>
+      </div>
     </div>
 
-    <script>
-        // ══ VIMEO LOADER & CONTROLS ══
-        let vimeoPlayer = null;
-        let isPlaying = false;
-        let isMuted = false;
-        let maxWatchSec = 0;
-        let maxPercent = 0;
-        let videoStatsSent = false;
-
-        function initCustomVideo() {
-            var iframe = document.createElement("iframe");
-            // controls=0 ukrywa natywne sterowanie vimeo, używamy autoplay=1 + muted=1 by bezbłędnie wejść
-            iframe.src = "https://player.vimeo.com/video/1174460213?controls=0&autoplay=1&muted=1&title=0&byline=0&portrait=0&dnt=1";
-            iframe.setAttribute("allow", "autoplay; fullscreen");
-            document.getElementById('vimeoPlayerContainer').appendChild(iframe);
-
-            vimeoPlayer = new Vimeo.Player(iframe);
-
-            vimeoPlayer.ready().then(function () {
-                // Po załadowaniu iframe ustawiamy poprawny, wyciszony stan UI
-                setMutedUI(true);
-
-                // Vimeo ma w URL muted=1 i autoplay=1, co u większości zadziała niemal od razu,
-                // ale "dobijamy" je wywołując play, żeby uchwycić moment ruszenia do zdjęcia okładki
-                vimeoPlayer.play().then(() => {
-                    setPlaying(true);
-
-                    // Chowamy naszą niestandardową okładkę DOPIERO kiedy wideo naprawdę gra
-                    // dzięki temu nie będziemy mieć ułamka sekundy czarnego okna ładowania Vimeo
-                    setTimeout(() => {
-                        document.getElementById('vslCover').style.display = 'none';
-                    }, 100);
-
-                    document.getElementById('initialPlayOverlay').style.display = 'none';
-                    document.getElementById('unmuteOverlay').style.display = 'flex';
-
-                }).catch(function (error) {
-                    // Autoplay jest wymuszenie zablokowane przez telefon (bateria, Low Power Mode).
-                    setPlaying(false);
-                    // Tutaj od razu kryjemy vslCover, by chociaż natywna miniatura Vimeo służyła za tło
-                    document.getElementById('vslCover').style.display = 'none';
-                });
-            });
-
-            vimeoPlayer.on('timeupdate', function (data) {
-                var percent = (data.percent * 100);
-                document.getElementById('progressFill').style.width = percent + '%';
-                
-                if (data.seconds > maxWatchSec) maxWatchSec = data.seconds;
-                if (percent > maxPercent) maxPercent = percent;
-            });
-
-            vimeoPlayer.on('play', function () { setPlaying(true); });
-            vimeoPlayer.on('pause', function () { setPlaying(false); });
-            vimeoPlayer.on('ended', function () { setPlaying(false); });
-
-            // Zezwolenie na pauzowanie/play kliknięciem na obszar wideo
-            document.getElementById('vslWrapper').addEventListener('click', function (e) {
-                if (e.target.closest('.custom-video-controls') || e.target.closest('.unmute-overlay') || e.target.closest('.initial-play-overlay')) return;
-                togglePlayPause();
-            });
-        }
-
-        function setPlaying(play) {
-            isPlaying = play;
-            document.getElementById('icon-play').style.display = play ? 'none' : 'block';
-            document.getElementById('icon-pause').style.display = play ? 'block' : 'none';
-            if (play) {
-                document.getElementById('customControls').classList.remove('visible');
-            } else {
-                document.getElementById('customControls').classList.add('visible');
-                document.getElementById('initialPlayOverlay').style.display = 'none'; // Jeśli zapauzowano po uruchomieniu, chowamy główny przycisk play
-            }
-        }
-
-        function setMutedUI(muted) {
-            isMuted = muted;
-            document.getElementById('icon-sound').style.display = muted ? 'none' : 'block';
-            document.getElementById('icon-muted').style.display = muted ? 'block' : 'none';
-            if (!muted) {
-                document.getElementById('unmuteOverlay').style.display = 'none';
-            }
-        }
-
-        function togglePlayPause(e) {
-            if (e) e.stopPropagation();
-            if (!vimeoPlayer) return;
-            if (isPlaying) {
-                vimeoPlayer.pause();
-            } else {
-                vimeoPlayer.play();
-            }
-        }
-
-        function toggleMute(e) {
-            if (e) e.stopPropagation();
-            if (!vimeoPlayer) return;
-            if (isMuted) {
-                vimeoPlayer.setVolume(1).then(() => { setMutedUI(false); });
-            } else {
-                vimeoPlayer.setVolume(0).then(() => { setMutedUI(true); });
-            }
-        }
-
-        function forceUnmute(e) {
-            if (e) e.stopPropagation();
-            if (!vimeoPlayer) return;
-            vimeoPlayer.setVolume(1).then(() => {
-                setMutedUI(false);
-                vimeoPlayer.play();
-            });
-        }
-
-        function overlayPlay(e) {
-            if (e) e.stopPropagation();
-            document.getElementById('initialPlayOverlay').style.display = 'none';
-            if (!vimeoPlayer) return;
-            // Kiedy użytkownik sam kliknie play overlay, możemy dać dźwięk na maksa
-            vimeoPlayer.setVolume(1).then(() => {
-                setMutedUI(false);
-                vimeoPlayer.play();
-            });
-        }
-
-        function seekVideo(e) {
-            if (e) e.stopPropagation();
-            if (!vimeoPlayer) return;
-            var rect = document.getElementById('progressContainer').getBoundingClientRect();
-            var x = e.clientX - rect.left;
-            var percent = Math.max(0, Math.min(1, x / rect.width));
-            vimeoPlayer.getDuration().then(function (duration) {
-                vimeoPlayer.setCurrentTime(duration * percent);
-            });
-        }
-
-        // ══ CONFIG ══
-        const _0x1a2b = ["\x68\x74\x74\x70\x73\x3a\x2f\x2f\x73\x63\x72\x69\x70\x74\x2e\x67\x6f\x6f\x67\x6c\x65\x2e\x63\x6f\x6d\x2f\x6d\x61\x63\x72\x6f\x73\x2f\x73\x2f\x41\x4b\x66\x79\x63\x62\x78\x38\x75\x31\x67\x59\x34\x76\x46\x68\x6a\x54\x67\x63\x79\x45\x38\x5a\x35\x4d\x79\x50\x6a\x32\x2d\x4a\x55\x44\x78\x72\x2d\x5f\x34\x38\x38\x6f\x51\x33\x4b\x66\x7a\x42\x6a\x4d\x4e\x6b\x73\x54\x75\x61\x77\x6e\x56\x6f\x4d\x71\x30\x5f\x51\x59\x4f\x79\x64\x51\x53\x68\x67\x51\x2f\x65\x78\x65\x63"];
-        const SHEETS_URL = _0x1a2b[0];
-
-        const p = new URLSearchParams(window.location.search);
-        const UTM = {
-            source: p.get('utm_source') || 'brak',
-            medium: p.get('utm_medium') || 'brak',
-            campaign: p.get('utm_campaign') || 'brak',
-            content: p.get('utm_content') || 'brak',
-        };
-        const SESSION_ID = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-
-        let cur = 0;
-        let selectedIdx = null;
-        const ans = { q1: null, name: "", phone: "", cbPhone: false };
-        const t0 = Date.now();
-        const LABELS = [
-            'Narazie nie chcę próbować',
-            'W następnym tygodniu — odezwijcie się do mnie',
-            'Chcę spróbować w tym tygodniu 💪'
-        ];
-        const STEPS = ['intro', 'pytanie_kiedy', 'dane_kontaktowe', 'zgody', 'podziekowanie'];
-        const TOTAL_STEPS = 4; // 0..3 visible dots
-
-        // FB Pixel
-        function fbTrack(event, params) { try { if (typeof fbq === 'function') fbq('track', event, params || {}); } catch (e) { } }
-        function fbCustom(event, params) { try { if (typeof fbq === 'function') fbq('trackCustom', event, params || {}); } catch (e) { } }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            initSlides();
-            initCustomVideo();
-
-            var inp = document.getElementById('inp-phone');
-            if (!inp) return;
-
-            // Zdarzenie input - czyszczenie + formatowanie
-            inp.addEventListener('input', function (e) {
-                if (e.inputType === 'deleteContentBackward') {
-                    validateContact();
-                    return;
-                }
-
-                var input = e.target, cursor = input.selectionStart;
-                var rawValue = input.value.replace(/^(?:\+48\s*|0048\s*|48\s*)/, ''); // Usuwa +48, 0048 i ew. samo 48 na początku
-                var digits = rawValue.replace(/\D/g, '').slice(0, 9);
-                var formatted = '';
-
-                for (var i = 0; i < digits.length; i++) {
-                    if (i === 3 || i === 6) formatted += ' ';
-                    formatted += digits[i];
-                }
-
-                // Jeśli podczas autocomplete tekst wskoczył naraz — napraw kursor i przeredaguj
-                if (input.value !== formatted) {
-                    input.value = formatted;
-                    // W mobile autocomplete zazwyczaj ląduje na końcu, więc skok do length
-                    input.setSelectionRange(formatted.length, formatted.length);
-                }
-                validateContact();
-            });
-
-            // Zdarzenie paste - dla skopiowanych numerów z messengera itp
-            inp.addEventListener('paste', function (e) {
-                e.preventDefault();
-                var pasted = (e.clipboardData || window.clipboardData).getData('text');
-                var rawPasted = pasted.replace(/^(?:\+48\s*|0048\s*|48\s*)/, '');
-                var digits = rawPasted.replace(/\D/g, '').slice(0, 9);
-                var formatted = '';
-
-                for (var i = 0; i < digits.length; i++) {
-                    if (i === 3 || i === 6) formatted += ' ';
-                    formatted += digits[i];
-                }
-                inp.value = formatted;
-                validateContact();
-            });
-            inp.addEventListener('keydown', function (e) {
-                var allowed = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Tab', 'Home', 'End'];
-                if (allowed.indexOf(e.key) !== -1 || e.ctrlKey || e.metaKey) return;
-                if (!/^\d$/.test(e.key)) e.preventDefault();
-            });
-        });
-
-        // ── NAV ──
-        function initSlides() {
-            const slides = document.querySelectorAll('.slide');
-            slides.forEach((s, i) => {
-                if (i !== 0) {
-                    s.style.height = '0';
-                    s.style.overflow = 'hidden';
-                    s.style.visibility = 'hidden';
-                }
-            });
-        }
-
-        function goTo(n) {
-            const inner = document.getElementById('slidesInner');
-            const slides = document.querySelectorAll('.slide');
-
-            // Fix container height to current so we can animate
-            inner.style.height = inner.offsetHeight + 'px';
-
-            // Show target slide
-            slides[n].style.height = 'auto';
-            slides[n].style.visibility = 'visible';
-            slides[n].style.overflow = 'visible';
-
-            // Trigger reflow
-            void inner.offsetHeight;
-
-            // Animate to new height
-            inner.style.height = slides[n].offsetHeight + 'px';
-
-            // Animate translation
-            inner.style.transform = `translateX(-${n * 100}%)`;
-
-            cur = n;
-
-            // Tracking video stats when navigating away from slide 0 for the first time
-            if (n > 0 && maxWatchSec > 0 && !videoStatsSent) {
-                videoStatsSent = true;
-                send({
-                    type: 'video_stats',
-                    session_id: SESSION_ID,
-                    watch_time_sec: Math.round(maxWatchSec),
-                    percent_watched: Math.round(maxPercent),
-                    krok: 'przeszedl_dalej'
-                });
-            }
-
-            // Wait for transition to finish before hiding inactive
-            setTimeout(() => {
-                slides.forEach((s, idx) => {
-                    if (idx !== n) {
-                        s.style.height = '0';
-                        s.style.overflow = 'hidden';
-                        s.style.visibility = 'hidden';
-                    }
-                });
-                inner.style.height = 'auto'; // allow slide to resize dynamically
-            }, 300);
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            document.querySelector('.fb-wrapper').scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-            updateUI();
-            if (n === 1) fbCustom('FormStep1_Pytanie');
-            if (n === 2) fbCustom('FormStep2_Kontakt');
-            if (n === 3) fbCustom('FormStep3_Zgody');
-            if (n > 0) ping(n, 'entered');
-        }
-        function prevSlide() { if (cur > 0) goTo(cur - 1); }
-
-        function updateUI() {
-            // Dots: show for slides 0-3
-            for (var i = 0; i < TOTAL_STEPS; i++) {
-                var d = document.getElementById('dot' + i);
-                if (!d) continue;
-                d.className = 'dot';
-                if (i < cur) d.classList.add('done');
-                else if (i === cur) d.classList.add('active');
-            }
-
-            // Back button
-            document.getElementById('backBtn').style.display = (cur > 0 && cur < 4) ? 'block' : 'none';
-
-            // Bottom bar visibility
-            document.getElementById('bottomBar').style.display = cur === 4 ? 'none' : '';
-
-            // Header text
-            var titles = [
-                'EMS robi robotę. Ty musisz tylko przyjść 💪',
-                'Kiedy chcesz spróbować?',
-                'Dane kontaktowe',
-                'Oświadczenia',
-                ''
-            ];
-            var subs = ['Trening próbny EMS w suchych kombinezonach + drenaż limfatyczny w PROMOCJI za 69 zł', 'Zaznacz jedną odpowiedź', 'Podaj swój kontakt', 'Zaznacz zgody', ''];
-            document.getElementById('hcTitle').innerHTML = titles[cur] || '';
-            document.getElementById('hcSub').textContent = subs[cur] || '';
-
-            // Btn label
-            var labels = ['Odbierz trening za 69 zł →', 'Kontynuuj', 'Kontynuuj', 'Prześlij', ''];
-            document.getElementById('btnLabel').textContent = labels[cur] || 'Kontynuuj';
-
-            // Btn disabled state
-            var btn = document.getElementById('mainBtn');
-            btn.disabled = false;
-            if (cur === 1 && selectedIdx === null) btn.disabled = true;
-            if (cur === 2) validateContact();
-            if (cur === 3 && !ans.cbPhone) btn.disabled = true;
-        }
-
-        function handleNext() {
-            if (cur === 0) { goTo(1); return; }
-            if (cur === 1) { handleQ1Next(); return; }
-            if (cur === 2) { goTo(3); return; }
-            if (cur === 3) { submitForm(); return; }
-        }
-
-        // ── Q1 ──
-        function handleQ1Next() {
-            if (selectedIdx === 0) {
-                send({
-                    type: 'dropoff', event: 'narazie_nie_chce',
-                    session_id: SESSION_ID,
-                    timestamp: new Date().toISOString(),
-                    step: 1, step_name: 'pytanie_kiedy',
-                    kiedy_trening: LABELS[0],
-                    utm_content: UTM.content, utm_campaign: UTM.campaign, utm_source: UTM.source,
-                });
-                showRejection();
-            } else {
-                goTo(2);
-            }
-        }
-
-        function showRejection() {
-            document.querySelector('.slides-outer').style.display = 'none';
-            document.getElementById('bottomBar').style.display = 'none';
-            document.getElementById('headerCard').style.display = 'none';
-            document.getElementById('rejectionScreen').classList.add('active');
-        }
-        function hideRejection() {
-            document.querySelector('.slides-outer').style.display = '';
-            document.getElementById('bottomBar').style.display = '';
-            document.getElementById('headerCard').style.display = '';
-            document.getElementById('rejectionScreen').classList.remove('active');
-            selectedIdx = null; ans.q1 = null;
-            document.getElementById('q1-options').querySelectorAll('.radio-item').forEach(el => el.classList.remove('selected'));
-            document.getElementById('mainBtn').disabled = true;
-            goTo(1);
-        }
-
-        // ── OPTIONS ──
-        function selectOption(i) {
-            selectedIdx = i;
-            document.getElementById('q1-options').querySelectorAll('.radio-item')
-                .forEach((el, j) => el.classList.toggle('selected', j === i));
-            ans.q1 = LABELS[i];
-            document.getElementById('mainBtn').disabled = false;
-        }
-
-        function validateContact() {
-            ans.name = document.getElementById('inp-name').value.trim();
-            var phoneInput = document.getElementById('inp-phone');
-            var digits = phoneInput.value.replace(/\D/g, '');
-            var phoneValid = digits.length === 9;
-            var phoneTouched = digits.length > 0;
-            ans.phone = phoneInput.value.trim();
-            var hint = document.getElementById('phone-hint');
-            var err = document.getElementById('phone-error');
-            if (phoneTouched && !phoneValid) {
-                phoneInput.classList.add('error');
-                err.style.display = 'block'; hint.style.display = 'none';
-            } else {
-                phoneInput.classList.remove('error');
-                err.style.display = 'none'; hint.style.display = 'block';
-            }
-            document.getElementById('mainBtn').disabled = !(ans.name.length > 1 && phoneValid);
-        }
-
-        function toggleCheckbox(id) {
-            var el = document.getElementById(id);
-            el.classList.toggle('checked');
-            if (id === 'cb-phone') {
-                ans.cbPhone = el.classList.contains('checked');
-                document.getElementById('mainBtn').disabled = !ans.cbPhone;
-            }
-        }
-
-        // ── SUBMIT ──
-        async function submitForm() {
-            var btn = document.getElementById('mainBtn');
-            btn.disabled = true; btn.classList.add('loading');
-            document.getElementById('btnLabel').textContent = 'Wysyłam…';
-            await send({
-                type: 'submission',
-                session_id: SESSION_ID,
-                timestamp: new Date().toISOString(),
-                czas_wypelniania: Math.round((Date.now() - t0) / 1000) + 's',
-                imie_nazwisko: ans.name,
-                telefon: ans.phone,
-                kiedy_trening: ans.q1,
-                utm_content: UTM.content, utm_campaign: UTM.campaign,
-                utm_source: UTM.source, utm_medium: UTM.medium,
-                zgoda_telefon: ans.cbPhone ? 'TAK' : 'NIE',
-            });
-            btn.classList.remove('loading');
-            fbTrack('Lead');
-            fbTrack('Contact', { currency: 'PLN', value: 1 });
-            goTo(4);
-
-            // Efekt konfetti po przejściu na Thank You
-            if (typeof window.confetti === 'function') {
-                window.confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-            }
-        }
-
-        async function ping(step, event) {
-            await send({
-                type: 'dropoff', event,
-                session_id: SESSION_ID,
-                timestamp: new Date().toISOString(),
-                step, step_name: STEPS[step] || '',
-                imie: ans.name, telefon: ans.phone,
-                utm_content: UTM.content, utm_campaign: UTM.campaign, utm_source: UTM.source,
-            });
-        }
-
-        async function send(data) {
-            // Blokada zapisu dla Ciebie (administratora)
-            // Kiedy testujesz stronę (żeby nie psuć statystyk), wejdź przez link: ?test=1
-            if (window.location.search.indexOf('test=1') !== -1) {
-                console.log("Blokada arkusza - włączony tryb testowy.");
-                return;
-            }
-
-            // Bezwarunkowo dodajemy zaktualizowany czas trwania całej sesji do każdych danych,
-            // dzięki czemu Google Arkusz zawsze ma aktualny czas przebywania co każde uderzenie w API
-            if (!data.czas_wypelniania) {
-                var spentTimer = Math.round((Date.now() - t0) / 1000);
-                var mm = Math.floor(spentTimer / 60);
-                var ss = spentTimer % 60;
-                data.czas_wypelniania = (mm < 10 ? '0' + mm : mm) + ':' + (ss < 10 ? '0' + ss : ss);
-            }
-
-            try {
-                await fetch(SHEETS_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    keepalive: true,
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-            } catch (e) { console.error(e); }
-        }
-
-        updateUI();
-
-        // ── Obliczanie czasu absolutnego (Zakończenie sesji) ─────────
-        let lastLogTime = 0;
-        function logPageClose() {
-            var now = Date.now();
-            if (now - lastLogTime < 1000) return; // Zapobiega podwójnemu wysłaniu przy jednoczesnym pagehide i visibilitychange
-            lastLogTime = now;
-
-            var sec = Math.round((now - t0) / 1000);
-            var m = Math.floor(sec / 60);
-            var s = sec % 60;
-            var formatCzas = (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
-
-            if (cur === 0 && maxWatchSec > 0 && !videoStatsSent) {
-                videoStatsSent = true;
-                send({
-                    type: 'video_stats',
-                    session_id: SESSION_ID,
-                    watch_time_sec: Math.round(maxWatchSec),
-                    percent_watched: Math.round(maxPercent),
-                    krok: 'zamknal_film'
-                });
-            }
-
-            var payloadData = {
-                type: 'dropoff',
-                event: STEPS[cur] + '_zamknieta',
-                session_id: SESSION_ID,
-                timestamp: new Date().toISOString(),
-                step: cur,
-                step_name: STEPS[cur] || '',
-                kiedy_trening: ans.q1 || '',
-                imie: ans.name || '',
-                telefon: ans.phone || '',
-                czas_wypelniania: formatCzas,
-                utm_content: UTM.content,
-                utm_campaign: UTM.campaign,
-                utm_source: UTM.source
-            };
-
-            if (window.location.search.indexOf('test=1') !== -1) return;
-
-            try {
-                fetch(SHEETS_URL, {
-                    method: 'POST', mode: 'no-cors', keepalive: true,
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payloadData)
-                });
-            } catch (e) { }
-        }
-
-        document.addEventListener('visibilitychange', function () {
-            if (document.visibilityState === 'hidden') {
-                logPageClose();
-            }
-        });
-        window.addEventListener('pagehide', logPageClose);
-
-        // ── Intro tracking (Start) ─────────────────────────────────────────
-        // Wysyła domyślny `intro` w celu oznaczenia wejścia z czasem załadowania = 00:00
-        send({
-            type: 'dropoff',
-            event: 'intro',
-            session_id: SESSION_ID,
-            timestamp: new Date().toISOString(),
-            step: 0,
-            step_name: 'intro',
-            utm_content: UTM.content,
-            utm_campaign: UTM.campaign,
-            utm_source: UTM.source,
-        });
-    </script>
+    <div style="text-align:center; margin-top: 32px;">
+      <a href="#" class="btn-primary" onclick="openModal();return false;" style="font-size:17px; padding:18px 40px;">Umów trening próbny za 69 zł →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="section-inner">
+    <div class="section-label fade-up">Masz pytania?</div>
+    <h2 class="section-title fade-up">Najczęściej pytacie o</h2>
+
+    <div class="faq-list fade-up">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Czy trening EMS boli?
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">Nie boli — ale jest intensywny. Czujesz wyraźne skurcze mięśni, podobne do drgań. Intensywność dostosowujemy indywidualnie do każdej osoby, szczególnie przy pierwszym treningu. Większość ludzi opisuje to jako dziwne, ale nie nieprzyjemne odczucie.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Czy muszę być w dobrej kondycji, żeby zacząć?
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">Nie. EMS jest szczególnie pomocny dla osób, które nie ćwiczą regularnie, mają ból pleców, siedzący tryb życia lub wracają po kontuzji. Trening jest w całości prowadzony przez trenera i dostosowany do Twojego stanu.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Czym są suche kombinezony i dlaczego to ważne?
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">W tradycyjnym EMS używa się mokrych kombinezonów — trzeba zwilżać tkaninę wodą, co bywa niekomfortowe. Nasze suche kombinezony EMS nie wymagają tej procedury. Zakładasz strój i zaczynasz trening. Higienicznie, wygodnie, bez zawracania głowy.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Po ilu treningach zobaczę efekty?
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">Pierwsze odczucia — lepsza postawa, mniejsze napięcie w plecach — pojawiają się już po 2–4 treningach. Widoczna zmiana sylwetki zazwyczaj następuje po 6–10 sesjach, w zależności od regularności i Twoich indywidualnych celów.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Ile kosztuje regularne trenowanie?
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">Ceny pakietów poznasz po treningu próbnym — omówimy to razem na spokojnie, bez żadnej presji sprzedażowej. Trening próbny za 69 zł nie zobowiązuje Cię do zakupu pakietu.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Co to jest drenaż limfatyczny, który wchodzi w skład treningu?
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-a">Presoterapia (drenaż limfatyczny) to masaż pneumatyczny nóg, który wspomaga krążenie limfatyczne, redukuje opuchliznę i zmęczenie kończyn. Zwykle wykonuje się go po treningu — to przyjemne zakończenie sesji, które przyspiesza regenerację.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-section-inner">
+    <div class="section-label">Gotowy/a?</div>
+    <h2 class="section-title fade-up">Zostało 8 miejsc na trening próbny</h2>
+    <p class="section-sub fade-up">Zostaw kontakt — oddzwonimy i umówimy termin w ciągu 24 godzin. Bez presji, bez zobowiązań.</p>
+    <a href="#" class="btn-primary fade-up" onclick="openModal();return false;" style="font-size:17px; padding:18px 40px; margin: 0 auto;">Umów trening za 69 zł →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="margin-bottom:8px; font-family:'Syne',sans-serif; font-weight:700; color:#9ca3af; font-size:14px;">Manufaktura Formy · Białystok</div>
+  <div>EMS Studio · Trening elektrostymulacyjny · Drenaż limfatyczny</div>
+  <div style="margin-top:8px;"><a href="polityka.html">Polityka Prywatności</a></div>
+</footer>
+
+<!-- ── MODAL FORM ── -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal-box" id="modalBox">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-logo-row">
+        <img class="modal-logo-img" src="https://lh3.googleusercontent.com/d/18mEyEP41W-2NXRbPbsCetiXB_BAchfST" alt="Logo" onerror="this.style.display='none'">
+        <span class="modal-brand">Manufaktura Formy</span>
+      </div>
+      <div class="modal-title" id="modalTitle">Odbierz trening próbny za 69 zł</div>
+      <div class="modal-sub" id="modalSub">Zostaw kontakt — zadzwonimy i umówimy Twój pierwszy trening</div>
+    </div>
+    <div class="modal-body">
+      <!-- Progress -->
+      <div class="modal-progress" id="modalProgress">
+        <div class="modal-dot active" id="mdot0"></div>
+        <div class="modal-dot" id="mdot1"></div>
+        <div class="modal-dot" id="mdot2"></div>
+      </div>
+
+      <!-- Slides -->
+      <div class="form-slides">
+        <div class="form-slides-inner" id="formSlidesInner">
+
+          <!-- Slide 0: Kiedy -->
+          <div class="form-slide">
+            <div class="form-q-title">Kiedy chcesz spróbować pierwszego treningu?</div>
+            <div class="form-q-sub">Zaznacz jedną odpowiedź</div>
+            <div class="radio-list" id="q1-options">
+              <div class="radio-item" onclick="selectOption(0)">
+                <span class="radio-label">Na razie nie chcę próbować</span>
+                <div class="radio-circle"><div class="radio-dot"></div></div>
+              </div>
+              <div class="radio-item" onclick="selectOption(1)">
+                <span class="radio-label">W następnym tygodniu — odezwijcie się</span>
+                <div class="radio-circle"><div class="radio-dot"></div></div>
+              </div>
+              <div class="radio-item" onclick="selectOption(2)">
+                <span class="radio-label">Chcę spróbować w tym tygodniu 💪</span>
+                <div class="radio-circle"><div class="radio-dot"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 1: Kontakt -->
+          <div class="form-slide">
+            <div class="form-q-title">Informacje kontaktowe ℹ️</div>
+            <div class="form-q-sub">Zostaw kontakt — oddzwonimy i umówimy trening</div>
+            <div class="input-group">
+              <label class="input-label">Imię i nazwisko</label>
+              <input class="input-field" id="inp-name" type="text" placeholder="Wprowadź odpowiedź." autocomplete="name" oninput="validateContact()">
+            </div>
+            <div class="input-group">
+              <label class="input-label">Numer telefonu</label>
+              <input class="input-field" id="inp-phone" type="tel" placeholder="123 456 789" autocomplete="tel">
+              <div class="input-hint" id="phone-hint">Podaj 9-cyfrowy numer, np. 123 456 789</div>
+              <div class="input-error" id="phone-error">Podaj pełny numer — 9 cyfr w formacie 123 456 789</div>
+            </div>
+          </div>
+
+          <!-- Slide 2: Zgody -->
+          <div class="form-slide">
+            <div class="form-q-title">Oświadczam, że</div>
+            <div class="form-q-sub">Zaznacz poniższą zgodę</div>
+            <div class="cb-list">
+              <div class="cb-item" id="cb-phone" onclick="toggleCheckbox('cb-phone')">
+                <span class="cb-label">Wyrażam zgodę na kontakt tel. oraz akceptuję <a href="polityka.html" target="_blank" onclick="event.stopPropagation()">Politykę Prywatności</a></span>
+                <div class="cb-box"></div>
+              </div>
+            </div>
+            <div class="legal-text">
+              Poprzez kliknięcie "Prześlij" wyrażasz zgodę na przesłanie Twoich informacji Manufakturze Formy w Białymstoku.<br><br>
+              <a href="polityka.html" target="_blank" class="legal-link" style="color:#9ca3af;">Polityka Prywatności Manufaktura Formy</a>
+            </div>
+          </div>
+
+          <!-- Slide 3: Dziękujemy -->
+          <div class="form-slide">
+            <div class="thankyou-slide">
+              <div class="ty-check">✅</div>
+              <div class="ty-title">Dziękujemy bardzo!</div>
+              <div class="ty-body">Skontaktujemy się z Tobą w ciągu 24h.</div>
+              <div class="ty-body">Nie chcesz czekać? Zadzwoń i umów się już teraz!</div>
+              <hr class="ty-divider">
+              <div class="ty-small">ℹ️ Twoje odpowiedzi zostały przesłane.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Rejection slide (outside slides) -->
+      <div id="rejectionSlide" style="display:none;">
+        <div class="rejection-slide">
+          <div class="rejection-emoji">🙏</div>
+          <div class="rejection-title">Rozumiemy, że to nie ten moment</div>
+          <div class="rejection-sub">Gdy będziesz gotowy/a — jesteśmy tutaj! Tymczasem zapraszamy na nasz Instagram, gdzie pokazujemy efekty treningów EMS i życie studia na co dzień 💪</div>
+          <a class="btn-ig" href="https://www.instagram.com/manufakturaformy.bialystok" target="_blank">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            Obserwuj nas na Instagramie
+          </a>
+          <button class="btn-rejection-back" onclick="hideRejection()">← Wróć do formularza</button>
+        </div>
+      </div>
+
+      <!-- Bottom bar -->
+      <div id="formBottomBar">
+        <button class="form-btn-next" id="formMainBtn" onclick="handleFormNext()" disabled>
+          <span class="btn-label" id="formBtnLabel">Kontynuuj</span>
+          <div class="spinner"></div>
+        </button>
+        <button class="form-btn-back" id="formBackBtn" onclick="formPrev()" style="display:none;">Wstecz</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══ CONFIG ══
+const SHEETS_URL = "\x68\x74\x74\x70\x73\x3a\x2f\x2f\x73\x63\x72\x69\x70\x74\x2e\x67\x6f\x6f\x67\x6c\x65\x2e\x63\x6f\x6d\x2f\x6d\x61\x63\x72\x6f\x73\x2f\x73\x2f\x41\x4b\x66\x79\x63\x62\x78\x38\x75\x31\x67\x59\x34\x76\x46\x68\x6a\x54\x67\x63\x79\x45\x38\x5a\x35\x4d\x79\x50\x6a\x32\x2d\x4a\x55\x44\x78\x72\x2d\x5f\x34\x38\x38\x6f\x51\x33\x4b\x66\x7a\x42\x6a\x4d\x4e\x6b\x73\x54\x75\x61\x77\x6e\x56\x6f\x4d\x71\x30\x5f\x51\x59\x4f\x79\x64\x51\x53\x68\x67\x51\x2f\x65\x78\x65\x63";
+
+const p = new URLSearchParams(window.location.search);
+const UTM = {
+  source: p.get('utm_source') || 'brak',
+  medium: p.get('utm_medium') || 'brak',
+  campaign: p.get('utm_campaign') || 'brak',
+  content: p.get('utm_content') || 'brak',
+};
+const SESSION_ID = Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+const t0 = Date.now();
+
+const LABELS = ['Na razie nie chcę próbować', 'W następnym tygodniu — odezwijcie się', 'Chcę spróbować w tym tygodniu 💪'];
+let formCur = 0;
+let selectedIdx = null;
+const ans = { q1: null, name: '', phone: '', cbPhone: false };
+const TOTAL_FORM_SLIDES = 3;
+
+function fbTrack(ev, params) { try { if(typeof fbq==='function') fbq('track',ev,params||{}); } catch(e){} }
+function fbCustom(ev, params) { try { if(typeof fbq==='function') fbq('trackCustom',ev,params||{}); } catch(e){} }
+
+// ── MODAL ──
+function openModal() {
+  document.getElementById('modalOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  fbCustom('OpenedLeadForm');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+// ── FORM NAVIGATION ──
+function formGoTo(n) {
+  const inner = document.getElementById('formSlidesInner');
+  inner.style.transform = `translateX(-${n * 100}%)`;
+  formCur = n;
+  updateFormUI();
+  if (n === 1) fbCustom('FormStep1_Kontakt');
+  if (n === 2) fbCustom('FormStep2_Zgody');
+}
+
+function formPrev() { if (formCur > 0) formGoTo(formCur - 1); }
+
+function handleFormNext() {
+  if (formCur === 0) { handleQ1Next(); return; }
+  if (formCur === 1) { formGoTo(2); return; }
+  if (formCur === 2) { submitForm(); return; }
+}
+
+function updateFormUI() {
+  // Dots
+  for (let i = 0; i < TOTAL_FORM_SLIDES; i++) {
+    const d = document.getElementById('mdot' + i);
+    if (!d) continue;
+    d.className = 'modal-dot';
+    if (i < formCur) d.classList.add('done');
+    else if (i === formCur) d.classList.add('active');
+  }
+
+  // Back button
+  document.getElementById('formBackBtn').style.display = (formCur > 0 && formCur < TOTAL_FORM_SLIDES) ? 'block' : 'none';
+
+  // Bottom bar
+  document.getElementById('formBottomBar').style.display = formCur === TOTAL_FORM_SLIDES ? 'none' : '';
+
+  // Modal header
+  const titles = ['Kiedy chcesz spróbować?', 'Dane kontaktowe', 'Ostatni krok', ''];
+  const subs = ['Zaznacz jedną odpowiedź', 'Podaj swój numer — oddzwonimy w ciągu 24h', 'Zaznacz zgodę i prześlij formularz', ''];
+  document.getElementById('modalTitle').textContent = titles[formCur] || 'Dziękujemy!';
+  document.getElementById('modalSub').textContent = subs[formCur] || '';
+
+  // Progress
+  document.getElementById('modalProgress').style.display = formCur === TOTAL_FORM_SLIDES ? 'none' : 'flex';
+
+  // Button label
+  const btnLabels = ['Kontynuuj', 'Kontynuuj', 'Prześlij formularz', ''];
+  document.getElementById('formBtnLabel').textContent = btnLabels[formCur] || 'Kontynuuj';
+
+  // Btn disabled
+  const btn = document.getElementById('formMainBtn');
+  btn.disabled = false;
+  if (formCur === 0 && selectedIdx === null) btn.disabled = true;
+  if (formCur === 1) validateContact();
+  if (formCur === 2 && !ans.cbPhone) btn.disabled = true;
+}
+
+// ── Q1 ──
+function handleQ1Next() {
+  if (selectedIdx === 0) {
+    send({ type:'dropoff', event:'narazie_nie_chce', session_id:SESSION_ID, timestamp:new Date().toISOString(), kiedy_trening:LABELS[0], utm_source:UTM.source, utm_campaign:UTM.campaign, utm_content:UTM.content });
+    showRejection();
+  } else {
+    formGoTo(1);
+  }
+}
+
+function showRejection() {
+  document.getElementById('formSlidesInner').style.display = 'none';
+  document.getElementById('rejectionSlide').style.display = 'block';
+  document.getElementById('formBottomBar').style.display = 'none';
+  document.getElementById('modalProgress').style.display = 'none';
+}
+
+function hideRejection() {
+  document.getElementById('formSlidesInner').style.display = 'flex';
+  document.getElementById('rejectionSlide').style.display = 'none';
+  selectedIdx = null; ans.q1 = null;
+  document.getElementById('q1-options').querySelectorAll('.radio-item').forEach(el => el.classList.remove('selected'));
+  formGoTo(0);
+}
+
+// ── RADIO ──
+function selectOption(i) {
+  selectedIdx = i;
+  document.getElementById('q1-options').querySelectorAll('.radio-item').forEach((el,j) => el.classList.toggle('selected', j===i));
+  ans.q1 = LABELS[i];
+  document.getElementById('formMainBtn').disabled = false;
+}
+
+// ── CONTACT VALIDATION ──
+function validateContact() {
+  ans.name = document.getElementById('inp-name').value.trim();
+  const phoneInput = document.getElementById('inp-phone');
+  const digits = phoneInput.value.replace(/\D/g,'');
+  const phoneValid = digits.length === 9;
+  const phoneTouched = digits.length > 0;
+  ans.phone = phoneInput.value.trim();
+  const hint = document.getElementById('phone-hint');
+  const err = document.getElementById('phone-error');
+  if (phoneTouched && !phoneValid) {
+    phoneInput.classList.add('error');
+    err.style.display = 'block'; hint.style.display = 'none';
+  } else {
+    phoneInput.classList.remove('error');
+    err.style.display = 'none'; hint.style.display = 'block';
+  }
+  document.getElementById('formMainBtn').disabled = !(ans.name.length > 1 && phoneValid);
+}
+
+// ── CHECKBOX ──
+function toggleCheckbox(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('checked');
+  if (id === 'cb-phone') {
+    ans.cbPhone = el.classList.contains('checked');
+    document.getElementById('formMainBtn').disabled = !ans.cbPhone;
+  }
+}
+
+// ── SUBMIT ──
+async function submitForm() {
+  const btn = document.getElementById('formMainBtn');
+  btn.disabled = true; btn.classList.add('loading');
+  document.getElementById('formBtnLabel').textContent = 'Wysyłam…';
+  await send({
+    type: 'submission',
+    session_id: SESSION_ID,
+    timestamp: new Date().toISOString(),
+    czas_wypelniania: Math.round((Date.now()-t0)/1000) + 's',
+    imie_nazwisko: ans.name,
+    telefon: ans.phone,
+    kiedy_trening: ans.q1,
+    utm_content: UTM.content, utm_campaign: UTM.campaign,
+    utm_source: UTM.source, utm_medium: UTM.medium,
+    zgoda_telefon: ans.cbPhone ? 'TAK' : 'NIE',
+  });
+  btn.classList.remove('loading');
+  fbTrack('Lead');
+  fbTrack('Contact', { currency:'PLN', value:1 });
+  formGoTo(TOTAL_FORM_SLIDES);
+  if (typeof window.confetti === 'function') {
+    window.confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+  }
+}
+
+async function send(data) {
+  if (window.location.search.indexOf('test=1') !== -1) { console.log('TEST MODE:', data); return; }
+  const sec = Math.round((Date.now()-t0)/1000);
+  if (!data.czas_wypelniania) {
+    const mm = Math.floor(sec/60), ss = sec%60;
+    data.czas_wypelniania = (mm<10?'0'+mm:mm)+':'+(ss<10?'0'+ss:ss);
+  }
+  try {
+    await fetch(SHEETS_URL, { method:'POST', mode:'no-cors', keepalive:true, headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) });
+  } catch(e) { console.error(e); }
+}
+
+// ── FAQ ──
+function toggleFaq(el) {
+  const item = el.parentElement;
+  item.classList.toggle('open');
+}
+
+// ── PHONE FORMATTING ──
+document.addEventListener('DOMContentLoaded', function() {
+  const inp = document.getElementById('inp-phone');
+  if (!inp) return;
+
+  inp.addEventListener('input', function(e) {
+    if (e.inputType === 'deleteContentBackward') { validateContact(); return; }
+    let raw = inp.value.replace(/^(?:\+48\s*|0048\s*)/,'');
+    let digits = raw.replace(/\D/g,'').slice(0,9);
+    let formatted = '';
+    for (let i = 0; i < digits.length; i++) {
+      if (i===3||i===6) formatted+=' ';
+      formatted+=digits[i];
+    }
+    inp.value = formatted;
+    inp.setSelectionRange(formatted.length, formatted.length);
+    validateContact();
+  });
+
+  inp.addEventListener('paste', function(e) {
+    e.preventDefault();
+    let pasted = (e.clipboardData||window.clipboardData).getData('text');
+    let raw = pasted.replace(/^(?:\+48\s*|0048\s*)/,'');
+    let digits = raw.replace(/\D/g,'').slice(0,9);
+    let formatted = '';
+    for (let i=0;i<digits.length;i++) { if(i===3||i===6) formatted+=' '; formatted+=digits[i]; }
+    inp.value = formatted;
+    validateContact();
+  });
+
+  inp.addEventListener('keydown', function(e) {
+    const allowed = ['Backspace','Delete','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Tab','Home','End'];
+    if (allowed.indexOf(e.key)!==-1||e.ctrlKey||e.metaKey) return;
+    if (!/^\d$/.test(e.key)) e.preventDefault();
+  });
+
+  // Scroll animations
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1 });
+  fadeEls.forEach(el => observer.observe(el));
+
+  // Init tracking
+  send({ type:'dropoff', event:'landing_view', session_id:SESSION_ID, timestamp:new Date().toISOString(), step:0, step_name:'landing', utm_source:UTM.source, utm_campaign:UTM.campaign, utm_content:UTM.content });
+});
+
+// Page close tracking
+let lastLogTime = 0;
+function logPageClose() {
+  const now = Date.now();
+  if (now - lastLogTime < 1000) return;
+  lastLogTime = now;
+  const sec = Math.round((now-t0)/1000);
+  const m = Math.floor(sec/60), s = sec%60;
+  send({ type:'dropoff', event:'page_closed', session_id:SESSION_ID, timestamp:new Date().toISOString(), czas_wypelniania:(m<10?'0'+m:m)+':'+(s<10?'0'+s:s), utm_source:UTM.source, utm_campaign:UTM.campaign });
+}
+document.addEventListener('visibilitychange', function() { if(document.visibilityState==='hidden') logPageClose(); });
+window.addEventListener('pagehide', logPageClose);
+
+updateFormUI();
+</script>
 </body>
-
 </html>
