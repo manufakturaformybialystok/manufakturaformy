@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Manufaktura Formy – Trening EMS Białystok</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root {
@@ -23,17 +23,22 @@
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
+}
 
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   background: var(--cream);
   color: var(--black);
   overflow-x: hidden;
+  max-width: 100vw;
 }
 
 h1, h2, h3, h4 {
-  font-family: 'Syne', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
 }
 
 /* ── NOISE OVERLAY ── */
@@ -61,7 +66,7 @@ nav {
 }
 
 .nav-logo {
-  font-family: 'Syne', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 800;
   font-size: 15px;
   letter-spacing: 0.04em;
@@ -164,7 +169,7 @@ nav {
 }
 
 .stat-num {
-  font-family: 'Syne', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   font-size: 28px;
   font-weight: 800;
   color: var(--black);
@@ -195,7 +200,7 @@ nav {
   border: none;
   cursor: pointer;
   transition: all 0.2s;
-  font-family: 'DM Sans', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -213,7 +218,7 @@ nav {
   border: 1.5px solid var(--border);
   cursor: pointer;
   transition: all 0.2s;
-  font-family: 'DM Sans', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
 }
 .btn-secondary:hover { border-color: var(--black); }
 
@@ -244,7 +249,7 @@ nav {
 }
 
 .offer-price-new {
-  font-family: 'Syne', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   font-size: 22px;
   font-weight: 800;
   color: #60a5fa;
@@ -339,7 +344,7 @@ section {
 }
 
 .benefit-title {
-  font-family: 'Syne', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   font-size: 15px;
   font-weight: 700;
   margin-bottom: 5px;
@@ -426,7 +431,7 @@ section {
 }
 
 .callout-title {
-  font-family: 'Syne', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   font-size: clamp(28px, 5vw, 48px);
   font-weight: 800;
   line-height: 1.1;
@@ -494,7 +499,7 @@ section {
 }
 
 .forwho-card-title {
-  font-family: 'Syne', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   font-size: 14px;
   font-weight: 700;
   margin-bottom: 16px;
@@ -567,7 +572,7 @@ section {
 }
 
 .included-price-new {
-  font-family: 'Syne', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   font-size: 52px;
   font-weight: 800;
   color: var(--black);
@@ -603,7 +608,7 @@ section {
 .included-list-block { flex: 1; }
 
 .included-list-title {
-  font-family: 'Syne', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 16px;
@@ -669,7 +674,7 @@ section {
   gap: 16px;
   padding: 20px 24px;
   cursor: pointer;
-  font-family: 'Syne', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   font-size: 15px;
   font-weight: 600;
   color: var(--black);
@@ -788,7 +793,7 @@ section {
 }
 
 .modal-title {
-  font-family: 'Syne', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   font-size: 20px;
   font-weight: 800;
   line-height: 1.25;
@@ -844,7 +849,7 @@ section {
 
 /* Radio */
 .form-q-title {
-  font-family: 'Syne', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 4px;
@@ -955,7 +960,7 @@ section {
   color: var(--black);
   outline: none;
   background: transparent;
-  font-family: 'DM Sans', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   transition: border-color 0.15s;
 }
 
@@ -992,7 +997,7 @@ section {
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  font-family: 'Syne', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   transition: background 0.15s;
   display: flex;
   align-items: center;
@@ -1026,7 +1031,7 @@ section {
   background: none;
   border: none;
   cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   padding: 8px 0 0;
   text-decoration: underline;
   width: 100%;
@@ -1039,7 +1044,7 @@ section {
 }
 
 .rejection-emoji { font-size: 40px; margin-bottom: 14px; }
-.rejection-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.rejection-title { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 8px; }
 .rejection-sub { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
 
 .btn-ig {
@@ -1054,7 +1059,7 @@ section {
   font-weight: 700;
   cursor: pointer;
   text-decoration: none;
-  font-family: 'DM Sans', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   margin-bottom: 12px;
   width: 100%;
   justify-content: center;
@@ -1066,7 +1071,7 @@ section {
   background: none;
   border: none;
   cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   text-decoration: underline;
   padding: 6px;
   width: 100%;
@@ -1080,7 +1085,7 @@ section {
 }
 
 .ty-check { font-size: 44px; margin-bottom: 14px; }
-.ty-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+.ty-title { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 8px; }
 .ty-body { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 8px; }
 .ty-divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
 .ty-small { font-size: 12px; color: var(--muted); }
@@ -1385,7 +1390,7 @@ fbq('track','PageView');
 <div class="callout-section fade-up">
   <div class="callout-inner">
     <div class="callout-tag">⚡ Dlaczego EMS działa</div>
-    <div class="callout-title">Nauczę Cię poczuć własne mięśnie — nawet jeśli lata nie ćwiczyłeś/aś</div>
+    <div class="callout-title">Nauczymy Cię poczuć własne mięśnie — nawet jeśli lata nie ćwiczyłeś/aś</div>
     <p class="callout-sub">Elektrostymulacja angażuje mięśnie bez przeciążania ciała. Raz w tygodniu. 20 minut. W suchych kombinezonach — bez mokrych żeli i nieprzyjemnych procedur.</p>
   </div>
 </div>
@@ -1576,7 +1581,7 @@ fbq('track','PageView');
 
 <!-- FOOTER -->
 <footer>
-  <div style="margin-bottom:8px; font-family:'Syne',sans-serif; font-weight:700; color:#9ca3af; font-size:14px;">Manufaktura Formy · Białystok</div>
+  <div style="margin-bottom:8px; font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Inter','Helvetica Neue',Arial,sans-serif; font-weight:700; color:#9ca3af; font-size:14px;">Manufaktura Formy · Białystok</div>
   <div>EMS Studio · Trening elektrostymulacyjny · Drenaż limfatyczny</div>
   <div style="margin-top:8px;"><a href="polityka.html">Polityka Prywatności</a></div>
 </footer>
