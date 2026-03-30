@@ -1271,7 +1271,7 @@ fbq('track','PageView');
     <img src="https://lh3.googleusercontent.com/d/18mEyEP41W-2NXRbPbsCetiXB_BAchfST" alt="Manufaktura Formy" onerror="this.style.display='none'">
     Manufaktura Formy
   </div>
-  <a href="https://manufaktura-formy.pl/pierwsza-wizyta" class="nav-cta">Wypróbuj EMS za 79 zł →</a>
+  <a href="#" class="nav-cta" id="navCta" onclick="handleCtaClick(event)">Wypróbuj EMS za 79 zł →</a>
 </nav>
 
 <!-- HERO -->
@@ -1298,7 +1298,7 @@ fbq('track','PageView');
       </div>
     </div>
     <div class="hero-cta-group">
-      <a href="https://manufaktura-formy.pl/pierwsza-wizyta" class="btn-primary">Sprawdź EMS zamiast siłowni →</a>
+      <a href="#" class="btn-primary" onclick="handleCtaClick(event)">Sprawdź EMS zamiast siłowni →</a>
       <a href="#jak-dziala" class="btn-secondary">EMS vs siłownia — porównaj</a>
     </div>
   </div>
@@ -1511,7 +1511,37 @@ fbq('track','PageView');
     </div>
 
     <div style="text-align:center; margin-top: 32px;">
-      <a href="https://manufaktura-formy.pl/pierwsza-wizyta" class="btn-primary" style="font-size:17px; padding:18px 40px;">Umów trening próbny za 79 zł →</a>
+      <a href="#" class="btn-primary" onclick="handleCtaClick(event)" style="font-size:17px; padding:18px 40px;">Umów trening próbny za 79 zł →</a>
+    </div>
+  </div>
+</section>
+
+<!-- MAPA -->
+<section style="background: var(--cream); border-top: 1px solid var(--border); position: relative; z-index: 1;">
+  <div class="section-inner" style="padding-bottom: 0;">
+    <div class="section-label fade-up">Gdzie nas znajdziesz?</div>
+    <h2 class="section-title fade-up">Manufaktura Formy w Białymstoku</h2>
+    <p class="section-sub fade-up" style="margin-bottom: 28px;">ul. Górka Tomka 6, Białystok — kameralne studio EMS, bez tłoku, blisko centrum.</p>
+  </div>
+  <div style="width: 100%; max-width: 780px; margin: 0 auto; padding: 0 20px 52px; box-sizing: border-box;">
+    <div style="border-radius: 16px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 2px 16px rgba(0,0,0,0.07);">
+      <iframe
+        src="https://maps.google.com/maps?q=Górka+Tomka+6+Białystok&t=&z=16&ie=UTF8&iwloc=&output=embed"
+        width="100%"
+        height="380"
+        style="border:0; display:block;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Manufaktura Formy – ul. Górka Tomka 6, Białystok">
+      </iframe>
+    </div>
+    <div style="display:flex; align-items:center; gap:10px; margin-top:14px; padding: 0 4px;">
+      <span style="font-size:20px;">📍</span>
+      <div>
+        <div style="font-size:14px; font-weight:600; color: var(--black);">ul. Górka Tomka 6, Białystok</div>
+        <a href="https://maps.google.com/?q=Górka+Tomka+6+Białystok" target="_blank" style="font-size:13px; color: var(--accent); text-decoration:none;">Otwórz w Google Maps →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -1582,7 +1612,7 @@ fbq('track','PageView');
     <div class="section-label">Gotowy/a?</div>
     <h2 class="section-title fade-up">Przekonaj się, dlaczego EMS wygrywa z siłownią</h2>
     <p class="section-sub fade-up">Pierwszy trening próbny za 79 zł — poczujesz różnicę już po 20 minutach. Umawiamy termin w ciągu 24 godzin. Bez presji, bez zobowiązań.</p>
-    <a href="https://manufaktura-formy.pl/pierwsza-wizyta" class="btn-primary fade-up" style="font-size:17px; padding:18px 40px; margin: 0 auto;">Umów trening za 79 zł →</a>
+    <a href="#" class="btn-primary fade-up" onclick="handleCtaClick(event)" style="font-size:17px; padding:18px 40px; margin: 0 auto;">Umów trening za 79 zł →</a>
   </div>
 </section>
 
@@ -1963,6 +1993,18 @@ function logPageClose() {
   const m = Math.floor(sec/60), s = sec%60;
   send({ type:'dropoff', event:'page_closed', session_id:SESSION_ID, timestamp:new Date().toISOString(), czas_wypelniania:(m<10?'0'+m:m)+':'+(s<10?'0'+s:s), utm_source:UTM.source, utm_campaign:UTM.campaign });
 }
+// ── SMART CTA (Pn-Pt = tel, Sob-Nd = strona) ──
+function handleCtaClick(e) {
+  e.preventDefault();
+  const day = new Date().getDay(); // 0=Nd, 1=Pn, ..., 5=Pt, 6=Sob
+  const isWeekend = (day === 0 || day === 6);
+  if (isWeekend) {
+    window.location.href = 'https://manufaktura-formy.pl/pierwsza-wizyta';
+  } else {
+    window.location.href = 'tel:+48534135533';
+  }
+}
+
 document.addEventListener('visibilitychange', function() { if(document.visibilityState==='hidden') logPageClose(); });
 window.addEventListener('pagehide', logPageClose);
 
