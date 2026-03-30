@@ -2018,7 +2018,22 @@ function trackConversion(eventName, params) {
       ...params
     });
   } catch(e) {}
-  // 2. Meta Pixel
+
+  // 2. Google Ads Conversion (bezpośredni event)
+  try {
+    if (typeof gtag === 'function') {
+      gtag('event', 'conversion', {
+        // Poniżej wklej identyfikator z Google Ads z właściwą etykietą konwersji
+        // np. 'AW-18039825187/wXYZ-1234abcd'
+        'send_to': 'AW-18039825187/Gqq2CKijvpIcEKPGh5pD',
+        'value': 79.0,
+        'currency': 'PLN',
+        'event_name': eventName
+      });
+    }
+  } catch(e) {}
+
+  // 3. Meta Pixel
   try {
     if (typeof fbq === 'function') {
       fbq('track', 'Lead', { currency: 'PLN', value: 79, ...params });
@@ -2035,11 +2050,15 @@ function handleCtaClick(e) {
   if (isWeekend) {
     // Weekend → strona rezerwacji
     trackConversion('cta_click', { event_label: 'weekend_booking', destination: 'website' });
-    window.location.href = 'https://manufaktura-formy.pl/pierwsza-wizyta';
+    setTimeout(() => {
+      window.location.href = 'https://manufaktura-formy.pl/pierwsza-wizyta';
+    }, 250); // Opóźnienie, aby tagi zdążyły się wysłać
   } else {
     // Tydzień roboczy → połączenie telefoniczne
     trackConversion('cta_click_call', { event_label: 'weekday_call', destination: 'phone' });
-    window.location.href = 'tel:+48534135533';
+    setTimeout(() => {
+      window.location.href = 'tel:+48534135533';
+    }, 250); // Opóźnienie, aby tagi zdążyły się wysłać
   }
 }
 
