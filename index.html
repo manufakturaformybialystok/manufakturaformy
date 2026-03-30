@@ -1923,6 +1923,33 @@
     <div style="margin-top:8px;"><a href="polityka.html">Polityka Prywatności</a></div>
   </footer>
 
+  <!-- ── MODAL CONTACT CHANNELS ── -->
+  <div class="modal-overlay" id="contactChannelsModal" onclick="this.classList.remove('active')">
+    <div class="modal-box" onclick="event.stopPropagation()" style="padding: 32px 24px; text-align: center;">
+      <button class="modal-close" style="background: #f3f4f6; color: #000;"
+        onclick="document.getElementById('contactChannelsModal').classList.remove('active')">✕</button>
+      <h3
+        style="font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif; font-size: 22px; font-weight: 800; margin-bottom: 8px;">
+        Wybierz aplikację</h3>
+      <p style="font-size: 14px; color: #6b7280; line-height: 1.5; margin-bottom: 24px;">Jak wolisz się z nami
+        skontaktować?</p>
+
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <a class="btn-primary"
+          href="https://wa.me/48534135533?text=Dzie%C5%84%20dobry%2C%20chc%C4%99%20si%C4%99%20um%C3%B3wi%C4%87%20na%20promocyjny%20trening%20EMS%20z%20drena%C5%BCem%20limfatycznym%20za%2079%20z%C5%82."
+          target="_blank" onclick="document.getElementById('contactChannelsModal').classList.remove('active')"
+          style="background: #25D366; color: white; width: 100%; justify-content: center; font-size: 16px; padding: 16px; border: none; border-radius: 12px;">
+          <span style="font-size: 20px;">🟢</span> Umów trening przez WhatsApp
+        </a>
+        <a class="btn-primary" href="https://www.facebook.com/share/18CBMMXE4Z/?mibextid=wwXIfr" target="_blank"
+          onclick="document.getElementById('contactChannelsModal').classList.remove('active')"
+          style="background: #0084FF; color: white; width: 100%; justify-content: center; font-size: 16px; padding: 16px; border: none; border-radius: 12px;">
+          <span style="font-size: 20px;">💬</span> Umów trening przez Messenger
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- ── MODAL FORM ── -->
   <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
     <div class="modal-box" id="modalBox">
@@ -2347,25 +2374,12 @@
       } catch (e) { }
     }
 
-    // ── SMART CTA (Pn-Pt = tel, Sob-Nd = strona) ──
+    // ── SMART CTA (Messenger / WhatsApp) ──
     function handleCtaClick(e) {
       e.preventDefault();
-      const day = new Date().getDay(); // 0=Nd, 1=Pn, ..., 5=Pt, 6=Sob
-      const isWeekend = (day === 0 || day === 6);
-
-      if (isWeekend) {
-        // Weekend → strona rezerwacji
-        trackConversion('cta_click', { event_label: 'weekend_booking', destination: 'website' });
-        setTimeout(() => {
-          window.location.href = 'https://manufaktura-formy.pl/pierwsza-wizyta';
-        }, 250); // Opóźnienie, aby tagi zdążyły się wysłać
-      } else {
-        // Tydzień roboczy → połączenie telefoniczne
-        trackConversion('cta_click_call', { event_label: 'weekday_call', destination: 'phone' });
-        setTimeout(() => {
-          window.location.href = 'tel:+48534135533';
-        }, 250); // Opóźnienie, aby tagi zdążyły się wysłać
-      }
+      try { trackConversion('cta_click', { event_label: 'chat_modal', destination: 'chat' }); } catch (err) { }
+      document.getElementById('contactChannelsModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
     }
 
     document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') logPageClose(); });
