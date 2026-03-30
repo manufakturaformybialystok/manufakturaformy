@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18039825187"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18039825187');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EMS zamiast siłowni w Białymstoku – Manufaktura Formy</title>
@@ -1252,14 +1261,6 @@ footer a { color: #9ca3af; text-decoration: none; }
 
 </style>
 
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KMDX6T5N');</script>
-<!-- End Google Tag Manager -->
-
 <!-- Facebook Pixel -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
@@ -1272,11 +1273,6 @@ fbq('track','PageView');
 </head>
 
 <body>
-
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KMDX6T5N"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 
 <!-- NAV -->
 <nav>
@@ -1930,6 +1926,11 @@ async function submitForm() {
   btn.classList.remove('loading');
   fbTrack('Lead');
   fbTrack('Contact', { currency:'PLN', value:1 });
+  // GTM conversion event
+  try {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'form_submit_lead', event_category: 'Lead', event_label: 'modal_form', currency: 'PLN', value: 79 });
+  } catch(e) {}
   formGoTo(TOTAL_FORM_SLIDES);
   if (typeof window.confetti === 'function') {
     window.confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
@@ -2006,14 +2007,38 @@ function logPageClose() {
   const m = Math.floor(sec/60), s = sec%60;
   send({ type:'dropoff', event:'page_closed', session_id:SESSION_ID, timestamp:new Date().toISOString(), czas_wypelniania:(m<10?'0'+m:m)+':'+(s<10?'0'+s:s), utm_source:UTM.source, utm_campaign:UTM.campaign });
 }
+// ── CONVERSION TRACKING ──
+function trackConversion(eventName, params) {
+  // 1. GTM dataLayer → odbiera GA4 i Google Ads
+  try {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: eventName,
+      event_category: 'CTA',
+      ...params
+    });
+  } catch(e) {}
+  // 2. Meta Pixel
+  try {
+    if (typeof fbq === 'function') {
+      fbq('track', 'Lead', { currency: 'PLN', value: 79, ...params });
+    }
+  } catch(e) {}
+}
+
 // ── SMART CTA (Pn-Pt = tel, Sob-Nd = strona) ──
 function handleCtaClick(e) {
   e.preventDefault();
   const day = new Date().getDay(); // 0=Nd, 1=Pn, ..., 5=Pt, 6=Sob
   const isWeekend = (day === 0 || day === 6);
+
   if (isWeekend) {
+    // Weekend → strona rezerwacji
+    trackConversion('cta_click', { event_label: 'weekend_booking', destination: 'website' });
     window.location.href = 'https://manufaktura-formy.pl/pierwsza-wizyta';
   } else {
+    // Tydzień roboczy → połączenie telefoniczne
+    trackConversion('cta_click_call', { event_label: 'weekday_call', destination: 'phone' });
     window.location.href = 'tel:+48534135533';
   }
 }
