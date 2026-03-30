@@ -1924,10 +1924,10 @@
   </footer>
 
   <!-- ── MODAL CONTACT CHANNELS ── -->
-  <div class="modal-overlay" id="contactChannelsModal" onclick="this.classList.remove('active')">
+  <div class="modal-overlay" id="contactChannelsModal" onclick="closeContactChannelsModal(event)">
     <div class="modal-box" onclick="event.stopPropagation()" style="padding: 32px 24px; text-align: center;">
       <button class="modal-close" style="background: #f3f4f6; color: #000;"
-        onclick="document.getElementById('contactChannelsModal').classList.remove('active')">✕</button>
+        onclick="closeContactChannelsModal()">✕</button>
       <h3
         style="font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif; font-size: 22px; font-weight: 800; margin-bottom: 8px;">
         Wybierz aplikację</h3>
@@ -1935,14 +1935,11 @@
         skontaktować?</p>
 
       <div style="display: flex; flex-direction: column; gap: 12px;">
-        <a class="btn-primary"
-          href="https://wa.me/48534135533?text=Dzie%C5%84%20dobry%2C%20chc%C4%99%20si%C4%99%20um%C3%B3wi%C4%87%20na%20promocyjny%20trening%20EMS%20z%20drena%C5%BCem%20limfatycznym%20za%2079%20z%C5%82."
-          target="_blank" onclick="document.getElementById('contactChannelsModal').classList.remove('active')"
+        <a class="btn-primary" href="#" onclick="openContactChannel(event, 'whatsapp')"
           style="background: #25D366; color: white; width: 100%; justify-content: center; font-size: 16px; padding: 16px; border: none; border-radius: 12px;">
           <span style="font-size: 20px;">🟢</span> Umów trening przez WhatsApp
         </a>
-        <a class="btn-primary" href="https://www.facebook.com/share/18CBMMXE4Z/?mibextid=wwXIfr" target="_blank"
-          onclick="document.getElementById('contactChannelsModal').classList.remove('active')"
+        <a class="btn-primary" href="#" onclick="openContactChannel(event, 'messenger')"
           style="background: #0084FF; color: white; width: 100%; justify-content: center; font-size: 16px; padding: 16px; border: none; border-radius: 12px;">
           <span style="font-size: 20px;">💬</span> Umów trening przez Messenger
         </a>
@@ -2095,6 +2092,13 @@
     };
     const SESSION_ID = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
     const t0 = Date.now();
+    const CONTACT_MESSAGE = 'Dzień dobry chcę się umówić na promocyjny trening EMS z drenażem limfatycznym za 79zł. Kiedy są dostępne terminy';
+    const WHATSAPP_PHONE = '48534135533';
+    const MESSENGER_PAGE_ID = '61550287396940';
+    const CONTACT_LINKS = {
+      whatsapp: `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(CONTACT_MESSAGE)}`,
+      messenger: `https://m.me/${MESSENGER_PAGE_ID}?text=${encodeURIComponent(CONTACT_MESSAGE)}`
+    };
 
     const LABELS = ['Na razie nie chcę próbować', 'W następnym tygodniu — odezwijcie się', 'Chcę spróbować w tym tygodniu 💪'];
     let formCur = 0;
@@ -2119,6 +2123,21 @@
 
     function handleOverlayClick(e) {
       if (e.target === document.getElementById('modalOverlay')) closeModal();
+    }
+
+    function closeContactChannelsModal(e) {
+      if (e && e.target !== document.getElementById('contactChannelsModal')) return;
+      document.getElementById('contactChannelsModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function openContactChannel(e, channel) {
+      e.preventDefault();
+      const url = CONTACT_LINKS[channel];
+      if (!url) return;
+      try { trackConversion('chat_channel_click', { event_label: channel, destination: channel }); } catch (err) { }
+      closeContactChannelsModal();
+      window.location.href = url;
     }
 
     // ── FORM NAVIGATION ──
