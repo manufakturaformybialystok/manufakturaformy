@@ -2109,7 +2109,7 @@
       e.preventDefault();
       const url = CONTACT_LINKS[channel];
       if (!url) return;
-      try { trackConversion('chat_channel_click', { event_label: channel, destination: channel }); } catch (err) { }
+      try { trackConversion('chat_channel_click', { event_label: channel }); } catch (err) { }
       closeContactChannelsModal();
       window.location.href = url;
     }
@@ -2250,8 +2250,7 @@
         zgoda_telefon: ans.cbPhone ? 'TAK' : 'NIE',
       });
       btn.classList.remove('loading');
-      // ── KONWERSJA: wysłanie formularza = prawdziwy lead ──
-      trackConversion('form_submit_lead', { event_label: 'modal_form', value: 79, currency: 'PLN' });
+      // Konwersja śledzona tylko przy kliknięciu WhatsApp/Messenger
       formGoTo(TOTAL_FORM_SLIDES);
       if (typeof window.confetti === 'function') {
         window.confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
@@ -2330,7 +2329,7 @@
     }
     // ── CONVERSION TRACKING ──
     function trackConversion(eventName, params) {
-      // 1. GTM dataLayer → odbiera GA4 i Google Ads
+      // 1. GTM dataLayer → odbiera GA4
       try {
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
@@ -2340,15 +2339,11 @@
         });
       } catch (e) { }
 
-      // 2. Google Ads Conversion (bezpośredni event)
+      // 2. Google Ads Conversion — tylko przy kliknięciu WhatsApp/Messenger
       try {
-        if (typeof gtag === 'function') {
+        if (typeof gtag === 'function' && eventName === 'chat_channel_click') {
           gtag('event', 'conversion', {
-            // Poniżej wklej identyfikator z Google Ads z właściwą etykietą konwersji
-            // np. 'AW-18039825187/wXYZ-1234abcd'
             'send_to': 'AW-18039825187/Gqq2CKijvpIcEKPGh5pD',
-            'value': 79.0,
-            'currency': 'PLN',
             'event_name': eventName
           });
         }
@@ -2357,7 +2352,7 @@
       // 3. Meta Pixel
       try {
         if (typeof fbq === 'function') {
-          fbq('track', 'Lead', { currency: 'PLN', value: 79, ...params });
+          fbq('track', 'Lead', { ...params });
         }
       } catch (e) { }
     }
