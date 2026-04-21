@@ -2257,9 +2257,18 @@
       }
     }
 
+    // ── TRACKING ENDPOINT ──
+    const TRACKING_URL = 'https://script.google.com/macros/s/TWOJE_DEPLOYMENT_ID/exec';
+
     async function send(data) {
-      // Formularz zastąpiony przekierowaniem — tracking wyłączony
-      return;
+      try {
+        await fetch(TRACKING_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...data, page_url: location.href, user_agent: navigator.userAgent, screen: screen.width + 'x' + screen.height })
+        });
+      } catch (e) { /* silent fail */ }
     }
 
     // ── FAQ ──
@@ -2369,6 +2378,224 @@
     window.addEventListener('pagehide', logPageClose);
 
     updateFormUI();
+  </script>
+
+  <!-- ── SEKCJE ŚLEDZENIA SCROLL ── -->
+  <script>
+  (function() {
+    // Sekcje strony z etykietami
+    var SECTIONS = [
+      { id: 'hero-section',      label: 'Hero (główny baner)' },
+      { id: 'offer-banner',      label: 'Baner oferty (79 zł)' },
+      { id: 'dlaczego-my',       label: 'Dlaczego my (benefity)' },
+      { id: 'services-section',  label: 'Usługi (EMS/Hybryda/Drenaż)' },
+      { id: 'callout-section',   label: 'Callout CTA' },
+      { id: 'proof-section',     label: 'Opinie klientów' },
+      { id: 'forwho-section',    label: 'Dla kogo (tak/nie)' },
+      { id: 'included-section',  label: 'Co dostajesz za 79 zł' },
+      { id: 'faq-section',       label: 'FAQ' },
+      { id: 'cta-section',       label: 'Końcowe CTA' },
+    ];
+
+    // Dodaj data-tracking-id do sekcji które nie mają ID
+    var sectionEls = document.querySelectorAll('section, .hero-section, .offer-banner, .callout-section, .cta-section');
+    var sectionIndex = 0;
+    sectionEls.forEach(function(el) {
+      if (!el.id) { el.id = 'section-auto-' + (sectionIndex++); }
+    });
+
+    // Uzupełnij SECTIONS o faktyczne elementy w DOM
+    var trackedSections = [];
+    SECTIONS.forEach(function(s) {
+      var el = document.getElementById(s.id);
+      if (el) trackedSections.push({ el: el, label: s.label, id: s.id, seen: false, enterTime: null, totalTime: 0 });
+    });
+
+    // Fallback — śledź wszystkie sekcje bez ID
+    document.querySelectorAll('section').forEach(function(el, i) {
+      var alreadyTracked = trackedSections.some(function(t) { return t.el === el; });
+      if (!alreadyTracked) {
+        var h = el.querySelector('h2');
+        var label = h ? h.textContent.trim().substring(0, 40) : ('Sekcja ' + (i+1));
+        trackedSections.push({ el: el, label: label, id: el.id || ('sekcja-' + i), seen: false, enterTime: null, totalTime: 0 });
+      }
+    });
+
+    // Scroll depth tracking (co 25%)
+    var maxScrollPct = 0;
+    var scrollMilestones = [25, 50, 75, 90, 100];
+    var firedMilestones = {};
+
+    function getScrollPct() {
+      var h = document.documentElement;
+      var scrollTop = window.pageYOffset || h.scrollTop;
+      var scrollHeight = h.scrollHeight - h.clientHeight;
+      return scrollHeight > 0 ? Math.round((scrollTop / scrollHeight) * 100) : 0;
+    }
+
+    // IntersectionObserver dla sekcji
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        var sec = trackedSections.find(function(s) { return s.el === entry.target; });
+        if (!sec) return;
+
+        if (entry.isIntersecting) {
+          sec.seen = true;
+          sec.enterTime = Date.now();
+        } else if (sec.enterTime) {
+          sec.totalTime += Date.now() - sec.enterTime;
+          sec.enterTime = null;
+
+          // Wyślij event po opuszczeniu sekcji
+          send({
+            type: 'section_read',
+            session_id: SESSION_ID,
+            timestamp: new Date().toISOString(),
+            section_id: sec.id,
+            section_label: sec.label,
+            time_seconds: Math.round(sec.totalTime / 1000),
+            utm_source: UTM.source,
+            utm_campaign: UTM.campaign,
+            utm_content: UTM.content,
+            utm_medium: UTM.medium
+          });
+        }
+      });
+    }, { threshold: 0.3 });
+
+    trackedSections.forEach(function(s) { observer.observe(s.el); });
+
+    // Scroll depth events
+    window.addEventListener('scroll', function() {
+      var pct = getScrollPct();
+      if (pct > maxScrollPct) maxScrollPct = pct;
+      scrollMilestones.forEach(function(m) {
+        if (pct >= m && !firedMilestones[m]) {
+          firedMilestones[m] = true;
+          send({
+            type: 'scroll_depth',
+            session_id: SESSION_ID,
+            timestamp: new Date().toISOString(),
+            scroll_percent: m,
+            utm_source: UTM.source,
+            utm_campaign: UTM.campaign
+          });
+        }
+      });
+    }, { passive: true });
+
+    // Śledzenie kliknięć w CTA
+    document.querySelectorAll('[onclick*="handleCtaClick"], .nav-cta, .btn-primary, .btn-secondary').forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        var label = el.textContent.trim().substring(0, 60);
+        var section = '';
+        var parent = el.closest('section, nav, .callout-section, .cta-section, .offer-banner');
+        if (parent) {
+          var h = parent.querySelector('h1, h2');
+          section = h ? h.textContent.trim().substring(0, 40) : (parent.className.split(' ')[0]);
+        }
+        send({
+          type: 'cta_click',
+          session_id: SESSION_ID,
+          timestamp: new Date().toISOString(),
+          cta_label: label,
+          cta_section: section,
+          scroll_pct_at_click: getScrollPct(),
+          time_on_page: Math.round((Date.now() - t0) / 1000),
+          utm_source: UTM.source,
+          utm_campaign: UTM.campaign,
+          utm_content: UTM.content
+        });
+      });
+    });
+
+    // Śledzenie FAQ
+    document.querySelectorAll('.faq-q').forEach(function(el) {
+      el.addEventListener('click', function() {
+        var question = el.textContent.trim().substring(0, 80);
+        send({
+          type: 'faq_open',
+          session_id: SESSION_ID,
+          timestamp: new Date().toISOString(),
+          question: question,
+          utm_source: UTM.source
+        });
+      });
+    });
+
+    // Śledzenie czasu otwartego modala
+    var modalOpenTime = null;
+    var origHandleCta = window.handleCtaClick;
+    window.handleCtaClick = function(e) {
+      modalOpenTime = Date.now();
+      send({
+        type: 'modal_open',
+        session_id: SESSION_ID,
+        timestamp: new Date().toISOString(),
+        scroll_pct: getScrollPct(),
+        time_on_page: Math.round((Date.now() - t0) / 1000),
+        utm_source: UTM.source,
+        utm_campaign: UTM.campaign,
+        utm_content: UTM.content
+      });
+      if (origHandleCta) origHandleCta(e);
+    };
+
+    // Zamknięcie modala
+    var modalEl = document.getElementById('contactChannelsModal');
+    if (modalEl) {
+      modalEl.addEventListener('click', function(e) {
+        if (e.target === modalEl && modalOpenTime) {
+          var timeInModal = Math.round((Date.now() - modalOpenTime) / 1000);
+          send({
+            type: 'modal_close',
+            session_id: SESSION_ID,
+            timestamp: new Date().toISOString(),
+            time_in_modal_seconds: timeInModal,
+            utm_source: UTM.source
+          });
+          modalOpenTime = null;
+        }
+      });
+    }
+
+    // Flush sekcji przy zamknięciu
+    var origLogClose = window.logPageClose;
+    window.logPageClose = function() {
+      // Wyślij czas sekcji które są aktualnie widoczne
+      trackedSections.forEach(function(s) {
+        if (s.enterTime) {
+          s.totalTime += Date.now() - s.enterTime;
+          if (s.totalTime > 1000) {
+            send({
+              type: 'section_read',
+              session_id: SESSION_ID,
+              timestamp: new Date().toISOString(),
+              section_id: s.id,
+              section_label: s.label,
+              time_seconds: Math.round(s.totalTime / 1000),
+              utm_source: UTM.source,
+              utm_campaign: UTM.campaign
+            });
+          }
+        }
+      });
+      // Max scroll przy zamknięciu
+      send({
+        type: 'page_close_summary',
+        session_id: SESSION_ID,
+        timestamp: new Date().toISOString(),
+        max_scroll_percent: maxScrollPct,
+        total_time_seconds: Math.round((Date.now() - t0) / 1000),
+        utm_source: UTM.source,
+        utm_campaign: UTM.campaign,
+        utm_content: UTM.content,
+        utm_medium: UTM.medium
+      });
+      if (origLogClose) origLogClose();
+    };
+
+  })();
   </script>
 </body>
 
