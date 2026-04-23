@@ -8,15 +8,13 @@
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-
     gtag('config', 'AW-18039825187');
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trening EMS Białystok – Manufaktura Formy | Suchy kombinezon, bez kabli</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -32,20 +30,8 @@
       --red: #c0392b;
     }
 
-    *,
-    *::before,
-    *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-      max-width: 100%;
-    }
-
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
       background: var(--cream);
@@ -53,11 +39,7 @@
       overflow-x: hidden;
       max-width: 100vw;
     }
-
-    h1,
-    h2,
-    h3,
-    h4 {
+    h1, h2, h3, h4 {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
     }
 
@@ -84,7 +66,6 @@
       align-items: center;
       justify-content: space-between;
     }
-
     .nav-logo {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
       font-weight: 800;
@@ -95,14 +76,7 @@
       align-items: center;
       gap: 10px;
     }
-
-    .nav-logo img {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
+    .nav-logo img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
     .nav-cta {
       background: var(--accent);
       color: var(--white);
@@ -114,10 +88,7 @@
       transition: background 0.2s;
       white-space: nowrap;
     }
-
-    .nav-cta:hover {
-      background: #c93a08;
-    }
+    .nav-cta:hover { background: #c93a08; }
 
     /* ── HERO ── */
     .hero {
@@ -128,7 +99,6 @@
       position: relative;
       z-index: 1;
     }
-
     .hero-badge {
       display: inline-flex;
       align-items: center;
@@ -144,26 +114,12 @@
       text-transform: uppercase;
       margin-bottom: 28px;
     }
-
     .hero-badge-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+      width: 6px; height: 6px; border-radius: 50%;
       background: var(--green);
       animation: pulse-dot 2s infinite;
     }
-
-    @keyframes pulse-dot {
-
-      0%,
-      100% {
-        opacity: 1;
-      }
-
-      50% {
-        opacity: 0.4;
-      }
-    }
+    @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
     .hero h1 {
       font-size: clamp(38px, 7vw, 64px);
@@ -173,12 +129,7 @@
       margin-bottom: 20px;
       color: var(--black);
     }
-
-    .hero h1 em {
-      font-style: normal;
-      color: var(--accent);
-    }
-
+    .hero h1 em { font-style: normal; color: var(--accent); }
     .hero-sub {
       font-size: 17px;
       color: var(--muted);
@@ -186,39 +137,18 @@
       margin-bottom: 36px;
       font-weight: 300;
     }
-
-    .hero-stats {
-      display: flex;
-      justify-content: center;
-      gap: 32px;
-      flex-wrap: wrap;
-    }
-
-    .stat {
-      text-align: center;
-    }
-
+    .hero-stats { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; }
+    .stat { text-align: center; }
     .stat-num {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--black);
+      font-size: 28px; font-weight: 800; color: var(--black);
     }
-
-    .stat-label {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 2px;
-    }
+    .stat-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
     .hero-cta-group {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 36px;
+      display: flex; gap: 12px; justify-content: center;
+      flex-wrap: wrap; margin-top: 36px;
     }
-
     .btn-primary {
       background: var(--black);
       color: var(--white);
@@ -235,13 +165,7 @@
       align-items: center;
       gap: 8px;
     }
-
-    .btn-primary:hover {
-      background: #c93a08;
-      transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(232, 67, 10, 0.3);
-    }
-
+    .btn-primary:hover { background: #c93a08; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(232,67,10,0.3); }
     .btn-secondary {
       background: transparent;
       color: var(--black);
@@ -255,60 +179,31 @@
       transition: all 0.2s;
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
     }
-
-    .btn-secondary:hover {
-      border-color: var(--black);
-    }
+    .btn-secondary:hover { border-color: var(--black); }
 
     /* ── HERO SECTION BG ── */
     .hero-section {
       position: relative;
-      background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url("https://lh3.googleusercontent.com/d/1ZPDtnxhx-N2OfCheppCo0X9msY0mLcXu");
+      background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+        url("https://lh3.googleusercontent.com/d/1ZPDtnxhx-N2OfCheppCo0X9msY0mLcXu");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
     }
-
-    .hero-section .hero h1 {
-      color: #ffffff;
-    }
-
-    .hero-section .hero-sub {
-      color: #f3f4f6;
-    }
-
-    .hero-section .stat-num {
-      color: #ffffff;
-    }
-
-    .hero-section .stat-label {
-      color: #d1d5db;
-    }
-
+    .hero-section .hero h1 { color: #ffffff; }
+    .hero-section .hero-sub { color: #f3f4f6; }
+    .hero-section .stat-num { color: #ffffff; }
+    .hero-section .stat-label { color: #d1d5db; }
     .hero-section .hero-badge {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: rgba(255, 255, 255, 0.25);
+      background: rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.25);
       color: #ffffff;
       backdrop-filter: blur(8px);
     }
-
-    .hero-section .btn-primary {
-      background: var(--accent);
-    }
-
-    .hero-section .btn-primary:hover {
-      background: #c93a08;
-    }
-
-    .hero-section .btn-secondary {
-      color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.4);
-    }
-
-    .hero-section .btn-secondary:hover {
-      border-color: #ffffff;
-      background: rgba(255, 255, 255, 0.1);
-    }
+    .hero-section .btn-primary { background: var(--accent); }
+    .hero-section .btn-primary:hover { background: #c93a08; }
+    .hero-section .btn-secondary { color: #ffffff; border-color: rgba(255,255,255,0.4); }
+    .hero-section .btn-secondary:hover { border-color: #ffffff; background: rgba(255,255,255,0.1); }
 
     /* ── OFFER BANNER ── */
     .offer-banner {
@@ -319,7 +214,6 @@
       position: relative;
       z-index: 1;
     }
-
     .offer-banner-inner {
       max-width: 700px;
       margin: 0 auto;
@@ -329,69 +223,20 @@
       gap: 16px;
       flex-wrap: wrap;
     }
-
-    .offer-price-old {
-      font-size: 15px;
-      color: #9ca3af;
-      text-decoration: line-through;
-    }
-
+    .offer-price-old { font-size: 15px; color: #9ca3af; text-decoration: line-through; }
     .offer-price-new {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 22px;
-      font-weight: 800;
-      color: #60a5fa;
+      font-size: 22px; font-weight: 800; color: #60a5fa;
     }
-
-    .offer-label {
-      font-size: 14px;
-      color: #d1d5db;
-    }
-
-    .offer-spots {
-      background: #dc2626;
-      color: white;
-      padding: 4px 10px;
-      border-radius: 100px;
-      font-size: 12px;
-      font-weight: 600;
-    }
+    .offer-label { font-size: 14px; color: #d1d5db; }
+    .offer-spots { background: #dc2626; color: white; padding: 4px 10px; border-radius: 100px; font-size: 12px; font-weight: 600; }
 
     /* ── SECTION ── */
-    section {
-      position: relative;
-      z-index: 1;
-    }
-
-    .section-inner {
-      max-width: 780px;
-      margin: 0 auto;
-      padding: 52px 20px;
-    }
-
-    .section-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-
-    .section-title {
-      font-size: clamp(26px, 5vw, 42px);
-      font-weight: 800;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
-    }
-
-    .section-sub {
-      font-size: 16px;
-      color: var(--muted);
-      line-height: 1.65;
-      font-weight: 300;
-    }
+    section { position: relative; z-index: 1; }
+    .section-inner { max-width: 780px; margin: 0 auto; padding: 52px 20px; }
+    .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+    .section-title { font-size: clamp(26px, 5vw, 42px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px; }
+    .section-sub { font-size: 16px; color: var(--muted); line-height: 1.65; font-weight: 300; }
 
     /* ── BENEFITS ── */
     .benefits-section {
@@ -399,10 +244,10 @@
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
-
+    /* FIX: 2-column grid for 2 cards only */
     .benefits-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
@@ -410,1113 +255,348 @@
       overflow: hidden;
       margin-top: 40px;
     }
-
-    .benefit-card {
-      background: var(--white);
-      padding: 28px 28px;
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
+    @media (max-width: 580px) {
+      .benefits-grid { grid-template-columns: 1fr; }
     }
-
+    .benefit-card { background: var(--white); padding: 28px 28px; display: flex; gap: 16px; align-items: flex-start; }
     .benefit-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--cream);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
+      width: 40px; height: 40px; background: var(--cream);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
     }
-
-    .benefit-title {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 5px;
-    }
-
-    .benefit-body {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.55;
-    }
+    .benefit-title { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 5px; }
+    .benefit-body { font-size: 13px; color: var(--muted); line-height: 1.55; }
 
     /* ── PAIN POINTS ── */
-    .pain-section {
-      background: var(--black);
-      color: var(--white);
-    }
-
-    .pain-section .section-label {
-      color: #6b7280;
-    }
-
-    .pain-section .section-title {
-      color: var(--white);
-    }
-
-    .pain-section .section-sub {
-      color: #9ca3af;
-    }
-
+    .pain-section { background: var(--black); color: var(--white); }
+    .pain-section .section-label { color: #6b7280; }
+    .pain-section .section-title { color: var(--white); }
+    .pain-section .section-sub { color: #9ca3af; }
     .pain-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      margin-top: 40px;
-      border: 1px solid #1f2937;
-      border-radius: 16px;
-      overflow: hidden;
+      display: flex; flex-direction: column; gap: 0;
+      margin-top: 40px; border: 1px solid #1f2937;
+      border-radius: 16px; overflow: hidden;
     }
-
     .pain-item {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 20px 24px;
-      border-bottom: 1px solid #1f2937;
-      transition: background 0.2s;
+      display: flex; align-items: center; gap: 16px;
+      padding: 20px 24px; border-bottom: 1px solid #1f2937; transition: background 0.2s;
     }
-
-    .pain-item:last-child {
-      border-bottom: none;
-    }
-
-    .pain-item:hover {
-      background: #111827;
-    }
-
+    .pain-item:last-child { border-bottom: none; }
+    .pain-item:hover { background: #111827; }
     .pain-x {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: #7f1d1d;
-      color: #fca5a5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 700;
-      flex-shrink: 0;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: #7f1d1d; color: #fca5a5;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; flex-shrink: 0;
     }
-
-    .pain-text {
-      font-size: 15px;
-      color: #d1d5db;
-      line-height: 1.5;
-    }
+    .pain-text { font-size: 15px; color: #d1d5db; line-height: 1.5; }
 
     /* ── CALLOUT ── */
-    .callout-section {
-      background: var(--accent);
-      color: var(--white);
-      text-align: center;
-      padding: 64px 24px;
-    }
-
-    .callout-inner {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .callout-tag {
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #bfdbfe;
-      margin-bottom: 20px;
-    }
-
+    .callout-section { background: var(--accent); color: var(--white); text-align: center; padding: 64px 24px; }
+    .callout-inner { max-width: 600px; margin: 0 auto; }
+    .callout-tag { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #bfdbfe; margin-bottom: 20px; }
     .callout-title {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      font-size: clamp(28px, 5vw, 48px);
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
+      font-size: clamp(28px, 5vw, 48px); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 16px;
     }
-
-    .callout-sub {
-      font-size: 16px;
-      color: #bfdbfe;
-      line-height: 1.6;
-      font-weight: 300;
-    }
+    .callout-sub { font-size: 16px; color: #bfdbfe; line-height: 1.6; font-weight: 300; }
 
     /* ── SOCIAL PROOF ── */
-    .proof-section {
-      background: var(--cream);
-    }
-
-    .reviews-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-      margin-top: 40px;
-    }
-
-    .review-img {
-      width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-      display: block;
-    }
+    .proof-section { background: var(--cream); }
+    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 40px; }
+    .review-img { width: 100%; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); display: block; }
 
     /* ── FOR WHOM ── */
-    .forwho-section {
-      background: var(--white);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .forwho-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 40px;
-    }
-
-    @media (max-width: 580px) {
-      .forwho-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .forwho-card {
-      border-radius: 16px;
-      padding: 28px;
-    }
-
-    .forwho-card.yes {
-      background: #f0fdf4;
-      border: 1.5px solid #bbf7d0;
-    }
-
-    .forwho-card.no {
-      background: #fef2f2;
-      border: 1.5px solid #fecaca;
-    }
-
+    .forwho-section { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .forwho-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; }
+    @media (max-width: 580px) { .forwho-grid { grid-template-columns: 1fr; } }
+    .forwho-card { border-radius: 16px; padding: 28px; }
+    .forwho-card.yes { background: #f0fdf4; border: 1.5px solid #bbf7d0; }
+    .forwho-card.no { background: #fef2f2; border: 1.5px solid #fecaca; }
     .forwho-card-title {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      font-size: 14px; font-weight: 700; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
     }
-
-    .forwho-card.yes .forwho-card-title {
-      color: #15803d;
-    }
-
-    .forwho-card.no .forwho-card-title {
-      color: #dc2626;
-    }
-
-    .forwho-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .forwho-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 14px;
-      line-height: 1.5;
-      color: #374151;
-    }
-
+    .forwho-card.yes .forwho-card-title { color: #15803d; }
+    .forwho-card.no .forwho-card-title { color: #dc2626; }
+    .forwho-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .forwho-item { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.5; color: #374151; }
     .forwho-item-icon {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 700;
-      margin-top: 1px;
+      width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700; margin-top: 1px;
     }
-
-    .yes .forwho-item-icon {
-      background: #dcfce7;
-      color: #16a34a;
-    }
-
-    .no .forwho-item-icon {
-      background: #fee2e2;
-      color: #dc2626;
-    }
+    .yes .forwho-item-icon { background: #dcfce7; color: #16a34a; }
+    .no .forwho-item-icon { background: #fee2e2; color: #dc2626; }
 
     /* ── WHAT'S INCLUDED ── */
-    .included-section {
-      background: var(--cream);
-    }
-
+    .included-section { background: var(--cream); }
     .included-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 40px;
-      margin-top: 40px;
-      display: flex;
-      gap: 40px;
-      align-items: flex-start;
-      flex-wrap: wrap;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 20px; padding: 40px; margin-top: 40px;
+      display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap;
     }
-
-    .included-price-block {
-      flex-shrink: 0;
-    }
-
-    .included-price-label {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 6px;
-      font-weight: 500;
-    }
-
+    .included-price-block { flex-shrink: 0; }
+    .included-price-label { font-size: 12px; color: var(--muted); margin-bottom: 6px; font-weight: 500; }
     .included-price-new {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 52px;
-      font-weight: 800;
-      color: var(--black);
-      line-height: 1;
+      font-size: 52px; font-weight: 800; color: var(--black); line-height: 1;
     }
-
-    .included-price-old {
-      font-size: 18px;
-      color: #9ca3af;
-      text-decoration: line-through;
-      margin-top: 4px;
-    }
-
-    .included-price-note {
-      font-size: 12px;
-      color: var(--green);
-      font-weight: 600;
-      margin-top: 6px;
-    }
-
-    .included-divider {
-      width: 1px;
-      background: var(--border);
-      align-self: stretch;
-      flex-shrink: 0;
-    }
-
+    .included-price-old { font-size: 18px; color: #9ca3af; text-decoration: line-through; margin-top: 4px; }
+    .included-price-note { font-size: 12px; color: var(--green); font-weight: 600; margin-top: 6px; }
+    .included-divider { width: 1px; background: var(--border); align-self: stretch; flex-shrink: 0; }
     @media (max-width: 580px) {
-      .included-divider {
-        display: none;
-      }
-
-      .included-card {
-        flex-direction: column;
-        gap: 24px;
-      }
+      .included-divider { display: none; }
+      .included-card { flex-direction: column; gap: 24px; }
     }
-
-    .included-list-block {
-      flex: 1;
-    }
-
+    .included-list-block { flex: 1; }
     .included-list-title {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 16px;
+      font-size: 16px; font-weight: 700; margin-bottom: 16px;
     }
-
-    .included-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .included-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 14px;
-      line-height: 1.5;
-      color: #374151;
-    }
-
+    .included-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .included-item { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.5; color: #374151; }
     .included-check {
-      width: 20px;
-      height: 20px;
-      background: #dcfce7;
-      color: #16a34a;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-top: 1px;
+      width: 20px; height: 20px; background: #dcfce7; color: #16a34a;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
     }
 
     /* ── FAQ ── */
-    .faq-section {
-      background: var(--white);
-      border-top: 1px solid var(--border);
-    }
-
+    .faq-section { background: var(--white); border-top: 1px solid var(--border); }
     .faq-list {
-      margin-top: 40px;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
+      margin-top: 40px; display: flex; flex-direction: column; gap: 0;
+      border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
     }
-
-    .faq-item {
-      border-bottom: 1px solid var(--border);
-    }
-
-    .faq-item:last-child {
-      border-bottom: none;
-    }
-
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-item:last-child { border-bottom: none; }
     .faq-q {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 20px 24px;
-      cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 20px 24px; cursor: pointer;
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--black);
-      user-select: none;
-      transition: background 0.15s;
+      font-size: 15px; font-weight: 600; color: var(--black);
+      user-select: none; transition: background 0.15s;
     }
-
-    .faq-q:hover {
-      background: var(--cream);
-    }
-
+    .faq-q:hover { background: var(--cream); }
     .faq-icon {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: var(--cream);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-size: 14px;
-      transition: transform 0.2s, background 0.2s;
+      width: 24px; height: 24px; border-radius: 50%; background: var(--cream);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 14px; transition: transform 0.2s, background 0.2s;
     }
-
-    .faq-item.open .faq-icon {
-      background: var(--black);
-      color: var(--white);
-      transform: rotate(45deg);
-    }
-
-    .faq-a {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.65;
-      padding: 0 24px 20px;
-      display: none;
-    }
-
-    .faq-item.open .faq-a {
-      display: block;
-    }
+    .faq-item.open .faq-icon { background: var(--black); color: var(--white); transform: rotate(45deg); }
+    .faq-a { font-size: 14px; color: var(--muted); line-height: 1.65; padding: 0 24px 20px; display: none; }
+    .faq-item.open .faq-a { display: block; }
 
     /* ── FORM MODAL ── */
     .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(6px);
-      z-index: 1000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
+      position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(6px); z-index: 1000;
+      display: none; align-items: center; justify-content: center; padding: 16px;
     }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
+    .modal-overlay.active { display: flex; }
     .modal-box {
-      background: var(--white);
-      border-radius: 16px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2);
-      overflow: hidden;
+      background: var(--white); border-radius: 16px; width: 100%; max-width: 420px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.2); overflow: hidden;
       animation: modal-up 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
-    @keyframes modal-up {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .modal-header {
-      background: #2b2b2b;
-      padding: 24px;
-      color: var(--white);
-      position: relative;
-    }
-
+    @keyframes modal-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .modal-header { background: #2b2b2b; padding: 24px; color: var(--white); position: relative; }
     .modal-close {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: #ffffff20;
-      border: none;
-      color: var(--white);
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      font-size: 16px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: absolute; top: 16px; right: 16px; background: #ffffff20;
+      border: none; color: var(--white); width: 32px; height: 32px; border-radius: 50%;
+      font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;
       transition: background 0.15s;
     }
-
-    .modal-close:hover {
-      background: #ffffff30;
-    }
-
-    .modal-logo-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .modal-logo-img {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #ffffff30;
-    }
-
-    .modal-brand {
-      font-size: 13px;
-      color: #9ca3af;
-    }
-
-    .modal-title {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 20px;
-      font-weight: 800;
-      line-height: 1.25;
-      margin-bottom: 4px;
-    }
-
-    .modal-sub {
-      font-size: 13px;
-      color: #9ca3af;
-    }
-
-    .modal-body {
-      padding: 24px;
-    }
-
-    /* Slides inside modal */
-    .form-slides {
-      overflow: hidden;
-    }
-
-    .form-slides-inner {
-      display: flex;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .form-slide {
-      min-width: 100%;
-    }
-
-    /* Progress dots */
-    .modal-progress {
-      display: flex;
-      gap: 5px;
-      margin-bottom: 20px;
-    }
-
-    .modal-dot {
-      height: 4px;
-      border-radius: 2px;
-      background: #e5e7eb;
-      transition: width 0.3s, background 0.3s;
-      width: 24px;
-    }
-
-    .modal-dot.active {
-      background: var(--accent);
-      width: 36px;
-    }
-
-    .modal-dot.done {
-      background: var(--accent);
-    }
-
-    /* Radio */
+    .modal-close:hover { background: #ffffff30; }
+    .modal-logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .modal-logo-img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #ffffff30; }
+    .modal-brand { font-size: 13px; color: #9ca3af; }
+    .modal-title { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif; font-size: 20px; font-weight: 800; line-height: 1.25; margin-bottom: 4px; }
+    .modal-sub { font-size: 13px; color: #9ca3af; }
+    .modal-body { padding: 24px; }
+    .form-slides { overflow: hidden; }
+    .form-slides-inner { display: flex; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .form-slide { min-width: 100%; }
+    .modal-progress { display: flex; gap: 5px; margin-bottom: 20px; }
+    .modal-dot { height: 4px; border-radius: 2px; background: #e5e7eb; transition: width 0.3s, background 0.3s; width: 24px; }
+    .modal-dot.active { background: var(--accent); width: 36px; }
+    .modal-dot.done { background: var(--accent); }
     .form-q-title {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 4px;
+      font-size: 16px; font-weight: 700; margin-bottom: 4px;
     }
-
-    .form-q-sub {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 14px;
+    .form-q-sub { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+    .radio-list, .cb-list { display: flex; flex-direction: column; }
+    .radio-item, .cb-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0; border-bottom: 1px solid #f3f4f6; cursor: pointer; user-select: none;
     }
-
-    .radio-list,
-    .cb-list {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .radio-item,
-    .cb-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 0;
-      border-bottom: 1px solid #f3f4f6;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .radio-item:last-child,
-    .cb-item:last-child {
-      border-bottom: none;
-    }
-
-    .radio-label,
-    .cb-label {
-      font-size: 15px;
-      line-height: 1.4;
-      padding-right: 12px;
-      flex: 1;
-      color: var(--black);
-    }
-
-    .cb-label a {
-      color: var(--muted);
-    }
-
+    .radio-item:last-child, .cb-item:last-child { border-bottom: none; }
+    .radio-label, .cb-label { font-size: 15px; line-height: 1.4; padding-right: 12px; flex: 1; color: var(--black); }
+    .cb-label a { color: var(--muted); }
     .radio-circle {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      border: 2px solid #d1d5db;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      transition: all 0.12s;
+      width: 22px; height: 22px; border-radius: 50%; border: 2px solid #d1d5db;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.12s;
     }
-
-    .radio-item.selected .radio-circle {
-      background: var(--accent);
-      border-color: var(--accent);
-    }
-
-    .radio-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #fff;
-      display: none;
-    }
-
-    .radio-item.selected .radio-dot {
-      display: block;
-    }
-
+    .radio-item.selected .radio-circle { background: var(--accent); border-color: var(--accent); }
+    .radio-dot { width: 8px; height: 8px; border-radius: 50%; background: #fff; display: none; }
+    .radio-item.selected .radio-dot { display: block; }
     .cb-box {
-      width: 22px;
-      height: 22px;
-      border: 2px solid #d1d5db;
-      border-radius: 5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      transition: all 0.12s;
+      width: 22px; height: 22px; border: 2px solid #d1d5db; border-radius: 5px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.12s;
     }
-
-    .cb-item.checked .cb-box {
-      background: var(--accent);
-      border-color: var(--accent);
-    }
-
-    .cb-item.checked .cb-box::after {
-      content: '✓';
-      color: #fff;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    /* Input fields */
-    .input-group {
-      margin-bottom: 18px;
-    }
-
-    .input-label {
-      font-size: 11px;
-      color: var(--muted);
-      margin-bottom: 4px;
-      display: block;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-    }
-
+    .cb-item.checked .cb-box { background: var(--accent); border-color: var(--accent); }
+    .cb-item.checked .cb-box::after { content: '✓'; color: #fff; font-size: 12px; font-weight: 700; }
+    .input-group { margin-bottom: 18px; }
+    .input-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; display: block; font-weight: 500; letter-spacing: 0.04em; }
     .input-field {
-      width: 100%;
-      border: none;
-      border-bottom: 1.5px solid #e5e7eb;
-      padding: 6px 0 8px;
-      font-size: 17px;
-      color: var(--black);
-      outline: none;
+      width: 100%; border: none; border-bottom: 1.5px solid #e5e7eb;
+      padding: 6px 0 8px; font-size: 17px; color: var(--black); outline: none;
       background: transparent;
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
       transition: border-color 0.15s;
     }
-
-    .input-field:focus {
-      border-bottom-color: var(--accent);
-    }
-
-    .input-field.error {
-      border-bottom-color: var(--red);
-    }
-
-    .input-field::placeholder {
-      color: #d1d5db;
-    }
-
-    .input-hint,
-    .input-error {
-      font-size: 11px;
-      margin-top: 4px;
-      line-height: 1.4;
-    }
-
-    .input-hint {
-      color: var(--muted);
-    }
-
-    .input-error {
-      color: var(--red);
-      display: none;
-    }
-
-    .legal-text {
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.55;
-      margin-top: 12px;
-    }
-
-    .legal-link {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    /* Form buttons */
+    .input-field:focus { border-bottom-color: var(--accent); }
+    .input-field.error { border-bottom-color: var(--red); }
+    .input-field::placeholder { color: #d1d5db; }
+    .input-hint, .input-error { font-size: 11px; margin-top: 4px; line-height: 1.4; }
+    .input-hint { color: var(--muted); }
+    .input-error { color: var(--red); display: none; }
+    .legal-text { font-size: 11px; color: var(--muted); line-height: 1.55; margin-top: 12px; }
+    .legal-link { color: var(--accent); text-decoration: none; }
     .form-btn-next {
-      width: 100%;
-      padding: 14px;
-      background: var(--black);
-      color: var(--white);
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
+      width: 100%; padding: 14px; background: var(--black); color: var(--white);
+      border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer;
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      transition: background 0.15s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      transition: background 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px;
     }
-
-    .form-btn-next:hover {
-      background: #c93a08;
-    }
-
-    .form-btn-next:disabled {
-      background: #d1d5db;
-      cursor: default;
-    }
-
-    .form-btn-next.loading .spinner {
-      display: block;
-    }
-
-    .form-btn-next.loading .btn-label {
-      opacity: 0.7;
-    }
-
+    .form-btn-next:hover { background: #c93a08; }
+    .form-btn-next:disabled { background: #d1d5db; cursor: default; }
+    .form-btn-next.loading .spinner { display: block; }
+    .form-btn-next.loading .btn-label { opacity: 0.7; }
     .spinner {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-top-color: #fff;
-      animation: spin 0.7s linear infinite;
-      display: none;
+      width: 16px; height: 16px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
+      animation: spin 0.7s linear infinite; display: none;
     }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
+    @keyframes spin { to { transform: rotate(360deg); } }
     .form-btn-back {
-      display: block;
-      text-align: center;
-      font-size: 13px;
-      color: var(--muted);
-      background: none;
-      border: none;
-      cursor: pointer;
+      display: block; text-align: center; font-size: 13px; color: var(--muted);
+      background: none; border: none; cursor: pointer;
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      padding: 8px 0 0;
-      text-decoration: underline;
-      width: 100%;
+      padding: 8px 0 0; text-decoration: underline; width: 100%;
     }
-
-    /* Rejection inside modal */
-    .rejection-slide {
-      text-align: center;
-      padding: 8px 0;
-    }
-
-    .rejection-emoji {
-      font-size: 40px;
-      margin-bottom: 14px;
-    }
-
-    .rejection-title {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .rejection-sub {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-
+    .rejection-slide { text-align: center; padding: 8px 0; }
+    .rejection-emoji { font-size: 40px; margin-bottom: 14px; }
+    .rejection-title { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .rejection-sub { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
     .btn-ig {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      display: inline-flex; align-items: center; gap: 8px;
       background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
-      color: #fff;
-      padding: 12px 20px;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: none;
+      color: #fff; padding: 12px 20px; border-radius: 10px; font-size: 14px; font-weight: 700;
+      cursor: pointer; text-decoration: none;
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      margin-bottom: 12px;
-      width: 100%;
-      justify-content: center;
+      margin-bottom: 12px; width: 100%; justify-content: center;
     }
-
     .btn-rejection-back {
-      font-size: 13px;
-      color: var(--muted);
-      background: none;
-      border: none;
-      cursor: pointer;
+      font-size: 13px; color: var(--muted); background: none; border: none; cursor: pointer;
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      text-decoration: underline;
-      padding: 6px;
-      width: 100%;
-      text-align: center;
+      text-decoration: underline; padding: 6px; width: 100%; text-align: center;
     }
-
-    /* Thank you */
-    .thankyou-slide {
-      text-align: center;
-      padding: 8px 0;
-    }
-
-    .ty-check {
-      font-size: 44px;
-      margin-bottom: 14px;
-    }
-
-    .ty-title {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 20px;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-
-    .ty-body {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.6;
-      margin-bottom: 8px;
-    }
-
-    .ty-divider {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 16px 0;
-    }
-
-    .ty-small {
-      font-size: 12px;
-      color: var(--muted);
-    }
+    .thankyou-slide { text-align: center; padding: 8px 0; }
+    .ty-check { font-size: 44px; margin-bottom: 14px; }
+    .ty-title { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+    .ty-body { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 8px; }
+    .ty-divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+    .ty-small { font-size: 12px; color: var(--muted); }
 
     /* ── CTA SECTION ── */
-    .cta-section {
-      background: var(--cream);
-      text-align: center;
-      padding: 80px 24px;
-    }
-
-    .cta-section-inner {
-      max-width: 540px;
-      margin: 0 auto;
-    }
-
-    .cta-section .section-title {
-      margin-bottom: 12px;
-    }
-
-    .cta-section .section-sub {
-      margin-bottom: 32px;
-    }
+    .cta-section { background: var(--cream); text-align: center; padding: 80px 24px; }
+    .cta-section-inner { max-width: 540px; margin: 0 auto; }
+    .cta-section .section-title { margin-bottom: 12px; }
+    .cta-section .section-sub { margin-bottom: 32px; }
 
     /* ── FOOTER ── */
     footer {
-      background: var(--black);
-      color: #6b7280;
-      text-align: center;
-      padding: 32px 24px;
-      font-size: 13px;
-      line-height: 1.6;
-      position: relative;
-      z-index: 1;
+      background: var(--black); color: #6b7280; text-align: center;
+      padding: 32px 24px; font-size: 13px; line-height: 1.6;
+      position: relative; z-index: 1;
     }
+    footer a { color: #9ca3af; text-decoration: none; }
 
-    footer a {
-      color: #9ca3af;
-      text-decoration: none;
-    }
-
-
-    /* ── MOBILE FIRST ENHANCEMENTS ── */
-    .hero-stats {
-      gap: 20px;
-    }
-
-    .hero-cta-group {
-      flex-direction: column;
-      align-items: stretch;
-    }
-
-    .hero-cta-group .btn-primary,
-    .hero-cta-group .btn-secondary {
-      width: 100%;
-      justify-content: center;
-      text-align: center;
-    }
-
-    .benefits-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .reviews-grid {
-      grid-template-columns: 1fr;
-    }
-
-    /* Desktop overrides */
-    @media (min-width: 600px) {
-      .hero {
-        padding: 72px 32px 64px;
-      }
-
-      .section-inner {
-        padding: 72px 32px;
-      }
-
-      .hero-cta-group {
-        flex-direction: row;
-        align-items: center;
-      }
-
-      .hero-cta-group .btn-primary,
-      .hero-cta-group .btn-secondary {
-        width: auto;
-      }
-
-      .benefits-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .reviews-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      nav {
-        padding: 14px 32px;
-      }
-
-      .nav-logo {
-        font-size: 15px;
-      }
-
-      .nav-logo img {
-        width: 36px;
-        height: 36px;
-      }
-    }
-
-    /* Callout section mobile */
-    .callout-section {
-      padding: 52px 20px;
-    }
+    /* ── MOBILE FIRST ── */
+    .hero-stats { gap: 20px; }
+    .hero-cta-group { flex-direction: column; align-items: stretch; }
+    .hero-cta-group .btn-primary, .hero-cta-group .btn-secondary { width: 100%; justify-content: center; text-align: center; }
+    .reviews-grid { grid-template-columns: 1fr; }
 
     @media (min-width: 600px) {
-      .callout-section {
-        padding: 72px 32px;
-      }
+      .hero { padding: 72px 32px 64px; }
+      .section-inner { padding: 72px 32px; }
+      .hero-cta-group { flex-direction: row; align-items: center; }
+      .hero-cta-group .btn-primary, .hero-cta-group .btn-secondary { width: auto; }
+      .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+      nav { padding: 14px 32px; }
+      .nav-logo { font-size: 15px; }
+      .nav-logo img { width: 36px; height: 36px; }
     }
+    .callout-section { padding: 52px 20px; }
+    @media (min-width: 600px) { .callout-section { padding: 72px 32px; } }
+    .cta-section { padding: 60px 20px; }
+    @media (min-width: 600px) { .cta-section { padding: 80px 32px; } }
+    .included-price-new { font-size: 48px; }
+    .pain-item { padding: 16px 20px; }
+    .faq-q { padding: 18px 20px; font-size: 14px; }
+    .faq-a { padding: 0 20px 18px; font-size: 13px; }
+    .stat-num { font-size: 24px; }
 
-    /* CTA section mobile */
-    .cta-section {
-      padding: 60px 20px;
-    }
-
-    @media (min-width: 600px) {
-      .cta-section {
-        padding: 80px 32px;
-      }
-    }
-
-    /* Included card mobile */
-    .included-price-new {
-      font-size: 48px;
-    }
-
-    /* Pain list mobile */
-    .pain-item {
-      padding: 16px 20px;
-    }
-
-    /* FAQ mobile */
-    .faq-q {
-      padding: 18px 20px;
-      font-size: 14px;
-    }
-
-    .faq-a {
-      padding: 0 20px 18px;
-      font-size: 13px;
-    }
-
-    /* Stats mobile */
-    .stat-num {
-      font-size: 24px;
-    }
-
-    /* ── RESPONSIVE (legacy) ── */
     @media (max-width: 640px) {
-      .hero {
-        padding: 48px 20px 40px;
-      }
-
-      .section-inner {
-        padding: 56px 20px;
-      }
-
-      .included-card {
-        padding: 24px;
-      }
-
-      .included-price-new {
-        font-size: 40px;
-      }
-
-      .modal-body {
-        padding: 20px;
-      }
-
-      .modal-header {
-        padding: 20px;
-      }
-
-      .nav {
-        padding: 12px 16px;
-      }
+      .hero { padding: 48px 20px 40px; }
+      .section-inner { padding: 56px 20px; }
+      .included-card { padding: 24px; }
+      .included-price-new { font-size: 40px; }
+      .modal-body { padding: 20px; }
+      .modal-header { padding: 20px; }
     }
 
     /* ── ANIMATIONS ── */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
+    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-up.visible { opacity: 1; transform: none; }
 
-    .fade-up.visible {
-      opacity: 1;
-      transform: none;
+    /* ── CHANNEL BUTTON STYLES ── */
+    .channel-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 15px 20px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+      transition: opacity 0.15s, transform 0.15s;
     }
+    .channel-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .channel-btn-phone {
+      background: transparent;
+      color: var(--black);
+      border: 1.5px solid var(--border);
+    }
+    .channel-btn-phone:hover { border-color: var(--black); }
   </style>
 
   <!-- Facebook Pixel -->
   <script>
-    !function (f, b, e, v, n, t, s) { if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments) }; if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = []; t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s) }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1267687915507510');
-    fbq('track', 'PageView');
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init','1267687915507510');
+    fbq('track','PageView');
   </script>
-  <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=1267687915507510&ev=PageView&noscript=1" /></noscript>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1267687915507510&ev=PageView&noscript=1"/></noscript>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
@@ -1526,8 +606,7 @@
   <!-- NAV -->
   <nav>
     <div class="nav-logo">
-      <img src="https://lh3.googleusercontent.com/d/18mEyEP41W-2NXRbPbsCetiXB_BAchfST" alt="Manufaktura Formy"
-        onerror="this.style.display='none'">
+      <img src="https://lh3.googleusercontent.com/d/18mEyEP41W-2NXRbPbsCetiXB_BAchfST" alt="Manufaktura Formy" onerror="this.style.display='none'">
       Manufaktura Formy
     </div>
     <a href="#" class="nav-cta" id="navCta" onclick="handleCtaClick(event)">Wypróbuj EMS za 79 zł →</a>
@@ -1579,160 +658,28 @@
       <div class="section-label fade-up">Czym się różnimy</div>
       <h2 class="section-title fade-up">EMS u nas wygląda inaczej</h2>
       <p class="section-sub fade-up">Znasz EMS z mokrych kombinezonów, kabli i zimna przy zakładaniu? U nas to nie istnieje. Korzystamy z najnowszego sprzętu bezprzewodowego dostępnego w Polsce — i to czuć od pierwszej minuty.</p>
+      <!-- FIX: tylko 2 najważniejsze karty, bez nadmiernego scrollowania -->
       <div class="benefits-grid fade-up">
         <div class="benefit-card">
           <div class="benefit-icon">🔋</div>
           <div>
-            <div class="benefit-title">Bezprzewodowy kombinezon</div>
-            <div class="benefit-body">Żadnych kabli, żadnych ograniczeń ruchu. Nasz sprzęt to najnowsza generacja EMS dostępna w Polsce — swobodny, naturalny ruch przez cały trening.</div>
-          </div>
-        </div>
-        <div class="benefit-card">
-          <div class="benefit-icon">👕</div>
-          <div>
-            <div class="benefit-title">Suchy kombinezon — bez moczenia</div>
-            <div class="benefit-body">Tradycyjny EMS wymaga zwilżania tkaniny — zimno, mokro, nieprzyjemnie. U nas zakładasz suchy strój i od razu zaczynasz. Zupełnie inne doświadczenie.</div>
-          </div>
-        </div>
-        <div class="benefit-card">
-          <div class="benefit-icon">🧼</div>
-          <div>
-            <div class="benefit-title">Każdy strój prany po każdej osobie</div>
-            <div class="benefit-body">Nie dostaniesz kombinezonu po kimś, kto trenował przed Tobą. Każdy strój jest prany i dezynfekowany po każdej sesji — bez wyjątków.</div>
+            <div class="benefit-title">Bezprzewodowy i suchy kombinezon</div>
+            <div class="benefit-body">Żadnych kabli, żadnego moczenia tkaniny. Nasz sprzęt to najnowsza generacja EMS dostępna w Polsce — zakładasz suchy strój i od razu zaczynasz. Zupełnie inne doświadczenie.</div>
           </div>
         </div>
         <div class="benefit-card">
           <div class="benefit-icon">🎯</div>
           <div>
             <div class="benefit-title">Trener wyłącznie dla Ciebie</div>
-            <div class="benefit-body">Przez całe 20 minut trener skupia się tylko na Tobie — dobiera intensywność, koryguje, motywuje. Nie siedzisz sam z maszyną i instrukcją obsługi.</div>
+            <div class="benefit-body">Przez całe 20 minut trener skupia się tylko na Tobie — dobiera intensywność, koryguje, motywuje. Każdy kombinezon jest prany i dezynfekowany po każdej osobie — bez wyjątków.</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- USŁUGI -->
-  <section class="pain-section">
-    <div class="section-inner">
-      <div class="section-label fade-up">Co oferujemy</div>
-      <h2 class="section-title fade-up">Trzy sposoby na trening — jeden adres</h2>
-      <p class="section-sub fade-up">Wybierz format, który pasuje do Twoich celów. Możesz zacząć od próbnego i zdecydować na miejscu.</p>
-      <div class="pain-list fade-up">
-        <div class="pain-item">
-          <div class="pain-x" style="background: #1e3a5f; color: #93c5fd; font-size:16px;">⚡</div>
-          <div class="pain-text">
-            <strong style="color:#fff;">Trening EMS</strong> — 20 minut, pełne ciało, sprzęt bezprzewodowy. Idealny jeśli zależy Ci na czasie i efektach.
-          </div>
-        </div>
-        <div class="pain-item">
-          <div class="pain-x" style="background: #1e3a5f; color: #93c5fd; font-size:16px;">🏋️</div>
-          <div class="pain-text">
-            <strong style="color:#fff;">Hybryda (EMS + trening personalny)</strong> — połączenie elektrostymulacji z indywidualnym programem trenera. Maksymalne efekty w najkrótszym czasie.
-          </div>
-        </div>
-        <div class="pain-item">
-          <div class="pain-x" style="background: #1e3a5f; color: #93c5fd; font-size:16px;">💆</div>
-          <div class="pain-text">
-            <strong style="color:#fff;">Drenaż limfatyczny (presoterapia)</strong> — masaż pneumatyczny nóg po treningu. Redukcja obrzęków, celulitu i zmęczenia kończyn.
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CALLOUT -->
-  <div class="callout-section fade-up">
-    <div class="callout-inner">
-      <div class="callout-tag">⚡ Trening próbny</div>
-      <div class="callout-title">Przekonaj się na własnej skórze — już za 79 zł</div>
-      <p class="callout-sub">Pełny trening EMS 20 min + drenaż limfatyczny + rozmowa z trenerem o Twoich celach. Bez zobowiązań, bez presji sprzedażowej.</p>
-      <div style="margin-top: 36px;">
-        <a href="#" class="btn-primary" onclick="handleCtaClick(event)"
-          style="background: var(--black); color: var(--white); border: 2px solid var(--black); font-size: 16px; padding: 16px 36px; display: inline-flex; align-items: center; justify-content: center;">Umów trening próbny za 79 zł →</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- SOCIAL PROOF -->
-  <section class="proof-section">
-    <div class="section-inner">
-      <div class="section-label fade-up">Opinie klientów</div>
-      <h2 class="section-title fade-up">Co mówią klienci Manufaktury Formy</h2>
-
-      <div class="reviews-grid fade-up">
-        <img class="review-img" src="https://lh3.googleusercontent.com/d/1GGCNQ-YWMhR6VWcW_HobPZeCX89TiAA3"
-          alt="Opinia Google 1">
-        <img class="review-img" src="https://lh3.googleusercontent.com/d/1d3xsrVcFCEV8titdanK7quqP7UF6j0-4"
-          alt="Opinia Google 2">
-        <img class="review-img" src="https://lh3.googleusercontent.com/d/1jJnBVotzv2B2PxNL8YzVMf-DZ_ZbrkrM"
-          alt="Opinia Google 3">
-        <img class="review-img" src="https://lh3.googleusercontent.com/d/1q0a5DLbE4N0_29BS8l9OzbzGQFTC3fg-"
-          alt="Opinia Google 4">
-      </div>
-    </div>
-  </section>
-
-  <!-- FOR WHOM -->
-  <section class="forwho-section">
-    <div class="section-inner">
-      <div class="section-label fade-up">Sprawdź, czy to dla Ciebie</div>
-      <h2 class="section-title fade-up">EMS u nas — ale nie dla każdego</h2>
-      <p class="section-sub fade-up">Zależy nam na dobrym dopasowaniu. Szczerze mówimy, dla kogo to ma sens — i kiedy może nie pasować.</p>
-
-      <div class="forwho-grid fade-up">
-        <div class="forwho-card yes">
-          <div class="forwho-card-title">
-            <span>✓</span> EMS w Manufakturze Formy jest dla Ciebie, jeśli:
-          </div>
-          <ul class="forwho-list">
-            <li class="forwho-item">
-              <div class="forwho-item-icon">✓</div>
-              Chcesz mieć pewność, że trening robisz dobrze — trener jest przy Tobie przez całą sesję
-            </li>
-            <li class="forwho-item">
-              <div class="forwho-item-icon">✓</div>
-              Zależy Ci na nowoczesnym sprzęcie — bezprzewodowym, suchym, higienicznym
-            </li>
-            <li class="forwho-item">
-              <div class="forwho-item-icon">✓</div>
-              Masz ból pleców, problemy ze stawami lub wracasz po kontuzji
-            </li>
-            <li class="forwho-item">
-              <div class="forwho-item-icon">✓</div>
-              Chcesz trenować z uwagą trenera, a nie anonimowo w tłumie
-            </li>
-          </ul>
-        </div>
-        <div class="forwho-card no">
-          <div class="forwho-card-title">
-            <span>✕</span> EMS NIE JEST dla Ciebie, jeśli:
-          </div>
-          <ul class="forwho-list">
-            <li class="forwho-item">
-              <div class="forwho-item-icon">✕</div>
-              Masz rozrusznik serca lub aktywne implanty elektroniczne
-            </li>
-            <li class="forwho-item">
-              <div class="forwho-item-icon">✕</div>
-              Jesteś w ciąży
-            </li>
-            <li class="forwho-item">
-              <div class="forwho-item-icon">✕</div>
-              Masz ostrą infekcję lub gorączkę
-            </li>
-            <li class="forwho-item">
-              <div class="forwho-item-icon">✕</div>
-              Szukasz magicznej pigułki bez żadnego wysiłku z Twojej strony
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHAT'S INCLUDED -->
-  <section class="included-section">
+  <!-- FIX: CENA PRZESUNIĘTA WYŻEJ — zaraz po benefitach, zanim użytkownicy odejdą -->
+  <section class="included-section" id="cennik">
     <div class="section-inner">
       <div class="section-label fade-up">Trening próbny</div>
       <h2 class="section-title fade-up">Co dostajesz za 79 zł</h2>
@@ -1774,34 +721,118 @@
       </div>
 
       <div style="text-align:center; margin-top: 32px;">
-        <a href="#" class="btn-primary" onclick="handleCtaClick(event)" style="font-size:17px; padding:18px 40px;">Umów
-          trening próbny za 79 zł →</a>
+        <a href="#" class="btn-primary" onclick="handleCtaClick(event)" style="font-size:17px; padding:18px 40px;">Umów trening próbny za 79 zł →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- USŁUGI -->
+  <section class="pain-section">
+    <div class="section-inner">
+      <div class="section-label fade-up">Co oferujemy</div>
+      <h2 class="section-title fade-up">Trzy sposoby na trening — jeden adres</h2>
+      <p class="section-sub fade-up">Wybierz format, który pasuje do Twoich celów. Możesz zacząć od próbnego i zdecydować na miejscu.</p>
+      <div class="pain-list fade-up">
+        <div class="pain-item">
+          <div class="pain-x" style="background:#1e3a5f;color:#93c5fd;font-size:16px;">⚡</div>
+          <div class="pain-text">
+            <strong style="color:#fff;">Trening EMS</strong> — 20 minut, pełne ciało, sprzęt bezprzewodowy. Idealny jeśli zależy Ci na czasie i efektach.
+          </div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-x" style="background:#1e3a5f;color:#93c5fd;font-size:16px;">🏋️</div>
+          <div class="pain-text">
+            <strong style="color:#fff;">Hybryda (EMS + trening personalny)</strong> — połączenie elektrostymulacji z indywidualnym programem trenera. Maksymalne efekty w najkrótszym czasie.
+          </div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-x" style="background:#1e3a5f;color:#93c5fd;font-size:16px;">💆</div>
+          <div class="pain-text">
+            <strong style="color:#fff;">Drenaż limfatyczny (presoterapia)</strong> — masaż pneumatyczny nóg po treningu. Redukcja obrzęków, celulitu i zmęczenia kończyn.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALLOUT -->
+  <div class="callout-section fade-up">
+    <div class="callout-inner">
+      <div class="callout-tag">⚡ Trening próbny</div>
+      <div class="callout-title">Przekonaj się na własnej skórze — już za 79 zł</div>
+      <p class="callout-sub">Pełny trening EMS 20 min + drenaż limfatyczny + rozmowa z trenerem o Twoich celach. Bez zobowiązań, bez presji sprzedażowej.</p>
+      <div style="margin-top: 36px;">
+        <a href="#" class="btn-primary" onclick="handleCtaClick(event)"
+          style="background:var(--black);color:var(--white);border:2px solid var(--black);font-size:16px;padding:16px 36px;display:inline-flex;align-items:center;justify-content:center;">
+          Umów trening próbny za 79 zł →
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOCIAL PROOF -->
+  <section class="proof-section">
+    <div class="section-inner">
+      <div class="section-label fade-up">Opinie klientów</div>
+      <h2 class="section-title fade-up">Co mówią klienci Manufaktury Formy</h2>
+      <div class="reviews-grid fade-up">
+        <img class="review-img" src="https://lh3.googleusercontent.com/d/1GGCNQ-YWMhR6VWcW_HobPZeCX89TiAA3" alt="Opinia Google 1">
+        <img class="review-img" src="https://lh3.googleusercontent.com/d/1d3xsrVcFCEV8titdanK7quqP7UF6j0-4" alt="Opinia Google 2">
+        <img class="review-img" src="https://lh3.googleusercontent.com/d/1jJnBVotzv2B2PxNL8YzVMf-DZ_ZbrkrM" alt="Opinia Google 3">
+        <img class="review-img" src="https://lh3.googleusercontent.com/d/1q0a5DLbE4N0_29BS8l9OzbzGQFTC3fg-" alt="Opinia Google 4">
+      </div>
+    </div>
+  </section>
+
+  <!-- FOR WHOM -->
+  <section class="forwho-section">
+    <div class="section-inner">
+      <div class="section-label fade-up">Sprawdź, czy to dla Ciebie</div>
+      <h2 class="section-title fade-up">EMS u nas — ale nie dla każdego</h2>
+      <p class="section-sub fade-up">Zależy nam na dobrym dopasowaniu. Szczerze mówimy, dla kogo to ma sens — i kiedy może nie pasować.</p>
+      <div class="forwho-grid fade-up">
+        <div class="forwho-card yes">
+          <div class="forwho-card-title"><span>✓</span> EMS w Manufakturze Formy jest dla Ciebie, jeśli:</div>
+          <ul class="forwho-list">
+            <li class="forwho-item"><div class="forwho-item-icon">✓</div>Chcesz mieć pewność, że trening robisz dobrze — trener jest przy Tobie przez całą sesję</li>
+            <li class="forwho-item"><div class="forwho-item-icon">✓</div>Zależy Ci na nowoczesnym sprzęcie — bezprzewodowym, suchym, higienicznym</li>
+            <li class="forwho-item"><div class="forwho-item-icon">✓</div>Masz ból pleców, problemy ze stawami lub wracasz po kontuzji</li>
+            <li class="forwho-item"><div class="forwho-item-icon">✓</div>Chcesz trenować z uwagą trenera, a nie anonimowo w tłumie</li>
+          </ul>
+        </div>
+        <div class="forwho-card no">
+          <div class="forwho-card-title"><span>✕</span> EMS NIE JEST dla Ciebie, jeśli:</div>
+          <ul class="forwho-list">
+            <li class="forwho-item"><div class="forwho-item-icon">✕</div>Masz rozrusznik serca lub aktywne implanty elektroniczne</li>
+            <li class="forwho-item"><div class="forwho-item-icon">✕</div>Jesteś w ciąży</li>
+            <li class="forwho-item"><div class="forwho-item-icon">✕</div>Masz ostrą infekcję lub gorączkę</li>
+            <li class="forwho-item"><div class="forwho-item-icon">✕</div>Szukasz magicznej pigułki bez żadnego wysiłku z Twojej strony</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- MAPA -->
-  <section style="background: var(--cream); border-top: 1px solid var(--border); position: relative; z-index: 1;">
-    <div class="section-inner" style="padding-bottom: 0;">
+  <section style="background:var(--cream);border-top:1px solid var(--border);position:relative;z-index:1;">
+    <div class="section-inner" style="padding-bottom:0;">
       <div class="section-label fade-up">Gdzie nas znajdziesz?</div>
       <h2 class="section-title fade-up">Manufaktura Formy</h2>
-      <p class="section-sub fade-up" style="margin-bottom: 28px;">ul. Górka Tomka 6, Białystok — kameralne studio EMS,
-        bez tłoku.</p>
+      <p class="section-sub fade-up" style="margin-bottom:28px;">ul. Górka Tomka 6, Białystok — kameralne studio EMS, bez tłoku.</p>
     </div>
-    <div style="width: 100%; max-width: 780px; margin: 0 auto; padding: 0 20px 52px; box-sizing: border-box;">
-      <div
-        style="border-radius: 16px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 2px 16px rgba(0,0,0,0.07);">
+    <div style="width:100%;max-width:780px;margin:0 auto;padding:0 20px 52px;box-sizing:border-box;">
+      <div style="border-radius:16px;overflow:hidden;border:1px solid var(--border);box-shadow:0 2px 16px rgba(0,0,0,0.07);">
         <iframe src="https://maps.google.com/maps?q=Górka+Tomka+6+Białystok&t=&z=16&ie=UTF8&iwloc=&output=embed"
-          width="100%" height="380" style="border:0; display:block;" allowfullscreen="" loading="lazy"
+          width="100%" height="380" style="border:0;display:block;" allowfullscreen="" loading="lazy"
           referrerpolicy="no-referrer-when-downgrade" title="Manufaktura Formy – ul. Górka Tomka 6, Białystok">
         </iframe>
       </div>
-      <div style="display:flex; align-items:center; gap:10px; margin-top:14px; padding: 0 4px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-top:14px;padding:0 4px;">
         <span style="font-size:20px;">📍</span>
         <div>
-          <div style="font-size:14px; font-weight:600; color: var(--black);">ul. Górka Tomka 6, Białystok</div>
+          <div style="font-size:14px;font-weight:600;color:var(--black);">ul. Górka Tomka 6, Białystok</div>
           <a href="https://maps.google.com/?q=Górka+Tomka+6+Białystok" target="_blank"
-            style="font-size:13px; color: var(--accent); text-decoration:none;">Otwórz w Google Maps →</a>
+            style="font-size:13px;color:var(--accent);text-decoration:none;">Otwórz w Google Maps →</a>
         </div>
       </div>
     </div>
@@ -1812,7 +843,6 @@
     <div class="section-inner">
       <div class="section-label fade-up">Masz pytania?</div>
       <h2 class="section-title fade-up">Najczęstsze pytania o EMS</h2>
-
       <div class="faq-list fade-up">
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
@@ -1826,53 +856,42 @@
             Czy trening EMS boli?
             <div class="faq-icon">+</div>
           </div>
-          <div class="faq-a">Nie boli — ale jest intensywny. Czujesz wyraźne skurcze mięśni, podobne do drgań.
-            Intensywność dostosowujemy indywidualnie do każdej osoby, szczególnie przy pierwszym treningu. Większość
-            ludzi opisuje to jako dziwne, ale nie nieprzyjemne odczucie.</div>
+          <div class="faq-a">Nie boli — ale jest intensywny. Czujesz wyraźne skurcze mięśni, podobne do drgań. Intensywność dostosowujemy indywidualnie do każdej osoby, szczególnie przy pierwszym treningu. Większość ludzi opisuje to jako dziwne, ale nie nieprzyjemne odczucie.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             Czy muszę być w dobrej kondycji, żeby zacząć?
             <div class="faq-icon">+</div>
           </div>
-          <div class="faq-a">Nie. EMS jest szczególnie pomocny dla osób, które nie ćwiczą regularnie, mają ból pleców,
-            siedzący tryb życia lub wracają po kontuzji. Trening jest w całości prowadzony przez trenera i dostosowany
-            do Twojego stanu.</div>
+          <div class="faq-a">Nie. EMS jest szczególnie pomocny dla osób, które nie ćwiczą regularnie, mają ból pleców, siedzący tryb życia lub wracają po kontuzji. Trening jest w całości prowadzony przez trenera i dostosowany do Twojego stanu.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             Czym są suche kombinezony i dlaczego to ważne?
             <div class="faq-icon">+</div>
           </div>
-          <div class="faq-a">W tradycyjnym EMS używa się mokrych kombinezonów — trzeba zwilżać tkaninę wodą, co bywa
-            niekomfortowe. Nasze suche kombinezony EMS nie wymagają tej procedury. Zakładasz strój i zaczynasz trening.
-            Higienicznie, wygodnie, bez zawracania głowy.</div>
+          <div class="faq-a">W tradycyjnym EMS używa się mokrych kombinezonów — trzeba zwilżać tkaninę wodą, co bywa niekomfortowe. Nasze suche kombinezony EMS nie wymagają tej procedury. Zakładasz strój i zaczynasz trening. Higienicznie, wygodnie, bez zawracania głowy.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             Po ilu treningach zobaczę efekty?
             <div class="faq-icon">+</div>
           </div>
-          <div class="faq-a">Pierwsze odczucia — lepsza postawa, mniejsze napięcie w plecach — pojawiają się już po 2–4
-            treningach. Widoczna zmiana sylwetki zazwyczaj następuje po 6–10 sesjach, w zależności od regularności i
-            Twoich indywidualnych celów.</div>
+          <div class="faq-a">Pierwsze odczucia — lepsza postawa, mniejsze napięcie w plecach — pojawiają się już po 2–4 treningach. Widoczna zmiana sylwetki zazwyczaj następuje po 6–10 sesjach, w zależności od regularności i Twoich indywidualnych celów.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             Ile kosztuje regularne trenowanie?
             <div class="faq-icon">+</div>
           </div>
-          <div class="faq-a">Ceny pakietów poznasz po treningu próbnym — omówimy to razem na spokojnie, bez żadnej
-            presji sprzedażowej. Trening próbny za 79 zł nie zobowiązuje Cię do zakupu pakietu.</div>
+          <div class="faq-a">Ceny pakietów poznasz po treningu próbnym — omówimy to razem na spokojnie, bez żadnej presji sprzedażowej. Trening próbny za 79 zł nie zobowiązuje Cię do zakupu pakietu.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             Co to jest drenaż limfatyczny, który wchodzi w skład treningu?
             <div class="faq-icon">+</div>
           </div>
-          <div class="faq-a">Presoterapia (drenaż limfatyczny) to masaż pneumatyczny nóg, który wspomaga krążenie
-            limfatyczne, redukuje opuchliznę i zmęczenie kończyn. Zwykle wykonuje się go po treningu — to przyjemne
-            zakończenie sesji, które przyspiesza regenerację.</div>
+          <div class="faq-a">Presoterapia (drenaż limfatyczny) to masaż pneumatyczny nóg, który wspomaga krążenie limfatyczne, redukuje opuchliznę i zmęczenie kończyn. Zwykle wykonuje się go po treningu — to przyjemne zakończenie sesji, które przyspiesza regenerację.</div>
         </div>
       </div>
     </div>
@@ -1885,39 +904,83 @@
       <h2 class="section-title fade-up">Zarezerwuj pierwszy trening.</h2>
       <p class="section-sub fade-up">Pierwszy trening za 79 zł — poczujesz różnicę już po 20 minutach. Umawiamy termin w ciągu 24 godzin. Bez presji, bez zobowiązań.</p>
       <a href="#" class="btn-primary fade-up" onclick="handleCtaClick(event)"
-        style="font-size:17px; padding:18px 40px; margin: 0 auto;">Umów trening za 79 zł →</a>
+        style="font-size:17px;padding:18px 40px;margin:0 auto;">Umów trening za 79 zł →</a>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <div
-      style="margin-bottom:8px; font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Inter','Helvetica Neue',Arial,sans-serif; font-weight:700; color:#9ca3af; font-size:14px;">
-      Manufaktura Formy · Białystok</div>
+    <div style="margin-bottom:8px;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Inter','Helvetica Neue',Arial,sans-serif;font-weight:700;color:#9ca3af;font-size:14px;">
+      Manufaktura Formy · Białystok
+    </div>
     <div>EMS Studio · Trening elektrostymulacyjny · Drenaż limfatyczny</div>
     <div style="margin-top:8px;"><a href="polityka.html">Polityka Prywatności</a></div>
   </footer>
 
-  <!-- ── MODAL CONTACT CHANNELS ── -->
+  <!-- ══════════════════════════════════════════════════════════
+       MODAL WYBORU KANAŁU — FIX: usunięto "niespodziankę",
+       dodano social proof + przycisk telefonu
+  ══════════════════════════════════════════════════════════ -->
   <div class="modal-overlay" id="contactChannelsModal" onclick="closeContactChannelsModal(event)">
-    <div class="modal-box" onclick="event.stopPropagation()" style="padding: 32px 24px; text-align: center;">
-      <button class="modal-close" style="background: #f3f4f6; color: #000;"
-        onclick="closeContactChannelsModal()">✕</button>
-      <h3
-        style="font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif; font-size: 22px; font-weight: 800; margin-bottom: 8px;">
-        Teraz prawdziwa niespodzianka!</h3>
-      <p style="font-size: 14px; color: #6b7280; line-height: 1.5; margin-bottom: 24px;">Jeśli zdecydujesz, że chcesz ćwiczyć regularnie otrzymasz -10% na WSZYSTKIE możliwe karnety.</p>
+    <div class="modal-box" onclick="event.stopPropagation()" style="padding: 32px 24px; text-align: center; overflow: visible;">
+      <button class="modal-close" style="background:#f3f4f6;color:#000;" onclick="closeContactChannelsModal()">✕</button>
 
-      <div style="display: flex; flex-direction: column; gap: 12px;">
-        <a class="btn-primary" href="#" onclick="openContactChannel(event, 'whatsapp')"
-          style="background: #25D366; color: white; width: 100%; justify-content: center; font-size: 16px; padding: 16px; border: none; border-radius: 12px;">
-          <span style="font-size: 20px;">🟢</span> Umów trening przez WhatsApp
+      <!-- Social proof zamiast "niespodzianki" -->
+      <div style="font-size:13px;color:#6b7280;margin-bottom:6px;letter-spacing:0.02em;">
+        ⭐⭐⭐⭐⭐ &nbsp;·&nbsp; 200+ klientów &nbsp;·&nbsp; Białystok
+      </div>
+      <h3 style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Inter',sans-serif;font-size:22px;font-weight:800;margin-bottom:8px;color:var(--black);">
+        Umów trening próbny za 79 zł
+      </h3>
+      <p style="font-size:14px;color:#6b7280;line-height:1.55;margin-bottom:24px;">
+        Wybierz wygodny sposób kontaktu — odezwiemy się i umówimy termin w ciągu 24h.
+      </p>
+
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <!-- WhatsApp -->
+        <a href="#" onclick="openContactChannel(event,'whatsapp')"
+          style="display:flex;align-items:center;justify-content:center;gap:10px;
+                 background:#25D366;color:#fff;padding:15px 20px;border-radius:12px;
+                 font-size:15px;font-weight:600;text-decoration:none;
+                 font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;
+                 transition:opacity .15s,transform .15s;"
+          onmouseover="this.style.opacity='.9';this.style.transform='translateY(-1px)'"
+          onmouseout="this.style.opacity='1';this.style.transform='none'">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/></svg>
+          Umów przez WhatsApp
         </a>
-        <a class="btn-primary" href="#" onclick="openContactChannel(event, 'messenger')"
-          style="background: #0084FF; color: white; width: 100%; justify-content: center; font-size: 16px; padding: 16px; border: none; border-radius: 12px;">
-          <span style="font-size: 20px;">💬</span> Umów trening przez Messenger
+
+        <!-- Messenger -->
+        <a href="#" onclick="openContactChannel(event,'messenger')"
+          style="display:flex;align-items:center;justify-content:center;gap:10px;
+                 background:#0084FF;color:#fff;padding:15px 20px;border-radius:12px;
+                 font-size:15px;font-weight:600;text-decoration:none;
+                 font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;
+                 transition:opacity .15s,transform .15s;"
+          onmouseover="this.style.opacity='.9';this.style.transform='translateY(-1px)'"
+          onmouseout="this.style.opacity='1';this.style.transform='none'">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 4.974 0 11.111c0 3.498 1.744 6.614 4.469 8.654V24l4.088-2.242c1.092.3 2.246.464 3.443.464 6.627 0 12-4.975 12-11.111C24 4.974 18.627 0 12 0zm1.191 14.963l-3.055-3.26-5.963 3.26L10.732 8l3.131 3.26L19.752 8l-6.561 6.963z"/></svg>
+          Umów przez Messenger
+        </a>
+
+        <!-- FIX: Nowy przycisk — telefon -->
+        <a href="tel:+48534135533"
+          onclick="trackPhoneClick()"
+          style="display:flex;align-items:center;justify-content:center;gap:10px;
+                 background:transparent;color:var(--black);
+                 border:1.5px solid var(--border);padding:14px 20px;border-radius:12px;
+                 font-size:15px;font-weight:500;text-decoration:none;
+                 font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif;
+                 transition:border-color .15s;"
+          onmouseover="this.style.borderColor='var(--black)'"
+          onmouseout="this.style.borderColor='var(--border)'">
+          📞 Zadzwoń: 534 135 533
         </a>
       </div>
+
+      <p style="font-size:11px;color:#9ca3af;margin-top:16px;line-height:1.5;">
+        Bez zobowiązań · Odpowiadamy w ciągu 24h · ul. Górka Tomka 6, Białystok
+      </p>
     </div>
   </div>
 
@@ -1927,22 +990,19 @@
       <div class="modal-header">
         <button class="modal-close" onclick="closeModal()">✕</button>
         <div class="modal-logo-row">
-          <img class="modal-logo-img" src="https://lh3.googleusercontent.com/d/18mEyEP41W-2NXRbPbsCetiXB_BAchfST"
-            alt="Logo" onerror="this.style.display='none'">
+          <img class="modal-logo-img" src="https://lh3.googleusercontent.com/d/18mEyEP41W-2NXRbPbsCetiXB_BAchfST" alt="Logo" onerror="this.style.display='none'">
           <span class="modal-brand">Manufaktura Formy</span>
         </div>
         <div class="modal-title" id="modalTitle">Odbierz trening próbny za 79 zł</div>
         <div class="modal-sub" id="modalSub">Zostaw kontakt — zadzwonimy i umówimy Twój pierwszy trening</div>
       </div>
       <div class="modal-body">
-        <!-- Progress -->
         <div class="modal-progress" id="modalProgress">
           <div class="modal-dot active" id="mdot0"></div>
           <div class="modal-dot" id="mdot1"></div>
           <div class="modal-dot" id="mdot2"></div>
         </div>
 
-        <!-- Slides -->
         <div class="form-slides">
           <div class="form-slides-inner" id="formSlidesInner">
 
@@ -1953,21 +1013,15 @@
               <div class="radio-list" id="q1-options">
                 <div class="radio-item" onclick="selectOption(0)">
                   <span class="radio-label">Na razie nie chcę próbować</span>
-                  <div class="radio-circle">
-                    <div class="radio-dot"></div>
-                  </div>
+                  <div class="radio-circle"><div class="radio-dot"></div></div>
                 </div>
                 <div class="radio-item" onclick="selectOption(1)">
                   <span class="radio-label">W następnym tygodniu — odezwijcie się</span>
-                  <div class="radio-circle">
-                    <div class="radio-dot"></div>
-                  </div>
+                  <div class="radio-circle"><div class="radio-dot"></div></div>
                 </div>
                 <div class="radio-item" onclick="selectOption(2)">
                   <span class="radio-label">Chcę spróbować w tym tygodniu 💪</span>
-                  <div class="radio-circle">
-                    <div class="radio-dot"></div>
-                  </div>
+                  <div class="radio-circle"><div class="radio-dot"></div></div>
                 </div>
               </div>
             </div>
@@ -1978,8 +1032,7 @@
               <div class="form-q-sub">Zostaw kontakt — oddzwonimy i umówimy trening</div>
               <div class="input-group">
                 <label class="input-label">Imię i nazwisko</label>
-                <input class="input-field" id="inp-name" type="text" placeholder="Wprowadź odpowiedź."
-                  autocomplete="name" oninput="validateContact()">
+                <input class="input-field" id="inp-name" type="text" placeholder="Wprowadź odpowiedź." autocomplete="name" oninput="validateContact()">
               </div>
               <div class="input-group">
                 <label class="input-label">Numer telefonu</label>
@@ -1995,16 +1048,13 @@
               <div class="form-q-sub">Zaznacz poniższą zgodę</div>
               <div class="cb-list">
                 <div class="cb-item" id="cb-phone" onclick="toggleCheckbox('cb-phone')">
-                  <span class="cb-label">Wyrażam zgodę na kontakt tel. oraz akceptuję <a href="polityka.html"
-                      target="_blank" onclick="event.stopPropagation()">Politykę Prywatności</a></span>
+                  <span class="cb-label">Wyrażam zgodę na kontakt tel. oraz akceptuję <a href="polityka.html" target="_blank" onclick="event.stopPropagation()">Politykę Prywatności</a></span>
                   <div class="cb-box"></div>
                 </div>
               </div>
               <div class="legal-text">
-                Poprzez kliknięcie "Prześlij" wyrażasz zgodę na przesłanie Twoich informacji Manufakturze Formy w
-                Białymstoku.<br><br>
-                <a href="polityka.html" target="_blank" class="legal-link" style="color:#9ca3af;">Polityka Prywatności
-                  Manufaktura Formy</a>
+                Poprzez kliknięcie "Prześlij" wyrażasz zgodę na przesłanie Twoich informacji Manufakturze Formy w Białymstoku.<br><br>
+                <a href="polityka.html" target="_blank" class="legal-link" style="color:#9ca3af;">Polityka Prywatności Manufaktura Formy</a>
               </div>
             </div>
 
@@ -2023,18 +1073,14 @@
           </div>
         </div>
 
-        <!-- Rejection slide (outside slides) -->
+        <!-- Rejection slide -->
         <div id="rejectionSlide" style="display:none;">
           <div class="rejection-slide">
             <div class="rejection-emoji">🙏</div>
             <div class="rejection-title">Rozumiemy, że to nie ten moment</div>
-            <div class="rejection-sub">Gdy będziesz gotowy/a — jesteśmy tutaj! Tymczasem zapraszamy na nasz Instagram,
-              gdzie pokazujemy efekty treningów EMS i życie studia na co dzień 💪</div>
+            <div class="rejection-sub">Gdy będziesz gotowy/a — jesteśmy tutaj! Tymczasem zapraszamy na nasz Instagram, gdzie pokazujemy efekty treningów EMS i życie studia na co dzień 💪</div>
             <a class="btn-ig" href="https://www.instagram.com/manufakturaformy.bialystok" target="_blank">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
-                <path
-                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-              </svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
               Obserwuj nas na Instagramie
             </a>
             <button class="btn-rejection-back" onclick="hideRejection()">← Wróć do formularza</button>
@@ -2059,12 +1105,12 @@
 
     const p = new URLSearchParams(window.location.search);
     const UTM = {
-      source: p.get('utm_source') || 'brak',
-      medium: p.get('utm_medium') || 'brak',
+      source:   p.get('utm_source')   || 'brak',
+      medium:   p.get('utm_medium')   || 'brak',
       campaign: p.get('utm_campaign') || 'brak',
-      content: p.get('utm_content') || 'brak',
+      content:  p.get('utm_content')  || 'brak',
     };
-    const SESSION_ID = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    const SESSION_ID = Date.now().toString(36) + Math.random().toString(36).slice(2,6);
     const t0 = Date.now();
     const CONTACT_MESSAGE = 'Dzień dobry, chcę się umówić na promocyjny trening EMS z drenażem limfatycznym za 79zł. Kiedy są dostępne terminy?';
     const WHATSAPP_PHONE = '48534135533';
@@ -2074,14 +1120,14 @@
       messenger: `https://m.me/${MESSENGER_PAGE_ID}?text=${encodeURIComponent(CONTACT_MESSAGE)}`
     };
 
-    const LABELS = ['Na razie nie chcę próbować', 'W następnym tygodniu — odezwijcie się', 'Chcę spróbować w tym tygodniu 💪'];
+    const LABELS = ['Na razie nie chcę próbować','W następnym tygodniu — odezwijcie się','Chcę spróbować w tym tygodniu 💪'];
     let formCur = 0;
     let selectedIdx = null;
     const ans = { q1: null, name: '', phone: '', cbPhone: false };
     const TOTAL_FORM_SLIDES = 3;
 
-    function fbTrack(ev, params) { try { if (typeof fbq === 'function') fbq('track', ev, params || {}); } catch (e) { } }
-    function fbCustom(ev, params) { try { if (typeof fbq === 'function') fbq('trackCustom', ev, params || {}); } catch (e) { } }
+    function fbTrack(ev, params) { try { if (typeof fbq === 'function') fbq('track', ev, params || {}); } catch(e){} }
+    function fbCustom(ev, params) { try { if (typeof fbq === 'function') fbq('trackCustom', ev, params || {}); } catch(e){} }
 
     // ── MODAL ──
     function openModal() {
@@ -2089,28 +1135,25 @@
       document.body.style.overflow = 'hidden';
       fbCustom('OpenedLeadForm');
     }
-
     function closeModal() {
       document.getElementById('modalOverlay').classList.remove('active');
       document.body.style.overflow = '';
     }
-
     function handleOverlayClick(e) {
       if (e.target === document.getElementById('modalOverlay')) closeModal();
     }
-
     function closeContactChannelsModal(e) {
       if (e && e.target !== document.getElementById('contactChannelsModal')) return;
       document.getElementById('contactChannelsModal').classList.remove('active');
       document.body.style.overflow = '';
     }
-
     function openContactChannel(e, channel) {
       e.preventDefault();
       const url = CONTACT_LINKS[channel];
       if (!url) return;
-      try { trackConversion('chat_channel_click', { event_label: channel }); } catch (err) { }
-      closeContactChannelsModal();
+      try { trackConversion('chat_channel_click', { event_label: channel }); } catch(err){}
+      document.getElementById('contactChannelsModal').classList.remove('active');
+      document.body.style.overflow = '';
       window.open(url, '_blank', 'noopener,noreferrer');
     }
 
@@ -2123,17 +1166,13 @@
       if (n === 1) fbCustom('FormStep1_Kontakt');
       if (n === 2) fbCustom('FormStep2_Zgody');
     }
-
     function formPrev() { if (formCur > 0) formGoTo(formCur - 1); }
-
     function handleFormNext() {
       if (formCur === 0) { handleQ1Next(); return; }
       if (formCur === 1) { formGoTo(2); return; }
       if (formCur === 2) { submitForm(); return; }
     }
-
     function updateFormUI() {
-      // Dots
       for (let i = 0; i < TOTAL_FORM_SLIDES; i++) {
         const d = document.getElementById('mdot' + i);
         if (!d) continue;
@@ -2141,27 +1180,15 @@
         if (i < formCur) d.classList.add('done');
         else if (i === formCur) d.classList.add('active');
       }
-
-      // Back button
       document.getElementById('formBackBtn').style.display = (formCur > 0 && formCur < TOTAL_FORM_SLIDES) ? 'block' : 'none';
-
-      // Bottom bar
       document.getElementById('formBottomBar').style.display = formCur === TOTAL_FORM_SLIDES ? 'none' : '';
-
-      // Modal header
-      const titles = ['Kiedy chcesz spróbować?', 'Dane kontaktowe', 'Ostatni krok', ''];
-      const subs = ['Zaznacz jedną odpowiedź', 'Podaj swój numer — oddzwonimy w ciągu 24h', 'Zaznacz zgodę i prześlij formularz', ''];
+      const titles = ['Kiedy chcesz spróbować?','Dane kontaktowe','Ostatni krok',''];
+      const subs = ['Zaznacz jedną odpowiedź','Podaj swój numer — oddzwonimy w ciągu 24h','Zaznacz zgodę i prześlij formularz',''];
       document.getElementById('modalTitle').textContent = titles[formCur] || 'Dziękujemy!';
       document.getElementById('modalSub').textContent = subs[formCur] || '';
-
-      // Progress
       document.getElementById('modalProgress').style.display = formCur === TOTAL_FORM_SLIDES ? 'none' : 'flex';
-
-      // Button label
-      const btnLabels = ['Kontynuuj', 'Kontynuuj', 'Prześlij formularz', ''];
+      const btnLabels = ['Kontynuuj','Kontynuuj','Prześlij formularz',''];
       document.getElementById('formBtnLabel').textContent = btnLabels[formCur] || 'Kontynuuj';
-
-      // Btn disabled
       const btn = document.getElementById('formMainBtn');
       btn.disabled = false;
       if (formCur === 0 && selectedIdx === null) btn.disabled = true;
@@ -2172,20 +1199,18 @@
     // ── Q1 ──
     function handleQ1Next() {
       if (selectedIdx === 0) {
-        send({ type: 'dropoff', event: 'narazie_nie_chce', session_id: SESSION_ID, timestamp: new Date().toISOString(), kiedy_trening: LABELS[0], utm_source: UTM.source, utm_campaign: UTM.campaign, utm_content: UTM.content });
+        send({ type:'dropoff', event:'narazie_nie_chce', session_id:SESSION_ID, timestamp:new Date().toISOString(), kiedy_trening:LABELS[0], utm_source:UTM.source, utm_campaign:UTM.campaign, utm_content:UTM.content });
         showRejection();
       } else {
         formGoTo(1);
       }
     }
-
     function showRejection() {
       document.getElementById('formSlidesInner').style.display = 'none';
       document.getElementById('rejectionSlide').style.display = 'block';
       document.getElementById('formBottomBar').style.display = 'none';
       document.getElementById('modalProgress').style.display = 'none';
     }
-
     function hideRejection() {
       document.getElementById('formSlidesInner').style.display = 'flex';
       document.getElementById('rejectionSlide').style.display = 'none';
@@ -2250,25 +1275,22 @@
         zgoda_telefon: ans.cbPhone ? 'TAK' : 'NIE',
       });
       btn.classList.remove('loading');
-      // Konwersja śledzona tylko przy kliknięciu WhatsApp/Messenger
       formGoTo(TOTAL_FORM_SLIDES);
       if (typeof window.confetti === 'function') {
         window.confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
       }
     }
 
-    // ── TRACKING ENDPOINT ──
+    // ── TRACKING ──
     const TRACKING_URL = 'https://script.google.com/macros/s/AKfycbx4rIGGYoipiNZ-7JualOp4t5CcBw_cH1fnHflRrF9RjuHmXQjYj6DUDIru5XxZ4QbAhA/exec';
-
     async function send(data) {
       try {
         await fetch(TRACKING_URL, {
-          method: 'POST',
-          mode: 'no-cors',
+          method: 'POST', mode: 'no-cors',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ ...data, page_url: location.href, user_agent: navigator.userAgent, screen: screen.width + 'x' + screen.height })
         });
-      } catch (e) { /* silent fail */ }
+      } catch(e) {}
     }
 
     // ── FAQ ──
@@ -2278,25 +1300,20 @@
     }
 
     // ── PHONE FORMATTING ──
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
       const inp = document.getElementById('inp-phone');
       if (!inp) return;
-
-      inp.addEventListener('input', function (e) {
+      inp.addEventListener('input', function(e) {
         if (e.inputType === 'deleteContentBackward') { validateContact(); return; }
         let raw = inp.value.replace(/^(?:\+48\s*|0048\s*)/, '');
         let digits = raw.replace(/\D/g, '').slice(0, 9);
         let formatted = '';
-        for (let i = 0; i < digits.length; i++) {
-          if (i === 3 || i === 6) formatted += ' ';
-          formatted += digits[i];
-        }
+        for (let i = 0; i < digits.length; i++) { if (i === 3 || i === 6) formatted += ' '; formatted += digits[i]; }
         inp.value = formatted;
         inp.setSelectionRange(formatted.length, formatted.length);
         validateContact();
       });
-
-      inp.addEventListener('paste', function (e) {
+      inp.addEventListener('paste', function(e) {
         e.preventDefault();
         let pasted = (e.clipboardData || window.clipboardData).getData('text');
         let raw = pasted.replace(/^(?:\+48\s*|0048\s*)/, '');
@@ -2306,9 +1323,8 @@
         inp.value = formatted;
         validateContact();
       });
-
-      inp.addEventListener('keydown', function (e) {
-        const allowed = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Tab', 'Home', 'End'];
+      inp.addEventListener('keydown', function(e) {
+        const allowed = ['Backspace','Delete','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Tab','Home','End'];
         if (allowed.indexOf(e.key) !== -1 || e.ctrlKey || e.metaKey) return;
         if (!/^\d$/.test(e.key)) e.preventDefault();
       });
@@ -2316,17 +1332,14 @@
       // Scroll animations
       const fadeEls = document.querySelectorAll('.fade-up');
       const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) { entry.target.classList.add('visible'); }
-        });
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
       }, { threshold: 0.1 });
       fadeEls.forEach(el => observer.observe(el));
 
-      // Init tracking
-      send({ type: 'dropoff', event: 'landing_view', session_id: SESSION_ID, timestamp: new Date().toISOString(), step: 0, step_name: 'landing', utm_source: UTM.source, utm_campaign: UTM.campaign, utm_content: UTM.content });
+      send({ type:'dropoff', event:'landing_view', session_id:SESSION_ID, timestamp:new Date().toISOString(), step:0, step_name:'landing', utm_source:UTM.source, utm_campaign:UTM.campaign, utm_content:UTM.content });
     });
 
-    // Page close tracking
+    // ── PAGE CLOSE TRACKING ──
     let lastLogTime = 0;
     function logPageClose() {
       const now = Date.now();
@@ -2334,47 +1347,51 @@
       lastLogTime = now;
       const sec = Math.round((now - t0) / 1000);
       const m = Math.floor(sec / 60), s = sec % 60;
-      send({ type: 'dropoff', event: 'page_closed', session_id: SESSION_ID, timestamp: new Date().toISOString(), czas_wypelniania: (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s), utm_source: UTM.source, utm_campaign: UTM.campaign });
+      send({ type:'dropoff', event:'page_closed', session_id:SESSION_ID, timestamp:new Date().toISOString(), czas_wypelniania:(m<10?'0'+m:m)+':'+(s<10?'0'+s:s), utm_source:UTM.source, utm_campaign:UTM.campaign });
     }
+
     // ── CONVERSION TRACKING ──
     function trackConversion(eventName, params) {
-      // 1. GTM dataLayer → odbiera GA4
       try {
         window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-          event: eventName,
-          event_category: 'CTA',
-          ...params
-        });
-      } catch (e) { }
-
-      // 2. Google Ads Conversion — tylko przy kliknięciu WhatsApp/Messenger
+        window.dataLayer.push({ event: eventName, event_category: 'CTA', ...params });
+      } catch(e) {}
       try {
         if (typeof gtag === 'function' && eventName === 'chat_channel_click') {
-          gtag('event', 'conversion', {
-            'send_to': 'AW-18039825187/SgiyCMC9iJwcEKPGh5pD',
-            'event_name': eventName
-          });
+          gtag('event', 'conversion', { 'send_to': 'AW-18039825187/SgiyCMC9iJwcEKPGh5pD', 'event_name': eventName });
         }
-      } catch (e) { }
-
-      // 3. Meta Pixel
+      } catch(e) {}
       try {
-        if (typeof fbq === 'function') {
-          fbq('track', 'Lead', { ...params });
-        }
-      } catch (e) { }
+        if (typeof fbq === 'function') fbq('track', 'Lead', { ...params });
+      } catch(e) {}
     }
 
-    // ── SMART CTA (Messenger / WhatsApp) ──
+    function trackPhoneClick() {
+      try {
+        gtag('event', 'conversion', {'send_to': 'AW-18039825187/BsvzCNPIkaEcEKPGh5pD'});
+      } catch(e) {}
+      send({
+        type: 'cta_click',
+        session_id: SESSION_ID,
+        timestamp: new Date().toISOString(),
+        cta_label: 'Zadzwoń: 534 135 533',
+        cta_section: 'Modal kanałów',
+        scroll_pct_at_click: 0,
+        time_on_page: Math.round((Date.now() - t0) / 1000),
+        utm_source: UTM.source,
+        utm_campaign: UTM.campaign,
+        utm_content: UTM.content
+      });
+    }
+
+    // ── SMART CTA ──
     function handleCtaClick(e) {
       e.preventDefault();
-      // Samo otwarcie modala NIE jest konwersją — tracking odpala się dopiero przy kliknięciu kanału lub wysłaniu formularza
       document.getElementById('contactChannelsModal').classList.add('active');
       document.body.style.overflow = 'hidden';
     }
 
-    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') logPageClose(); });
+    document.addEventListener('visibilitychange', function() { if (document.visibilityState === 'hidden') logPageClose(); });
     window.addEventListener('pagehide', logPageClose);
 
     updateFormUI();
@@ -2383,49 +1400,38 @@
   <!-- ── SEKCJE ŚLEDZENIA SCROLL ── -->
   <script>
   (function() {
-    // Sekcje strony z etykietami
     var SECTIONS = [
-      { id: 'hero-section',      label: 'Hero (główny baner)' },
-      { id: 'offer-banner',      label: 'Baner oferty (79 zł)' },
-      { id: 'dlaczego-my',       label: 'Dlaczego my (benefity)' },
-      { id: 'services-section',  label: 'Usługi (EMS/Hybryda/Drenaż)' },
-      { id: 'callout-section',   label: 'Callout CTA' },
-      { id: 'proof-section',     label: 'Opinie klientów' },
-      { id: 'forwho-section',    label: 'Dla kogo (tak/nie)' },
-      { id: 'included-section',  label: 'Co dostajesz za 79 zł' },
-      { id: 'faq-section',       label: 'FAQ' },
-      { id: 'cta-section',       label: 'Końcowe CTA' },
+      { id: 'hero-section',     label: 'Hero (główny baner)' },
+      { id: 'offer-banner',     label: 'Baner oferty (79 zł)' },
+      { id: 'dlaczego-my',      label: 'Dlaczego my (benefity)' },
+      { id: 'cennik',           label: 'Co dostajesz za 79 zł' },
+      { id: 'services-section', label: 'Usługi (EMS/Hybryda/Drenaż)' },
+      { id: 'proof-section',    label: 'Opinie klientów' },
+      { id: 'forwho-section',   label: 'Dla kogo (tak/nie)' },
+      { id: 'faq-section',      label: 'FAQ' },
+      { id: 'cta-section',      label: 'Końcowe CTA' },
     ];
-
-    // Dodaj data-tracking-id do sekcji które nie mają ID
-    var sectionEls = document.querySelectorAll('section, .hero-section, .offer-banner, .callout-section, .cta-section');
     var sectionIndex = 0;
-    sectionEls.forEach(function(el) {
+    document.querySelectorAll('section, .hero-section, .offer-banner, .callout-section, .cta-section').forEach(function(el) {
       if (!el.id) { el.id = 'section-auto-' + (sectionIndex++); }
     });
-
-    // Uzupełnij SECTIONS o faktyczne elementy w DOM
     var trackedSections = [];
     SECTIONS.forEach(function(s) {
       var el = document.getElementById(s.id);
-      if (el) trackedSections.push({ el: el, label: s.label, id: s.id, seen: false, enterTime: null, totalTime: 0 });
+      if (el) trackedSections.push({ el:el, label:s.label, id:s.id, seen:false, enterTime:null, totalTime:0 });
     });
-
-    // Fallback — śledź wszystkie sekcje bez ID
     document.querySelectorAll('section').forEach(function(el, i) {
       var alreadyTracked = trackedSections.some(function(t) { return t.el === el; });
       if (!alreadyTracked) {
         var h = el.querySelector('h2');
         var label = h ? h.textContent.trim().substring(0, 40) : ('Sekcja ' + (i+1));
-        trackedSections.push({ el: el, label: label, id: el.id || ('sekcja-' + i), seen: false, enterTime: null, totalTime: 0 });
+        trackedSections.push({ el:el, label:label, id:el.id||('sekcja-'+i), seen:false, enterTime:null, totalTime:0 });
       }
     });
 
-    // Scroll depth tracking (co 25%)
     var maxScrollPct = 0;
     var scrollMilestones = [25, 50, 75, 90, 100];
     var firedMilestones = {};
-
     function getScrollPct() {
       var h = document.documentElement;
       var scrollTop = window.pageYOffset || h.scrollTop;
@@ -2433,170 +1439,83 @@
       return scrollHeight > 0 ? Math.round((scrollTop / scrollHeight) * 100) : 0;
     }
 
-    // IntersectionObserver dla sekcji
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         var sec = trackedSections.find(function(s) { return s.el === entry.target; });
         if (!sec) return;
-
         if (entry.isIntersecting) {
-          sec.seen = true;
-          sec.enterTime = Date.now();
+          sec.seen = true; sec.enterTime = Date.now();
         } else if (sec.enterTime) {
           sec.totalTime += Date.now() - sec.enterTime;
           sec.enterTime = null;
-
-          // Wyślij event po opuszczeniu sekcji
-          send({
-            type: 'section_read',
-            session_id: SESSION_ID,
-            timestamp: new Date().toISOString(),
-            section_id: sec.id,
-            section_label: sec.label,
-            time_seconds: Math.round(sec.totalTime / 1000),
-            utm_source: UTM.source,
-            utm_campaign: UTM.campaign,
-            utm_content: UTM.content,
-            utm_medium: UTM.medium
-          });
+          send({ type:'section_read', session_id:SESSION_ID, timestamp:new Date().toISOString(), section_id:sec.id, section_label:sec.label, time_seconds:Math.round(sec.totalTime/1000), utm_source:UTM.source, utm_campaign:UTM.campaign, utm_content:UTM.content, utm_medium:UTM.medium });
         }
       });
     }, { threshold: 0.3 });
-
     trackedSections.forEach(function(s) { observer.observe(s.el); });
 
-    // Scroll depth events
     window.addEventListener('scroll', function() {
       var pct = getScrollPct();
       if (pct > maxScrollPct) maxScrollPct = pct;
       scrollMilestones.forEach(function(m) {
         if (pct >= m && !firedMilestones[m]) {
           firedMilestones[m] = true;
-          send({
-            type: 'scroll_depth',
-            session_id: SESSION_ID,
-            timestamp: new Date().toISOString(),
-            scroll_percent: m,
-            utm_source: UTM.source,
-            utm_campaign: UTM.campaign
-          });
+          send({ type:'scroll_depth', session_id:SESSION_ID, timestamp:new Date().toISOString(), scroll_percent:m, utm_source:UTM.source, utm_campaign:UTM.campaign });
         }
       });
     }, { passive: true });
 
-    // Śledzenie kliknięć w CTA
     document.querySelectorAll('[onclick*="handleCtaClick"], .nav-cta, .btn-primary, .btn-secondary').forEach(function(el) {
       el.addEventListener('click', function(e) {
         var label = el.textContent.trim().substring(0, 60);
         var section = '';
         var parent = el.closest('section, nav, .callout-section, .cta-section, .offer-banner');
-        if (parent) {
-          var h = parent.querySelector('h1, h2');
-          section = h ? h.textContent.trim().substring(0, 40) : (parent.className.split(' ')[0]);
-        }
-        send({
-          type: 'cta_click',
-          session_id: SESSION_ID,
-          timestamp: new Date().toISOString(),
-          cta_label: label,
-          cta_section: section,
-          scroll_pct_at_click: getScrollPct(),
-          time_on_page: Math.round((Date.now() - t0) / 1000),
-          utm_source: UTM.source,
-          utm_campaign: UTM.campaign,
-          utm_content: UTM.content
-        });
+        if (parent) { var h = parent.querySelector('h1, h2'); section = h ? h.textContent.trim().substring(0, 40) : (parent.className.split(' ')[0]); }
+        send({ type:'cta_click', session_id:SESSION_ID, timestamp:new Date().toISOString(), cta_label:label, cta_section:section, scroll_pct_at_click:getScrollPct(), time_on_page:Math.round((Date.now()-t0)/1000), utm_source:UTM.source, utm_campaign:UTM.campaign, utm_content:UTM.content });
       });
     });
 
-    // Śledzenie FAQ
     document.querySelectorAll('.faq-q').forEach(function(el) {
       el.addEventListener('click', function() {
         var question = el.textContent.trim().substring(0, 80);
-        send({
-          type: 'faq_open',
-          session_id: SESSION_ID,
-          timestamp: new Date().toISOString(),
-          question: question,
-          utm_source: UTM.source
-        });
+        send({ type:'faq_open', session_id:SESSION_ID, timestamp:new Date().toISOString(), question:question, utm_source:UTM.source });
       });
     });
 
-    // Śledzenie czasu otwartego modala
     var modalOpenTime = null;
     var origHandleCta = window.handleCtaClick;
     window.handleCtaClick = function(e) {
       modalOpenTime = Date.now();
-      send({
-        type: 'modal_open',
-        session_id: SESSION_ID,
-        timestamp: new Date().toISOString(),
-        scroll_pct: getScrollPct(),
-        time_on_page: Math.round((Date.now() - t0) / 1000),
-        utm_source: UTM.source,
-        utm_campaign: UTM.campaign,
-        utm_content: UTM.content
-      });
+      send({ type:'modal_open', session_id:SESSION_ID, timestamp:new Date().toISOString(), scroll_pct:getScrollPct(), time_on_page:Math.round((Date.now()-t0)/1000), utm_source:UTM.source, utm_campaign:UTM.campaign, utm_content:UTM.content });
       if (origHandleCta) origHandleCta(e);
     };
 
-    // Zamknięcie modala
     var modalEl = document.getElementById('contactChannelsModal');
     if (modalEl) {
       modalEl.addEventListener('click', function(e) {
         if (e.target === modalEl && modalOpenTime) {
           var timeInModal = Math.round((Date.now() - modalOpenTime) / 1000);
-          send({
-            type: 'modal_close',
-            session_id: SESSION_ID,
-            timestamp: new Date().toISOString(),
-            time_in_modal_seconds: timeInModal,
-            utm_source: UTM.source
-          });
+          send({ type:'modal_close', session_id:SESSION_ID, timestamp:new Date().toISOString(), time_in_modal_seconds:timeInModal, utm_source:UTM.source });
           modalOpenTime = null;
         }
       });
     }
 
-    // Flush sekcji przy zamknięciu
     var origLogClose = window.logPageClose;
     window.logPageClose = function() {
-      // Wyślij czas sekcji które są aktualnie widoczne
       trackedSections.forEach(function(s) {
         if (s.enterTime) {
           s.totalTime += Date.now() - s.enterTime;
           if (s.totalTime > 1000) {
-            send({
-              type: 'section_read',
-              session_id: SESSION_ID,
-              timestamp: new Date().toISOString(),
-              section_id: s.id,
-              section_label: s.label,
-              time_seconds: Math.round(s.totalTime / 1000),
-              utm_source: UTM.source,
-              utm_campaign: UTM.campaign
-            });
+            send({ type:'section_read', session_id:SESSION_ID, timestamp:new Date().toISOString(), section_id:s.id, section_label:s.label, time_seconds:Math.round(s.totalTime/1000), utm_source:UTM.source, utm_campaign:UTM.campaign });
           }
         }
       });
-      // Max scroll przy zamknięciu
-      send({
-        type: 'page_close_summary',
-        session_id: SESSION_ID,
-        timestamp: new Date().toISOString(),
-        max_scroll_percent: maxScrollPct,
-        total_time_seconds: Math.round((Date.now() - t0) / 1000),
-        utm_source: UTM.source,
-        utm_campaign: UTM.campaign,
-        utm_content: UTM.content,
-        utm_medium: UTM.medium
-      });
+      send({ type:'page_close_summary', session_id:SESSION_ID, timestamp:new Date().toISOString(), max_scroll_percent:maxScrollPct, total_time_seconds:Math.round((Date.now()-t0)/1000), utm_source:UTM.source, utm_campaign:UTM.campaign, utm_content:UTM.content, utm_medium:UTM.medium });
       if (origLogClose) origLogClose();
     };
-
   })();
   </script>
-</body>
 
+</body>
 </html>
