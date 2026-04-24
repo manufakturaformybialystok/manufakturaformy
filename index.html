@@ -1014,6 +1014,10 @@
       e.preventDefault();
       document.getElementById('contactChannelsModal').classList.add('active');
       document.body.style.overflow = 'hidden';
+      // modal_open tracking bezpośrednio tutaj — żeby nie kolidowało z IIFE
+      try {
+        send({ type:'modal_open', session_id:SESSION_ID, timestamp:new Date().toISOString(), scroll_pct:0, time_on_page:Math.round((Date.now()-t0)/1000), utm_source:UTM.source, utm_campaign:UTM.campaign, utm_content:UTM.content });
+      } catch(err) {}
     }
 
     document.addEventListener('visibilitychange', function() { if (document.visibilityState === 'hidden') logPageClose(); });
@@ -1105,16 +1109,22 @@
       });
     });
 
+    // modal_close tracking
     var modalOpenTime = null;
-    var origHandleCta = window.handleCtaClick;
-    window.handleCtaClick = function(e) {
-      modalOpenTime = Date.now();
-      send({ type:'modal_open', session_id:SESSION_ID, timestamp:new Date().toISOString(), scroll_pct:getScrollPct(), time_on_page:Math.round((Date.now()-t0)/1000), utm_source:UTM.source, utm_campaign:UTM.campaign, utm_content:UTM.content });
-      if (origHandleCta) origHandleCta(e);
-    };
-
+    // Zapisujemy czas otwarcia gdy modal staje się aktywny (obserwujemy klasę)
     var modalEl = document.getElementById('contactChannelsModal');
     if (modalEl) {
+      var mutObs = new MutationObserver(function(mutations) {
+        mutations.forEach(function(m) {
+          if (m.attributeName === 'class') {
+            if (modalEl.classList.contains('active')) {
+              modalOpenTime = Date.now();
+            }
+          }
+        });
+      });
+      mutObs.observe(modalEl, { attributes: true });
+
       modalEl.addEventListener('click', function(e) {
         if (e.target === modalEl && modalOpenTime) {
           var timeInModal = Math.round((Date.now() - modalOpenTime) / 1000);
