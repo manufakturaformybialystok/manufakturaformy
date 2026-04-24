@@ -462,30 +462,7 @@
     .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .fade-up.visible { opacity: 1; transform: none; }
 
-    /* ── CHANNEL BUTTON STYLES ── */
-    .channel-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      padding: 15px 20px;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      border: none;
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      transition: opacity 0.15s, transform 0.15s;
-    }
-    .channel-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-    .channel-btn-phone {
-      background: transparent;
-      color: var(--black);
-      border: 1.5px solid var(--border);
-    }
-    .channel-btn-phone:hover { border-color: var(--black); }
+
   </style>
 
   <!-- Facebook Pixel -->
@@ -541,7 +518,7 @@
   </section>
 
   <!-- OFFER BANNER -->
-  <div class="offer-banner">
+  <div class="offer-banner" id="offer-banner">
     <div class="offer-banner-inner">
       <span class="offer-spots">Ostatnie miejsca!</span>
       <span class="offer-label">Trening próbny EMS + drenaż limfatyczny — kompletne doświadczenie</span>
@@ -903,9 +880,6 @@
       messenger: `https://m.me/${MESSENGER_PAGE_ID}?text=${encodeURIComponent(CONTACT_MESSAGE)}`
     };
 
-    function fbTrack(ev, params) { try { if (typeof fbq === 'function') fbq('track', ev, params || {}); } catch(e){} }
-    function fbCustom(ev, params) { try { if (typeof fbq === 'function') fbq('trackCustom', ev, params || {}); } catch(e){} }
-
     // ── CONTACT CHANNELS MODAL ──
     function closeContactChannelsModal(e) {
       if (e && e.target !== document.getElementById('contactChannelsModal')) return;
@@ -937,7 +911,7 @@
         timestamp: new Date().toISOString(),
         cta_label: channel === 'whatsapp' ? 'WhatsApp' : 'Messenger',
         cta_section: 'Modal kanałów',
-        scroll_pct_at_click: 0,
+        scroll_pct_at_click: getScrollPct(),
         time_on_page: Math.round((Date.now() - t0) / 1000),
         utm_source: UTM.source,
         utm_campaign: UTM.campaign,
@@ -980,7 +954,7 @@
 
     // ── PAGE CLOSE TRACKING ──
     let lastLogTime = 0;
-    function logPageClose() {
+    window.logPageClose = function logPageClose() {
       const now = Date.now();
       if (now - lastLogTime < 1000) return;
       lastLogTime = now;
@@ -988,6 +962,9 @@
       const m = Math.floor(sec / 60), s = sec % 60;
       send({ type:'dropoff', event:'page_closed', session_id:SESSION_ID, timestamp:new Date().toISOString(), czas_wypelniania:(m<10?'0'+m:m)+':'+(s<10?'0'+s:s), utm_source:UTM.source, utm_campaign:UTM.campaign });
     }
+
+    document.addEventListener('visibilitychange', function() { if (document.visibilityState === 'hidden') window.logPageClose(); });
+    window.addEventListener('pagehide', window.logPageClose);
 
     // ── CONVERSION TRACKING ──
     function trackPhoneClick() {
@@ -1001,7 +978,7 @@
         timestamp: new Date().toISOString(),
         cta_label: 'Zadzwoń: 534 135 533',
         cta_section: 'Modal kanałów',
-        scroll_pct_at_click: 0,
+        scroll_pct_at_click: getScrollPct(),
         time_on_page: Math.round((Date.now() - t0) / 1000),
         utm_source: UTM.source,
         utm_campaign: UTM.campaign,
@@ -1016,16 +993,20 @@
       document.body.style.overflow = 'hidden';
       // modal_open tracking bezpośrednio tutaj — żeby nie kolidowało z IIFE
       try {
-        send({ type:'modal_open', session_id:SESSION_ID, timestamp:new Date().toISOString(), scroll_pct:0, time_on_page:Math.round((Date.now()-t0)/1000), utm_source:UTM.source, utm_campaign:UTM.campaign, utm_content:UTM.content });
+        send({ type:'modal_open', session_id:SESSION_ID, timestamp:new Date().toISOString(), scroll_pct:getScrollPct(), time_on_page:Math.round((Date.now()-t0)/1000), utm_source:UTM.source, utm_campaign:UTM.campaign, utm_content:UTM.content });
       } catch(err) {}
     }
 
-    document.addEventListener('visibilitychange', function() { if (document.visibilityState === 'hidden') logPageClose(); });
-    window.addEventListener('pagehide', logPageClose);
   </script>
 
   <!-- ── SEKCJE ŚLEDZENIA SCROLL ── -->
   <script>
+  function getScrollPct() {
+    var h = document.documentElement;
+    var scrollTop = window.pageYOffset || h.scrollTop;
+    var scrollHeight = h.scrollHeight - h.clientHeight;
+    return scrollHeight > 0 ? Math.round((scrollTop / scrollHeight) * 100) : 0;
+  }
   (function() {
     var SECTIONS = [
       { id: 'hero-section',     label: 'Hero (główny baner)' },
@@ -1059,12 +1040,6 @@
     var maxScrollPct = 0;
     var scrollMilestones = [25, 50, 75, 90, 100];
     var firedMilestones = {};
-    function getScrollPct() {
-      var h = document.documentElement;
-      var scrollTop = window.pageYOffset || h.scrollTop;
-      var scrollHeight = h.scrollHeight - h.clientHeight;
-      return scrollHeight > 0 ? Math.round((scrollTop / scrollHeight) * 100) : 0;
-    }
 
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
