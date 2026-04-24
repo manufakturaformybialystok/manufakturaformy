@@ -388,7 +388,7 @@
     .faq-a { font-size: 14px; color: var(--muted); line-height: 1.65; padding: 0 24px 20px; display: none; }
     .faq-item.open .faq-a { display: block; }
 
-    /* ── FORM MODAL ── */
+    /* ── CONTACT MODAL ── */
     .modal-overlay {
       position: fixed; inset: 0; background: rgba(0,0,0,0.5);
       backdrop-filter: blur(6px); z-index: 1000;
@@ -401,7 +401,6 @@
       animation: modal-up 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
     @keyframes modal-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    .modal-header { background: #2b2b2b; padding: 24px; color: var(--white); position: relative; }
     .modal-close {
       position: absolute; top: 16px; right: 16px; background: #ffffff20;
       border: none; color: var(--white); width: 32px; height: 32px; border-radius: 50%;
@@ -409,107 +408,6 @@
       transition: background 0.15s;
     }
     .modal-close:hover { background: #ffffff30; }
-    .modal-logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-    .modal-logo-img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #ffffff30; }
-    .modal-brand { font-size: 13px; color: #9ca3af; }
-    .modal-title { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif; font-size: 20px; font-weight: 800; line-height: 1.25; margin-bottom: 4px; }
-    .modal-sub { font-size: 13px; color: #9ca3af; }
-    .modal-body { padding: 24px; }
-    .form-slides { overflow: hidden; }
-    .form-slides-inner { display: flex; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-    .form-slide { min-width: 100%; }
-    .modal-progress { display: flex; gap: 5px; margin-bottom: 20px; }
-    .modal-dot { height: 4px; border-radius: 2px; background: #e5e7eb; transition: width 0.3s, background 0.3s; width: 24px; }
-    .modal-dot.active { background: var(--accent); width: 36px; }
-    .modal-dot.done { background: var(--accent); }
-    .form-q-title {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      font-size: 16px; font-weight: 700; margin-bottom: 4px;
-    }
-    .form-q-sub { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
-    .radio-list, .cb-list { display: flex; flex-direction: column; }
-    .radio-item, .cb-item {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 0; border-bottom: 1px solid #f3f4f6; cursor: pointer; user-select: none;
-    }
-    .radio-item:last-child, .cb-item:last-child { border-bottom: none; }
-    .radio-label, .cb-label { font-size: 15px; line-height: 1.4; padding-right: 12px; flex: 1; color: var(--black); }
-    .cb-label a { color: var(--muted); }
-    .radio-circle {
-      width: 22px; height: 22px; border-radius: 50%; border: 2px solid #d1d5db;
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.12s;
-    }
-    .radio-item.selected .radio-circle { background: var(--accent); border-color: var(--accent); }
-    .radio-dot { width: 8px; height: 8px; border-radius: 50%; background: #fff; display: none; }
-    .radio-item.selected .radio-dot { display: block; }
-    .cb-box {
-      width: 22px; height: 22px; border: 2px solid #d1d5db; border-radius: 5px;
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.12s;
-    }
-    .cb-item.checked .cb-box { background: var(--accent); border-color: var(--accent); }
-    .cb-item.checked .cb-box::after { content: '✓'; color: #fff; font-size: 12px; font-weight: 700; }
-    .input-group { margin-bottom: 18px; }
-    .input-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; display: block; font-weight: 500; letter-spacing: 0.04em; }
-    .input-field {
-      width: 100%; border: none; border-bottom: 1.5px solid #e5e7eb;
-      padding: 6px 0 8px; font-size: 17px; color: var(--black); outline: none;
-      background: transparent;
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      transition: border-color 0.15s;
-    }
-    .input-field:focus { border-bottom-color: var(--accent); }
-    .input-field.error { border-bottom-color: var(--red); }
-    .input-field::placeholder { color: #d1d5db; }
-    .input-hint, .input-error { font-size: 11px; margin-top: 4px; line-height: 1.4; }
-    .input-hint { color: var(--muted); }
-    .input-error { color: var(--red); display: none; }
-    .legal-text { font-size: 11px; color: var(--muted); line-height: 1.55; margin-top: 12px; }
-    .legal-link { color: var(--accent); text-decoration: none; }
-    .form-btn-next {
-      width: 100%; padding: 14px; background: var(--black); color: var(--white);
-      border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer;
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      transition: background 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px;
-    }
-    .form-btn-next:hover { background: #c93a08; }
-    .form-btn-next:disabled { background: #d1d5db; cursor: default; }
-    .form-btn-next.loading .spinner { display: block; }
-    .form-btn-next.loading .btn-label { opacity: 0.7; }
-    .spinner {
-      width: 16px; height: 16px; border-radius: 50%;
-      border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
-      animation: spin 0.7s linear infinite; display: none;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .form-btn-back {
-      display: block; text-align: center; font-size: 13px; color: var(--muted);
-      background: none; border: none; cursor: pointer;
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      padding: 8px 0 0; text-decoration: underline; width: 100%;
-    }
-    .rejection-slide { text-align: center; padding: 8px 0; }
-    .rejection-emoji { font-size: 40px; margin-bottom: 14px; }
-    .rejection-title { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-    .rejection-sub { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
-    .btn-ig {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
-      color: #fff; padding: 12px 20px; border-radius: 10px; font-size: 14px; font-weight: 700;
-      cursor: pointer; text-decoration: none;
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      margin-bottom: 12px; width: 100%; justify-content: center;
-    }
-    .btn-rejection-back {
-      font-size: 13px; color: var(--muted); background: none; border: none; cursor: pointer;
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-      text-decoration: underline; padding: 6px; width: 100%; text-align: center;
-    }
-    .thankyou-slide { text-align: center; padding: 8px 0; }
-    .ty-check { font-size: 44px; margin-bottom: 14px; }
-    .ty-title { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 8px; }
-    .ty-body { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 8px; }
-    .ty-divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
-    .ty-small { font-size: 12px; color: var(--muted); }
 
     /* ── CTA SECTION ── */
     .cta-section { background: var(--cream); text-align: center; padding: 80px 24px; }
@@ -598,7 +496,7 @@
   </script>
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1267687915507510&ev=PageView&noscript=1"/></noscript>
 
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
 </head>
 
 <body>
@@ -984,125 +882,10 @@
     </div>
   </div>
 
-  <!-- ── MODAL FORM ── -->
-  <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
-    <div class="modal-box" id="modalBox">
-      <div class="modal-header">
-        <button class="modal-close" onclick="closeModal()">✕</button>
-        <div class="modal-logo-row">
-          <img class="modal-logo-img" src="https://lh3.googleusercontent.com/d/18mEyEP41W-2NXRbPbsCetiXB_BAchfST" alt="Logo" onerror="this.style.display='none'">
-          <span class="modal-brand">Manufaktura Formy</span>
-        </div>
-        <div class="modal-title" id="modalTitle">Odbierz trening próbny za 79 zł</div>
-        <div class="modal-sub" id="modalSub">Zostaw kontakt — zadzwonimy i umówimy Twój pierwszy trening</div>
-      </div>
-      <div class="modal-body">
-        <div class="modal-progress" id="modalProgress">
-          <div class="modal-dot active" id="mdot0"></div>
-          <div class="modal-dot" id="mdot1"></div>
-          <div class="modal-dot" id="mdot2"></div>
-        </div>
 
-        <div class="form-slides">
-          <div class="form-slides-inner" id="formSlidesInner">
-
-            <!-- Slide 0: Kiedy -->
-            <div class="form-slide">
-              <div class="form-q-title">Kiedy chcesz spróbować pierwszego treningu?</div>
-              <div class="form-q-sub">Zaznacz jedną odpowiedź</div>
-              <div class="radio-list" id="q1-options">
-                <div class="radio-item" onclick="selectOption(0)">
-                  <span class="radio-label">Na razie nie chcę próbować</span>
-                  <div class="radio-circle"><div class="radio-dot"></div></div>
-                </div>
-                <div class="radio-item" onclick="selectOption(1)">
-                  <span class="radio-label">W następnym tygodniu — odezwijcie się</span>
-                  <div class="radio-circle"><div class="radio-dot"></div></div>
-                </div>
-                <div class="radio-item" onclick="selectOption(2)">
-                  <span class="radio-label">Chcę spróbować w tym tygodniu 💪</span>
-                  <div class="radio-circle"><div class="radio-dot"></div></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Slide 1: Kontakt -->
-            <div class="form-slide">
-              <div class="form-q-title">Informacje kontaktowe ℹ️</div>
-              <div class="form-q-sub">Zostaw kontakt — oddzwonimy i umówimy trening</div>
-              <div class="input-group">
-                <label class="input-label">Imię i nazwisko</label>
-                <input class="input-field" id="inp-name" type="text" placeholder="Wprowadź odpowiedź." autocomplete="name" oninput="validateContact()">
-              </div>
-              <div class="input-group">
-                <label class="input-label">Numer telefonu</label>
-                <input class="input-field" id="inp-phone" type="tel" placeholder="123 456 789" autocomplete="tel">
-                <div class="input-hint" id="phone-hint">Podaj 9-cyfrowy numer, np. 123 456 789</div>
-                <div class="input-error" id="phone-error">Podaj pełny numer — 9 cyfr w formacie 123 456 789</div>
-              </div>
-            </div>
-
-            <!-- Slide 2: Zgody -->
-            <div class="form-slide">
-              <div class="form-q-title">Oświadczam, że</div>
-              <div class="form-q-sub">Zaznacz poniższą zgodę</div>
-              <div class="cb-list">
-                <div class="cb-item" id="cb-phone" onclick="toggleCheckbox('cb-phone')">
-                  <span class="cb-label">Wyrażam zgodę na kontakt tel. oraz akceptuję <a href="polityka.html" target="_blank" onclick="event.stopPropagation()">Politykę Prywatności</a></span>
-                  <div class="cb-box"></div>
-                </div>
-              </div>
-              <div class="legal-text">
-                Poprzez kliknięcie "Prześlij" wyrażasz zgodę na przesłanie Twoich informacji Manufakturze Formy w Białymstoku.<br><br>
-                <a href="polityka.html" target="_blank" class="legal-link" style="color:#9ca3af;">Polityka Prywatności Manufaktura Formy</a>
-              </div>
-            </div>
-
-            <!-- Slide 3: Dziękujemy -->
-            <div class="form-slide">
-              <div class="thankyou-slide">
-                <div class="ty-check">✅</div>
-                <div class="ty-title">Dziękujemy bardzo!</div>
-                <div class="ty-body">Skontaktujemy się z Tobą w ciągu 24h.</div>
-                <div class="ty-body">Nie chcesz czekać? Zadzwoń i umów się już teraz!</div>
-                <hr class="ty-divider">
-                <div class="ty-small">ℹ️ Twoje odpowiedzi zostały przesłane.</div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- Rejection slide -->
-        <div id="rejectionSlide" style="display:none;">
-          <div class="rejection-slide">
-            <div class="rejection-emoji">🙏</div>
-            <div class="rejection-title">Rozumiemy, że to nie ten moment</div>
-            <div class="rejection-sub">Gdy będziesz gotowy/a — jesteśmy tutaj! Tymczasem zapraszamy na nasz Instagram, gdzie pokazujemy efekty treningów EMS i życie studia na co dzień 💪</div>
-            <a class="btn-ig" href="https://www.instagram.com/manufakturaformy.bialystok" target="_blank">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-              Obserwuj nas na Instagramie
-            </a>
-            <button class="btn-rejection-back" onclick="hideRejection()">← Wróć do formularza</button>
-          </div>
-        </div>
-
-        <!-- Bottom bar -->
-        <div id="formBottomBar">
-          <button class="form-btn-next" id="formMainBtn" onclick="handleFormNext()" disabled>
-            <span class="btn-label" id="formBtnLabel">Kontynuuj</span>
-            <div class="spinner"></div>
-          </button>
-          <button class="form-btn-back" id="formBackBtn" onclick="formPrev()" style="display:none;">Wstecz</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <script>
     // ══ CONFIG ══
-    const SHEETS_URL = "\x68\x74\x74\x70\x73\x3a\x2f\x2f\x73\x63\x72\x69\x70\x74\x2e\x67\x6f\x6f\x67\x6c\x65\x2e\x63\x6f\x6d\x2f\x6d\x61\x63\x72\x6f\x73\x2f\x73\x2f\x41\x4b\x66\x79\x63\x62\x78\x38\x75\x31\x67\x59\x34\x76\x46\x68\x6a\x54\x67\x63\x79\x45\x38\x5a\x35\x4d\x79\x50\x6a\x32\x2d\x4a\x55\x44\x78\x72\x2d\x5f\x34\x38\x38\x6f\x51\x33\x4b\x66\x7a\x42\x6a\x4d\x4e\x6b\x73\x54\x75\x61\x77\x6e\x56\x6f\x4d\x71\x30\x5f\x51\x59\x4f\x79\x64\x51\x53\x68\x67\x51\x2f\x65\x78\x65\x63";
-
     const p = new URLSearchParams(window.location.search);
     const UTM = {
       source:   p.get('utm_source')   || 'brak',
@@ -1120,165 +903,56 @@
       messenger: `https://m.me/${MESSENGER_PAGE_ID}?text=${encodeURIComponent(CONTACT_MESSAGE)}`
     };
 
-    const LABELS = ['Na razie nie chcę próbować','W następnym tygodniu — odezwijcie się','Chcę spróbować w tym tygodniu 💪'];
-    let formCur = 0;
-    let selectedIdx = null;
-    const ans = { q1: null, name: '', phone: '', cbPhone: false };
-    const TOTAL_FORM_SLIDES = 3;
-
     function fbTrack(ev, params) { try { if (typeof fbq === 'function') fbq('track', ev, params || {}); } catch(e){} }
     function fbCustom(ev, params) { try { if (typeof fbq === 'function') fbq('trackCustom', ev, params || {}); } catch(e){} }
 
-    // ── MODAL ──
-    function openModal() {
-      document.getElementById('modalOverlay').classList.add('active');
-      document.body.style.overflow = 'hidden';
-      fbCustom('OpenedLeadForm');
-    }
-    function closeModal() {
-      document.getElementById('modalOverlay').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-    function handleOverlayClick(e) {
-      if (e.target === document.getElementById('modalOverlay')) closeModal();
-    }
+    // ── CONTACT CHANNELS MODAL ──
     function closeContactChannelsModal(e) {
       if (e && e.target !== document.getElementById('contactChannelsModal')) return;
       document.getElementById('contactChannelsModal').classList.remove('active');
       document.body.style.overflow = '';
     }
+
     function openContactChannel(e, channel) {
       e.preventDefault();
       const url = CONTACT_LINKS[channel];
       if (!url) return;
-      try { trackConversion('chat_channel_click', { event_label: channel }); } catch(err){}
+
+      // Google Ads konwersja — WhatsApp i Messenger
+      try {
+        gtag('event', 'conversion', { 'send_to': 'AW-18039825187/SgiyCMC9iJwcEKPGh5pD' });
+      } catch(err) {}
+
+      // dataLayer + FB
+      try {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: 'chat_channel_click', event_category: 'CTA', event_label: channel });
+      } catch(err) {}
+      try { if (typeof fbq === 'function') fbq('track', 'Lead', { channel: channel }); } catch(err) {}
+
+      // Google Sheets tracking
+      send({
+        type: 'cta_click',
+        session_id: SESSION_ID,
+        timestamp: new Date().toISOString(),
+        cta_label: channel === 'whatsapp' ? 'WhatsApp' : 'Messenger',
+        cta_section: 'Modal kanałów',
+        scroll_pct_at_click: 0,
+        time_on_page: Math.round((Date.now() - t0) / 1000),
+        utm_source: UTM.source,
+        utm_campaign: UTM.campaign,
+        utm_content: UTM.content
+      });
+
       document.getElementById('contactChannelsModal').classList.remove('active');
       document.body.style.overflow = '';
       window.open(url, '_blank', 'noopener,noreferrer');
     }
 
-    // ── FORM NAVIGATION ──
-    function formGoTo(n) {
-      const inner = document.getElementById('formSlidesInner');
-      inner.style.transform = `translateX(-${n * 100}%)`;
-      formCur = n;
-      updateFormUI();
-      if (n === 1) fbCustom('FormStep1_Kontakt');
-      if (n === 2) fbCustom('FormStep2_Zgody');
-    }
-    function formPrev() { if (formCur > 0) formGoTo(formCur - 1); }
-    function handleFormNext() {
-      if (formCur === 0) { handleQ1Next(); return; }
-      if (formCur === 1) { formGoTo(2); return; }
-      if (formCur === 2) { submitForm(); return; }
-    }
-    function updateFormUI() {
-      for (let i = 0; i < TOTAL_FORM_SLIDES; i++) {
-        const d = document.getElementById('mdot' + i);
-        if (!d) continue;
-        d.className = 'modal-dot';
-        if (i < formCur) d.classList.add('done');
-        else if (i === formCur) d.classList.add('active');
-      }
-      document.getElementById('formBackBtn').style.display = (formCur > 0 && formCur < TOTAL_FORM_SLIDES) ? 'block' : 'none';
-      document.getElementById('formBottomBar').style.display = formCur === TOTAL_FORM_SLIDES ? 'none' : '';
-      const titles = ['Kiedy chcesz spróbować?','Dane kontaktowe','Ostatni krok',''];
-      const subs = ['Zaznacz jedną odpowiedź','Podaj swój numer — oddzwonimy w ciągu 24h','Zaznacz zgodę i prześlij formularz',''];
-      document.getElementById('modalTitle').textContent = titles[formCur] || 'Dziękujemy!';
-      document.getElementById('modalSub').textContent = subs[formCur] || '';
-      document.getElementById('modalProgress').style.display = formCur === TOTAL_FORM_SLIDES ? 'none' : 'flex';
-      const btnLabels = ['Kontynuuj','Kontynuuj','Prześlij formularz',''];
-      document.getElementById('formBtnLabel').textContent = btnLabels[formCur] || 'Kontynuuj';
-      const btn = document.getElementById('formMainBtn');
-      btn.disabled = false;
-      if (formCur === 0 && selectedIdx === null) btn.disabled = true;
-      if (formCur === 1) validateContact();
-      if (formCur === 2 && !ans.cbPhone) btn.disabled = true;
-    }
-
-    // ── Q1 ──
-    function handleQ1Next() {
-      if (selectedIdx === 0) {
-        send({ type:'dropoff', event:'narazie_nie_chce', session_id:SESSION_ID, timestamp:new Date().toISOString(), kiedy_trening:LABELS[0], utm_source:UTM.source, utm_campaign:UTM.campaign, utm_content:UTM.content });
-        showRejection();
-      } else {
-        formGoTo(1);
-      }
-    }
-    function showRejection() {
-      document.getElementById('formSlidesInner').style.display = 'none';
-      document.getElementById('rejectionSlide').style.display = 'block';
-      document.getElementById('formBottomBar').style.display = 'none';
-      document.getElementById('modalProgress').style.display = 'none';
-    }
-    function hideRejection() {
-      document.getElementById('formSlidesInner').style.display = 'flex';
-      document.getElementById('rejectionSlide').style.display = 'none';
-      selectedIdx = null; ans.q1 = null;
-      document.getElementById('q1-options').querySelectorAll('.radio-item').forEach(el => el.classList.remove('selected'));
-      formGoTo(0);
-    }
-
-    // ── RADIO ──
-    function selectOption(i) {
-      selectedIdx = i;
-      document.getElementById('q1-options').querySelectorAll('.radio-item').forEach((el, j) => el.classList.toggle('selected', j === i));
-      ans.q1 = LABELS[i];
-      document.getElementById('formMainBtn').disabled = false;
-    }
-
-    // ── CONTACT VALIDATION ──
-    function validateContact() {
-      ans.name = document.getElementById('inp-name').value.trim();
-      const phoneInput = document.getElementById('inp-phone');
-      const digits = phoneInput.value.replace(/\D/g, '');
-      const phoneValid = digits.length === 9;
-      const phoneTouched = digits.length > 0;
-      ans.phone = phoneInput.value.trim();
-      const hint = document.getElementById('phone-hint');
-      const err = document.getElementById('phone-error');
-      if (phoneTouched && !phoneValid) {
-        phoneInput.classList.add('error');
-        err.style.display = 'block'; hint.style.display = 'none';
-      } else {
-        phoneInput.classList.remove('error');
-        err.style.display = 'none'; hint.style.display = 'block';
-      }
-      document.getElementById('formMainBtn').disabled = !(ans.name.length > 1 && phoneValid);
-    }
-
-    // ── CHECKBOX ──
-    function toggleCheckbox(id) {
-      const el = document.getElementById(id);
-      el.classList.toggle('checked');
-      if (id === 'cb-phone') {
-        ans.cbPhone = el.classList.contains('checked');
-        document.getElementById('formMainBtn').disabled = !ans.cbPhone;
-      }
-    }
-
-    // ── SUBMIT ──
-    async function submitForm() {
-      const btn = document.getElementById('formMainBtn');
-      btn.disabled = true; btn.classList.add('loading');
-      document.getElementById('formBtnLabel').textContent = 'Wysyłam…';
-      await send({
-        type: 'submission',
-        session_id: SESSION_ID,
-        timestamp: new Date().toISOString(),
-        czas_wypelniania: Math.round((Date.now() - t0) / 1000) + 's',
-        imie_nazwisko: ans.name,
-        telefon: ans.phone,
-        kiedy_trening: ans.q1,
-        utm_content: UTM.content, utm_campaign: UTM.campaign,
-        utm_source: UTM.source, utm_medium: UTM.medium,
-        zgoda_telefon: ans.cbPhone ? 'TAK' : 'NIE',
-      });
-      btn.classList.remove('loading');
-      formGoTo(TOTAL_FORM_SLIDES);
-      if (typeof window.confetti === 'function') {
-        window.confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-      }
+    // ── FAQ ──
+    function toggleFaq(el) {
+      const item = el.parentElement;
+      item.classList.toggle('open');
     }
 
     // ── TRACKING ──
@@ -1293,42 +967,7 @@
       } catch(e) {}
     }
 
-    // ── FAQ ──
-    function toggleFaq(el) {
-      const item = el.parentElement;
-      item.classList.toggle('open');
-    }
-
-    // ── PHONE FORMATTING ──
     document.addEventListener('DOMContentLoaded', function() {
-      const inp = document.getElementById('inp-phone');
-      if (!inp) return;
-      inp.addEventListener('input', function(e) {
-        if (e.inputType === 'deleteContentBackward') { validateContact(); return; }
-        let raw = inp.value.replace(/^(?:\+48\s*|0048\s*)/, '');
-        let digits = raw.replace(/\D/g, '').slice(0, 9);
-        let formatted = '';
-        for (let i = 0; i < digits.length; i++) { if (i === 3 || i === 6) formatted += ' '; formatted += digits[i]; }
-        inp.value = formatted;
-        inp.setSelectionRange(formatted.length, formatted.length);
-        validateContact();
-      });
-      inp.addEventListener('paste', function(e) {
-        e.preventDefault();
-        let pasted = (e.clipboardData || window.clipboardData).getData('text');
-        let raw = pasted.replace(/^(?:\+48\s*|0048\s*)/, '');
-        let digits = raw.replace(/\D/g, '').slice(0, 9);
-        let formatted = '';
-        for (let i = 0; i < digits.length; i++) { if (i === 3 || i === 6) formatted += ' '; formatted += digits[i]; }
-        inp.value = formatted;
-        validateContact();
-      });
-      inp.addEventListener('keydown', function(e) {
-        const allowed = ['Backspace','Delete','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Tab','Home','End'];
-        if (allowed.indexOf(e.key) !== -1 || e.ctrlKey || e.metaKey) return;
-        if (!/^\d$/.test(e.key)) e.preventDefault();
-      });
-
       // Scroll animations
       const fadeEls = document.querySelectorAll('.fade-up');
       const observer = new IntersectionObserver((entries) => {
@@ -1351,25 +990,11 @@
     }
 
     // ── CONVERSION TRACKING ──
-    function trackConversion(eventName, params) {
-      try {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({ event: eventName, event_category: 'CTA', ...params });
-      } catch(e) {}
-      try {
-        if (typeof gtag === 'function' && eventName === 'chat_channel_click') {
-          gtag('event', 'conversion', { 'send_to': 'AW-18039825187/SgiyCMC9iJwcEKPGh5pD', 'event_name': eventName });
-        }
-      } catch(e) {}
-      try {
-        if (typeof fbq === 'function') fbq('track', 'Lead', { ...params });
-      } catch(e) {}
-    }
-
     function trackPhoneClick() {
       try {
         gtag('event', 'conversion', {'send_to': 'AW-18039825187/BsvzCNPIkaEcEKPGh5pD'});
       } catch(e) {}
+      try { if (typeof fbq === 'function') fbq('track', 'Lead', { channel: 'phone' }); } catch(e) {}
       send({
         type: 'cta_click',
         session_id: SESSION_ID,
@@ -1393,8 +1018,6 @@
 
     document.addEventListener('visibilitychange', function() { if (document.visibilityState === 'hidden') logPageClose(); });
     window.addEventListener('pagehide', logPageClose);
-
-    updateFormUI();
   </script>
 
   <!-- ── SEKCJE ŚLEDZENIA SCROLL ── -->
