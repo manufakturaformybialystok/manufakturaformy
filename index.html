@@ -85,7 +85,7 @@
       font-size: 13px;
       font-weight: 500;
       text-decoration: none;
-      transition: background 0.2s;
+      transition: background 0.2s, opacity 0.5s ease, transform 0.5s ease;
       white-space: nowrap;
     }
     .nav-cta:hover { background: #c93a08; }
@@ -159,7 +159,7 @@
       text-decoration: none;
       border: none;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.2s, opacity 0.5s ease, transform 0.5s ease;
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
       display: inline-flex;
       align-items: center;
@@ -176,7 +176,7 @@
       text-decoration: none;
       border: 1.5px solid var(--border);
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.2s, opacity 0.5s ease;
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
     }
     .btn-secondary:hover { border-color: var(--black); }
@@ -244,7 +244,6 @@
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
-    /* FIX: 2-column grid for 2 cards only */
     .benefits-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -462,6 +461,38 @@
     .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .fade-up.visible { opacity: 1; transform: none; }
 
+    /* ══════════════════════════════════════════════
+       CTA UNLOCK — przyciski niewidoczne na start,
+       pojawiają się po spełnieniu warunków czasu+scrollu
+    ══════════════════════════════════════════════ */
+    .btn-primary,
+    .btn-secondary,
+    .nav-cta {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(6px);
+      /* transition już zdefiniowany wyżej per-element,
+         tutaj nadpisujemy by zawsze miał unlock-transition */
+      transition: opacity 0.5s ease, transform 0.5s ease, background 0.2s, box-shadow 0.2s;
+    }
+
+    /* Po odblokowaniu — wszystkie przyciski wjeżdżają */
+    .cta-unlocked .btn-primary,
+    .cta-unlocked .btn-secondary,
+    .cta-unlocked .nav-cta {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* hover działa dopiero po odblokowaniu */
+    .cta-unlocked .btn-primary:hover {
+      background: #c93a08;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(232,67,10,0.3);
+    }
+    .cta-unlocked .btn-secondary:hover { border-color: var(--black); }
+    .cta-unlocked .nav-cta:hover { background: #c93a08; }
 
   </style>
 
@@ -472,7 +503,6 @@
     fbq('track','PageView');
   </script>
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1267687915507510&ev=PageView&noscript=1"/></noscript>
-
 
 </head>
 
@@ -533,7 +563,6 @@
       <div class="section-label fade-up">Czym się różnimy</div>
       <h2 class="section-title fade-up">EMS u nas wygląda inaczej</h2>
       <p class="section-sub fade-up">Znasz EMS z mokrych kombinezonów, kabli i zimna przy zakładaniu? U nas to nie istnieje. Korzystamy z najnowszego sprzętu bezprzewodowego dostępnego w Polsce — i to czuć od pierwszej minuty.</p>
-      <!-- FIX: tylko 2 najważniejsze karty, bez nadmiernego scrollowania -->
       <div class="benefits-grid fade-up">
         <div class="benefit-card">
           <div class="benefit-icon">🔋</div>
@@ -553,7 +582,7 @@
     </div>
   </section>
 
-  <!-- FIX: CENA PRZESUNIĘTA WYŻEJ — zaraz po benefitach, zanim użytkownicy odejdą -->
+  <!-- CENNIK -->
   <section class="included-section" id="cennik">
     <div class="section-inner">
       <div class="section-label fade-up">Trening próbny</div>
@@ -792,15 +821,11 @@
     <div style="margin-top:8px;"><a href="polityka.html">Polityka Prywatności</a></div>
   </footer>
 
-  <!-- ══════════════════════════════════════════════════════════
-       MODAL WYBORU KANAŁU — FIX: usunięto "niespodziankę",
-       dodano social proof + przycisk telefonu
-  ══════════════════════════════════════════════════════════ -->
+  <!-- MODAL -->
   <div class="modal-overlay" id="contactChannelsModal" onclick="closeContactChannelsModal(event)">
     <div class="modal-box" onclick="event.stopPropagation()" style="padding: 32px 24px; text-align: center; overflow: visible;">
       <button class="modal-close" style="background:#f3f4f6;color:#000;" onclick="closeContactChannelsModal()">✕</button>
 
-      <!-- Social proof zamiast "niespodzianki" -->
       <div style="font-size:13px;color:#6b7280;margin-bottom:6px;letter-spacing:0.02em;">
         ⭐⭐⭐⭐⭐ &nbsp;·&nbsp; 200+ klientów &nbsp;·&nbsp; Białystok
       </div>
@@ -838,7 +863,7 @@
           Umów przez Messenger
         </a>
 
-        <!-- FIX: Nowy przycisk — telefon -->
+        <!-- Telefon -->
         <a href="tel:+48534135533"
           onclick="trackPhoneClick()"
           style="display:flex;align-items:center;justify-content:center;gap:10px;
@@ -858,8 +883,6 @@
       </p>
     </div>
   </div>
-
-
 
   <script>
     // ══ CONFIG ══
@@ -891,33 +914,19 @@
       e.preventDefault();
       const url = CONTACT_LINKS[channel];
       if (!url) return;
-
-      // Google Ads konwersja — WhatsApp i Messenger
-      try {
-        gtag('event', 'conversion', { 'send_to': 'AW-18039825187/SgiyCMC9iJwcEKPGh5pD' });
-      } catch(err) {}
-
-      // dataLayer + FB
+      try { gtag('event', 'conversion', { 'send_to': 'AW-18039825187/SgiyCMC9iJwcEKPGh5pD' }); } catch(err) {}
       try {
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({ event: 'chat_channel_click', event_category: 'CTA', event_label: channel });
       } catch(err) {}
       try { if (typeof fbq === 'function') fbq('track', 'Lead', { channel: channel }); } catch(err) {}
-
-      // Google Sheets tracking
       send({
-        type: 'cta_click',
-        session_id: SESSION_ID,
-        timestamp: new Date().toISOString(),
+        type: 'cta_click', session_id: SESSION_ID, timestamp: new Date().toISOString(),
         cta_label: channel === 'whatsapp' ? 'WhatsApp' : 'Messenger',
-        cta_section: 'Modal kanałów',
-        scroll_pct_at_click: getScrollPct(),
+        cta_section: 'Modal kanałów', scroll_pct_at_click: getScrollPct(),
         time_on_page: Math.round((Date.now() - t0) / 1000),
-        utm_source: UTM.source,
-        utm_campaign: UTM.campaign,
-        utm_content: UTM.content
+        utm_source: UTM.source, utm_campaign: UTM.campaign, utm_content: UTM.content
       });
-
       document.getElementById('contactChannelsModal').classList.remove('active');
       document.body.style.overflow = '';
       window.open(url, '_blank', 'noopener,noreferrer');
@@ -942,7 +951,6 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      // Scroll animations
       const fadeEls = document.querySelectorAll('.fade-up');
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
@@ -962,27 +970,18 @@
       const m = Math.floor(sec / 60), s = sec % 60;
       send({ type:'dropoff', event:'page_closed', session_id:SESSION_ID, timestamp:new Date().toISOString(), czas_wypelniania:(m<10?'0'+m:m)+':'+(s<10?'0'+s:s), utm_source:UTM.source, utm_campaign:UTM.campaign });
     }
-
     document.addEventListener('visibilitychange', function() { if (document.visibilityState === 'hidden') window.logPageClose(); });
     window.addEventListener('pagehide', window.logPageClose);
 
     // ── CONVERSION TRACKING ──
     function trackPhoneClick() {
-      try {
-        gtag('event', 'conversion', {'send_to': 'AW-18039825187/BsvzCNPIkaEcEKPGh5pD'});
-      } catch(e) {}
+      try { gtag('event', 'conversion', {'send_to': 'AW-18039825187/BsvzCNPIkaEcEKPGh5pD'}); } catch(e) {}
       try { if (typeof fbq === 'function') fbq('track', 'Lead', { channel: 'phone' }); } catch(e) {}
       send({
-        type: 'cta_click',
-        session_id: SESSION_ID,
-        timestamp: new Date().toISOString(),
-        cta_label: 'Zadzwoń: 534 135 533',
-        cta_section: 'Modal kanałów',
-        scroll_pct_at_click: getScrollPct(),
-        time_on_page: Math.round((Date.now() - t0) / 1000),
-        utm_source: UTM.source,
-        utm_campaign: UTM.campaign,
-        utm_content: UTM.content
+        type: 'cta_click', session_id: SESSION_ID, timestamp: new Date().toISOString(),
+        cta_label: 'Zadzwoń: 534 135 533', cta_section: 'Modal kanałów',
+        scroll_pct_at_click: getScrollPct(), time_on_page: Math.round((Date.now() - t0) / 1000),
+        utm_source: UTM.source, utm_campaign: UTM.campaign, utm_content: UTM.content
       });
     }
 
@@ -991,12 +990,10 @@
       e.preventDefault();
       document.getElementById('contactChannelsModal').classList.add('active');
       document.body.style.overflow = 'hidden';
-      // modal_open tracking bezpośrednio tutaj — żeby nie kolidowało z IIFE
       try {
         send({ type:'modal_open', session_id:SESSION_ID, timestamp:new Date().toISOString(), scroll_pct:getScrollPct(), time_on_page:Math.round((Date.now()-t0)/1000), utm_source:UTM.source, utm_campaign:UTM.campaign, utm_content:UTM.content });
       } catch(err) {}
     }
-
   </script>
 
   <!-- ── SEKCJE ŚLEDZENIA SCROLL ── -->
@@ -1084,17 +1081,13 @@
       });
     });
 
-    // modal_close tracking
     var modalOpenTime = null;
-    // Zapisujemy czas otwarcia gdy modal staje się aktywny (obserwujemy klasę)
     var modalEl = document.getElementById('contactChannelsModal');
     if (modalEl) {
       var mutObs = new MutationObserver(function(mutations) {
         mutations.forEach(function(m) {
           if (m.attributeName === 'class') {
-            if (modalEl.classList.contains('active')) {
-              modalOpenTime = Date.now();
-            }
+            if (modalEl.classList.contains('active')) { modalOpenTime = Date.now(); }
           }
         });
       });
@@ -1123,6 +1116,59 @@
       if (origLogClose) origLogClose();
     };
   })();
+  </script>
+
+  <!-- ══════════════════════════════════════════════
+       CTA UNLOCK — przyciski pojawiają się dopiero
+       gdy spełnione są OBA warunki: czas + scroll
+  ══════════════════════════════════════════════ -->
+  <script>
+    // ── KONFIGURACJA ──────────────────────────────
+    var CTA_MIN_SECONDS = 30;   // minimalne sekundy na stronie
+    var CTA_MIN_SCROLL  = 40;   // minimalny % scrolla
+    // ─────────────────────────────────────────────
+
+    var ctaUnlocked = false;
+    var timeOk      = false;
+    var scrollOk    = false;
+
+    function tryUnlockCta() {
+      if (ctaUnlocked) return;
+      if (timeOk && scrollOk) {
+        ctaUnlocked = true;
+        document.body.classList.add('cta-unlocked');
+
+        // Tracking — kiedy przyciski się odblokują
+        try {
+          send({
+            type: 'cta_unlocked',
+            session_id: SESSION_ID,
+            timestamp: new Date().toISOString(),
+            time_on_page: Math.round((Date.now() - t0) / 1000),
+            scroll_pct: getScrollPct(),
+            utm_source: UTM.source,
+            utm_campaign: UTM.campaign
+          });
+        } catch(e) {}
+      }
+    }
+
+    // Warunek 1 — czas
+    setTimeout(function() {
+      timeOk = true;
+      tryUnlockCta();
+    }, CTA_MIN_SECONDS * 1000);
+
+    // Warunek 2 — scroll
+    window.addEventListener('scroll', function checkScroll() {
+      var h = document.documentElement;
+      var pct = Math.round((window.pageYOffset / (h.scrollHeight - h.clientHeight)) * 100);
+      if (pct >= CTA_MIN_SCROLL) {
+        scrollOk = true;
+        tryUnlockCta();
+        window.removeEventListener('scroll', checkScroll);
+      }
+    }, { passive: true });
   </script>
 
 </body>
