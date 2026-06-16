@@ -1115,6 +1115,17 @@
     var scrollMilestones = [25, 50, 75, 90, 100];
     var firedMilestones = {};
 
+    window.addEventListener('scroll', function() {
+      var pct = getScrollPct();
+      if (pct > maxScrollPct) maxScrollPct = pct;
+      scrollMilestones.forEach(function(m) {
+        if (pct >= m && !firedMilestones[m]) {
+          firedMilestones[m] = true;
+          send({ type:'scroll_depth', session_id:SESSION_ID, timestamp:new Date().toISOString(), scroll_percent:m, utm_source:UTM.source, utm_campaign:UTM.campaign });
+        }
+      });
+    }, { passive: true });
+
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         var sec = trackedSections.find(function(s) { return s.el === entry.target; });
@@ -1129,17 +1140,6 @@
       });
     }, { threshold: 0.3 });
     trackedSections.forEach(function(s) { observer.observe(s.el); });
-
-    window.addEventListener('scroll', function() {
-      var pct = getScrollPct();
-      if (pct > maxScrollPct) maxScrollPct = pct;
-      scrollMilestones.forEach(function(m) {
-        if (pct >= m && !firedMilestones[m]) {
-          firedMilestones[m] = true;
-          send({ type:'scroll_depth', session_id:SESSION_ID, timestamp:new Date().toISOString(), scroll_percent:m, utm_source:UTM.source, utm_campaign:UTM.campaign });
-        }
-      });
-    }, { passive: true });
 
     document.querySelectorAll('[onclick*="handleCtaClick"], .nav-cta, .btn-primary, .btn-secondary').forEach(function(el) {
       el.addEventListener('click', function(e) {
@@ -1286,6 +1286,57 @@
         });
       }
     });
+  </script>
+
+  <!-- rrweb Session Recorder (Option A - Silent & Lightweight) -->
+  <script>
+  (function() {
+    // Nagrywaj tylko sesje z kampanii (obecność parametrów UTM w linku)
+    if (window.location.search.indexOf('utm_') === -1) return;
+
+    var script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/rrweb@1.1.3/dist/record/rrweb-record.min.js';
+    script.onload = function() {
+      var recordFn = (typeof rrwebRecord !== 'undefined' ? rrwebRecord : (typeof rrweb !== 'undefined' ? rrweb.record : null));
+      if (typeof recordFn !== 'function') {
+        console.warn('rrweb recording not available.');
+        return;
+      }
+      
+      var recordedEvents = [];
+      recordFn({
+        emit: function(event) {
+          recordedEvents.push(event);
+        }
+      });
+
+      // Wysyłaj paczki danych co 10 sekund
+      setInterval(uploadChunks, 10000);
+
+      // Wyślij pozostałości przy opuszczaniu strony
+      window.addEventListener('pagehide', uploadChunks);
+      window.addEventListener('beforeunload', uploadChunks);
+
+      function uploadChunks() {
+        if (recordedEvents.length === 0) return;
+        var chunk = [];
+        while(recordedEvents.length > 0) {
+          chunk.push(recordedEvents.shift());
+        }
+        
+        // Wyślij dane za pomocą istniejącej funkcji 'send' z tej strony
+        if (typeof send === 'function') {
+          send({
+            type: 'session_record',
+            session_id: SESSION_ID,
+            timestamp: new Date().toISOString(),
+            events: chunk
+          });
+        }
+      }
+    };
+    document.head.appendChild(script);
+  })();
   </script>
 
 </body>
