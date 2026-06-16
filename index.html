@@ -70,54 +70,6 @@
             z-index: 0;
         }
 
-        /* ── NAV ── */
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(245, 241, 232, 0.92);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-            padding: 14px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .nav-logo {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
-            font-weight: 800;
-            font-size: 15px;
-            letter-spacing: 0.04em;
-            color: var(--black);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .nav-logo img {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .nav-cta {
-            background: var(--accent);
-            color: var(--white);
-            padding: 10px 20px;
-            border-radius: 100px;
-            font-size: 13px;
-            font-weight: 500;
-            text-decoration: none;
-            transition: background 0.2s, opacity 0.5s ease, transform 0.5s ease;
-            white-space: nowrap;
-        }
-
-        .nav-cta:hover {
-            background: #c93a08;
-        }
-
         /* ── HERO ── */
         .hero {
             padding: 48px 20px 48px;
@@ -126,42 +78,6 @@
             text-align: center;
             position: relative;
             z-index: 1;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: 100px;
-            padding: 6px 14px;
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--muted);
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            margin-bottom: 28px;
-        }
-
-        .hero-badge-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--green);
-            animation: pulse-dot 2s infinite;
-        }
-
-        @keyframes pulse-dot {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.4;
-            }
         }
 
         .hero h1 {
@@ -355,13 +271,6 @@
 
         .hero-section .stat-label {
             color: #d1d5db;
-        }
-
-        .hero-section .hero-badge {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.25);
-            color: #ffffff;
-            backdrop-filter: blur(8px);
         }
 
         .hero-section .btn-primary {
@@ -943,7 +852,8 @@
             width: 100%;
             max-width: 420px;
             box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
+            overflow-y: auto;
+            max-height: 90vh;
             animation: modal-up 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -1061,19 +971,6 @@
             .reviews-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-
-            nav {
-                padding: 14px 32px;
-            }
-
-            .nav-logo {
-                font-size: 15px;
-            }
-
-            .nav-logo img {
-                width: 36px;
-                height: 36px;
-            }
         }
 
         .callout-section {
@@ -1155,45 +1052,6 @@
             opacity: 1;
             transform: none;
         }
-
-        /* ══════════════════════════════════════════════
-       CTA UNLOCK — przyciski niewidoczne na start,
-       pojawiają się po spełnieniu warunków czasu+scrollu
-    ══════════════════════════════════════════════ */
-        .btn-primary,
-        .btn-secondary,
-        .nav-cta {
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(6px);
-            /* transition już zdefiniowany wyżej per-element,
-         tutaj nadpisujemy by zawsze miał unlock-transition */
-            transition: opacity 0.5s ease, transform 0.5s ease, background 0.2s, box-shadow 0.2s;
-        }
-
-        /* Po odblokowaniu — wszystkie przyciski wjeżdżają */
-        .cta-unlocked .btn-primary,
-        .cta-unlocked .btn-secondary,
-        .cta-unlocked .nav-cta {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateY(0);
-        }
-
-        /* hover działa dopiero po odblokowaniu */
-        .cta-unlocked .btn-primary:hover {
-            background: #c93a08;
-            transform: translateY(-1px);
-            box-shadow: 0 8px 24px rgba(232, 67, 10, 0.3);
-        }
-
-        .cta-unlocked .btn-secondary:hover {
-            border-color: var(--black);
-        }
-
-        .cta-unlocked .nav-cta:hover {
-            background: #c93a08;
-        }
     </style>
 
     <!-- Facebook Pixel -->
@@ -1209,23 +1067,9 @@
 
 <body>
 
-    <!-- NAV -->
-    <nav>
-        <div class="nav-logo">
-            <img src="https://lh3.googleusercontent.com/d/18mEyEP41W-2NXRbPbsCetiXB_BAchfST" alt="Manufaktura Formy"
-                onerror="this.style.display='none'">
-            Manufaktura Formy
-        </div>
-        <a href="#" class="nav-cta" id="navCta" onclick="handleCtaClick(event)">Wypróbuj EMS za 0 zł →</a>
-    </nav>
-
     <!-- HERO -->
     <section class="hero-section">
         <div class="hero">
-            <div class="hero-badge">
-                <div class="hero-badge-dot"></div>
-                Studio EMS · Białystok · Górka Tomka 6
-            </div>
             <h1>EMS w Białymstoku.<br><em>Inaczej niż wszędzie.</em></h1>
             <p class="hero-sub">Bezprzewodowy kombinezon. Suchy — bez moczenia. Trener tylko dla Ciebie przez całe 20
                 minut. Sprawdź, dlaczego klienci, którzy próbowali EMS gdzie indziej, zostają u nas.</p>
@@ -1665,6 +1509,31 @@
                 </a>
             </div>
 
+            <!-- Divider -->
+            <div style="margin: 24px 0 16px; border-top: 1px dashed var(--border); position: relative; text-align: center;">
+                <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--white); padding: 0 12px; font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;">
+                    LUB ZOSTAW KONTAKT
+                </span>
+            </div>
+
+            <!-- Passive contact form -->
+            <form id="leadForm" onsubmit="handleLeadSubmit(event)" style="text-align: left; display: flex; flex-direction: column; gap: 14px; margin-top: 10px;">
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <label for="leadName" style="font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em;">Imię</label>
+                    <input type="text" id="leadName" required placeholder="Wpisz swoje imię" style="width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; font-family: inherit; color: var(--black); background: var(--white); outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--black)'" onblur="this.style.borderColor='var(--border)'">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <label for="leadPhone" style="font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em;">Numer telefonu</label>
+                    <input type="tel" id="leadPhone" required placeholder="np. 500 600 700" style="width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; font-family: inherit; color: var(--black); background: var(--white); outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--black)'" onblur="this.style.borderColor='var(--border)'">
+                </div>
+                <button type="submit" style="background: var(--accent); color: var(--white); border: none; padding: 14px 20px; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s, transform 0.1s;" onmouseover="this.style.background='#c93a08'" onmouseout="this.style.background='var(--accent)'">
+                    Oddzwonimy do Ciebie &nbsp;→
+                </button>
+            </form>
+            <div id="leadFormSuccess" style="display: none; padding: 16px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; color: #15803d; font-size: 13px; font-weight: 600; text-align: center; margin-top: 10px; line-height: 1.5;">
+                ✓ Gotowe! Zapisaliśmy Twoje zgłoszenie. Odezwiemy się wkrótce, aby ustalić termin próbnego treningu.
+            </div>
+
             <p style="font-size:11px;color:#9ca3af;margin-top:16px;line-height:1.5;">
                 Bez zobowiązań · Odpowiadamy w ciągu 24h · ul. Górka Tomka 6, Białystok
             </p>
@@ -1672,7 +1541,7 @@
     </div>
 
     <script>
-        // ══ CONFIG ══
+        // ── CONFIG ──
         const p = new URLSearchParams(window.location.search);
         const UTM = {
             source: p.get('utm_source') || 'brak',
@@ -1689,6 +1558,30 @@
             whatsapp: `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(CONTACT_MESSAGE)}`,
             messenger: `https://m.me/${MESSENGER_PAGE_ID}?text=${encodeURIComponent(CONTACT_MESSAGE)}`
         };
+
+        // ── ROTATION CONFIG ──
+        const ctaOptions = [
+            "Umów trening próbny za 0 zł",
+            "Umów bezpłatny trening próbny",
+            "Odbierz swój pierwszy trening za 0 zł",
+            "Sprawdź, czy ten trening jest dla Ciebie – za 0 zł",
+            "Zarezerwuj darmowy trening i poznaj nasze studio"
+        ];
+
+        const headlineOptions = [
+            "Inaczej niż wszędzie.",
+            "Więcej niż trening.",
+            "Trening dopasowany do Ciebie.",
+            "Skutecznie i kameralnie.",
+            "Jakość, którą poczujesz od pierwszej wizyty."
+        ];
+
+        const selectedCta = ctaOptions[Math.floor(Math.random() * ctaOptions.length)];
+        const selectedHeadline = headlineOptions[Math.floor(Math.random() * headlineOptions.length)];
+
+        // Make globally accessible for logging
+        window.selectedCtaText = selectedCta;
+        window.selectedHeadlineText = selectedHeadline;
 
         // ── CONTACT CHANNELS MODAL ──
         function closeContactChannelsModal(e) {
@@ -1719,6 +1612,41 @@
             window.open(url, '_blank', 'noopener,noreferrer');
         }
 
+        // ── PASSIVE LEAD SUBMIT ──
+        function handleLeadSubmit(e) {
+            e.preventDefault();
+            const nameEl = document.getElementById('leadName');
+            const phoneEl = document.getElementById('leadPhone');
+            const name = nameEl.value.trim();
+            const phone = phoneEl.value.trim();
+            
+            if (!name || !phone) return;
+            
+            send({
+                type: 'lead_form_submit',
+                session_id: SESSION_ID,
+                timestamp: new Date().toISOString(),
+                lead_name: name,
+                lead_phone: phone,
+                selected_cta: window.selectedCtaText,
+                selected_headline: window.selectedHeadlineText,
+                utm_source: UTM.source,
+                utm_campaign: UTM.campaign,
+                utm_content: UTM.content,
+                utm_medium: UTM.medium
+            });
+            
+            try { gtag('event', 'conversion', { 'send_to': 'AW-18039825187/SgiyCMC9iJwcEKPGh5pD' }); } catch (err) { }
+            try {
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({ event: 'lead_form_submit', event_category: 'CTA', event_label: 'Lead Form' });
+            } catch (err) { }
+            try { if (typeof fbq === 'function') fbq('track', 'Lead', { channel: 'lead_form' }); } catch (err) { }
+            
+            document.getElementById('leadForm').style.display = 'none';
+            document.getElementById('leadFormSuccess').style.display = 'block';
+        }
+
         // ── FAQ ──
         function toggleFaq(el) {
             const item = el.parentElement;
@@ -1732,7 +1660,9 @@
                 var payload = JSON.stringify(Object.assign({}, data, {
                     page_url: location.href,
                     user_agent: navigator.userAgent,
-                    screen: screen.width + 'x' + screen.height
+                    screen: screen.width + 'x' + screen.height,
+                    selected_cta: window.selectedCtaText || 'unknown',
+                    selected_headline: window.selectedHeadlineText || 'unknown'
                 }));
                 // sendBeacon wysyła jako text/plain — GAS odbiera e.postData.contents poprawnie
                 var blob = new Blob([payload], { type: 'text/plain' });
@@ -1747,13 +1677,38 @@
         }
 
         document.addEventListener('DOMContentLoaded', function () {
+            // Apply Dynamic Headline
+            const heroHeadlineEm = document.querySelector('.hero h1 em');
+            if (heroHeadlineEm) {
+                heroHeadlineEm.textContent = selectedHeadline;
+            }
+
+            // Apply Dynamic CTA texts to all primary buttons
+            const ctaButtons = document.querySelectorAll('.btn-primary');
+            ctaButtons.forEach(btn => {
+                btn.innerHTML = selectedCta + ' &rarr;';
+            });
+
+            // Initialize fade up animations
             const fadeEls = document.querySelectorAll('.fade-up');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
             }, { threshold: 0.1 });
             fadeEls.forEach(el => observer.observe(el));
 
-            send({ type: 'dropoff', event: 'landing_view', session_id: SESSION_ID, timestamp: new Date().toISOString(), step: 0, step_name: 'landing', utm_source: UTM.source, utm_campaign: UTM.campaign, utm_content: UTM.content });
+            send({
+                type: 'dropoff',
+                event: 'landing_view',
+                session_id: SESSION_ID,
+                timestamp: new Date().toISOString(),
+                step: 0,
+                step_name: 'landing',
+                selected_cta: selectedCta,
+                selected_headline: selectedHeadline,
+                utm_source: UTM.source,
+                utm_campaign: UTM.campaign,
+                utm_content: UTM.content
+            });
         });
 
         // ── PAGE CLOSE TRACKING ──
@@ -1860,11 +1815,11 @@
             }, { threshold: 0.3 });
             trackedSections.forEach(function (s) { observer.observe(s.el); });
 
-            document.querySelectorAll('[onclick*="handleCtaClick"], .nav-cta, .btn-primary, .btn-secondary').forEach(function (el) {
+            document.querySelectorAll('[onclick*="handleCtaClick"], .btn-primary, .btn-secondary').forEach(function (el) {
                 el.addEventListener('click', function (e) {
                     var label = el.textContent.trim().substring(0, 60);
                     var section = '';
-                    var parent = el.closest('section, nav, .callout-section, .cta-section, .offer-banner');
+                    var parent = el.closest('section, .callout-section, .cta-section, .offer-banner');
                     if (parent) { var h = parent.querySelector('h1, h2'); section = h ? h.textContent.trim().substring(0, 40) : (parent.className.split(' ')[0]); }
                     send({ type: 'cta_click', session_id: SESSION_ID, timestamp: new Date().toISOString(), cta_label: label, cta_section: section, scroll_pct_at_click: getScrollPct(), time_on_page: Math.round((Date.now() - t0) / 1000), utm_source: UTM.source, utm_campaign: UTM.campaign, utm_content: UTM.content });
                 });
@@ -1912,59 +1867,6 @@
                 if (origLogClose) origLogClose();
             };
         })();
-    </script>
-
-    <!-- ══════════════════════════════════════════════
-       CTA UNLOCK — przyciski pojawiają się dopiero
-       gdy spełnione są OBA warunki: czas + scroll
-  ══════════════════════════════════════════════ -->
-    <script>
-        // ── KONFIGURACJA ──────────────────────────────
-        var CTA_MIN_SECONDS = 5;   // minimalne sekundy na stronie
-        var CTA_MIN_SCROLL = 5;   // minimalny % scrolla
-        // ─────────────────────────────────────────────
-
-        var ctaUnlocked = false;
-        var timeOk = false;
-        var scrollOk = false;
-
-        function tryUnlockCta() {
-            if (ctaUnlocked) return;
-            if (timeOk && scrollOk) {
-                ctaUnlocked = true;
-                document.body.classList.add('cta-unlocked');
-
-                // Tracking — kiedy przyciski się odblokują
-                try {
-                    send({
-                        type: 'cta_unlocked',
-                        session_id: SESSION_ID,
-                        timestamp: new Date().toISOString(),
-                        time_on_page: Math.round((Date.now() - t0) / 1000),
-                        scroll_pct: getScrollPct(),
-                        utm_source: UTM.source,
-                        utm_campaign: UTM.campaign
-                    });
-                } catch (e) { }
-            }
-        }
-
-        // Warunek 1 — czas
-        setTimeout(function () {
-            timeOk = true;
-            tryUnlockCta();
-        }, CTA_MIN_SECONDS * 1000);
-
-        // Warunek 2 — scroll
-        window.addEventListener('scroll', function checkScroll() {
-            var h = document.documentElement;
-            var pct = Math.round((window.pageYOffset / (h.scrollHeight - h.clientHeight)) * 100);
-            if (pct >= CTA_MIN_SCROLL) {
-                scrollOk = true;
-                tryUnlockCta();
-                window.removeEventListener('scroll', checkScroll);
-            }
-        }, { passive: true });
     </script>
 
     <!-- VIMEO PLAYER JS -->
