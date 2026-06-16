@@ -1291,8 +1291,30 @@
   <!-- rrweb Session Recorder (Option A - Silent & Lightweight) -->
   <script>
   (function() {
-    // Nagrywaj tylko sesje z kampanii (obecność parametrów UTM w linku)
-    if (window.location.search.indexOf('utm_') === -1) return;
+    var isProd = window.location.hostname === 'manufakturaformybialystok.github.io';
+    var hasTestParam = window.location.search.indexOf('test') !== -1 || window.location.search.indexOf('utm_') !== -1;
+    
+    // Sprawdzanie flagi w localStorage
+    var testFlag = localStorage.getItem('mf_test_recording');
+    var isTestActive = false;
+    if (testFlag) {
+      var flagTime = parseInt(testFlag, 10);
+      // Flaga aktywna przez 24 godziny (86400000 ms)
+      if (Date.now() - flagTime < 24 * 60 * 60 * 1000) {
+        isTestActive = true;
+      } else {
+        localStorage.removeItem('mf_test_recording');
+      }
+    }
+
+    // Jeśli w linku jest ?test lub utm_, ustaw/odśwież flagę na 24h
+    if (hasTestParam) {
+      localStorage.setItem('mf_test_recording', Date.now().toString());
+      isTestActive = true;
+    }
+
+    // Nagrywaj jeśli to produkcja LUB jeśli test jest aktywny
+    if (!isProd && !isTestActive) return;
 
     var script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/npm/rrweb@1.1.3/dist/record/rrweb-record.min.js';
